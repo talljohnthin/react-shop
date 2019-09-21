@@ -1,7 +1,6 @@
 import React from 'react';
-import Products from './Products';
-import Filters from './Filters';
 import Signup from '../components/auth/Signup';
+import Shop from './Shop';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function Home() {
@@ -9,9 +8,8 @@ function Home() {
   <Router>
     <div className="container">
       <div className="row">
-        <Route path="/signup" component="Signup"/>
-        <Filters />
-        <Products />
+        <Route path="/" exact component={ Shop }/>
+        <Route path="/signup" exact component={ Signup }/>
       </div>
     </div>
   </Router>
