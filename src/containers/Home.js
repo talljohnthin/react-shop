@@ -1,15 +1,20 @@
 import React from 'react';
 import Products from './Products';
 import Filters from './Filters';
+import Signup from '../components/auth/Signup';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function Home() {
   return (
-   <div className="container">
-     <div className="row">
+  <Router>
+    <div className="container">
+      <div className="row">
+        <Route path="/signup" component="Signup"/>
         <Filters />
         <Products />
-     </div>
-  </div>
+      </div>
+    </div>
+  </Router>
   );
 }
 
