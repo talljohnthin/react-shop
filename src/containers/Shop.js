@@ -6,8 +6,9 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 function Shop() {
   return (
     <Fragment>
-        <Filters />
-        <Products />
+        {/* <Filters />
+        <Products /> */}
+
     </Fragment>
   );
 }

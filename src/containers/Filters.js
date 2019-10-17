@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Filter from '../components/filter/Filter'
+import Filter from '../components/Filter/Filter'
 
 export default class Filters extends Component {
     render() {

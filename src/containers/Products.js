@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import Product from '../components/product/Product'
+import Product from '../components/Product/Product'
+import AddProducts from '../components/Product/AddProducts'
 
 export default class Products extends Component {
     render() {
@@ -12,7 +13,11 @@ export default class Products extends Component {
                     <Product />
                     <Product />
                 </div>
+                <div className="add">
+                    <AddProducts />
+                </div>
             </div>
+           
         )
     }
 }

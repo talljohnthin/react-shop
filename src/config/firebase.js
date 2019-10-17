@@ -12,21 +12,12 @@ var firebaseConfig = {
     appId: "1:218930931613:web:e34792f2e97722b6433174"
 };
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig)
 
-const db = firebase.firestore();
-
-db.collection("users").add({
-    first: "Johnrel",
-    last: "Limpag",
-    phone: 090909,
-    role: 'user',
-    username: 'asdf',
-    pass:'asdf'
-})
-.then(function(docRef) {
-    console.log("Document written with ID: ", docRef.id);
-})
-.catch(function(error) {
-    console.error("Error adding document: ", error);
+export const db = firebase.firestore()
+db.settings({
+    timestampsInSnapshots: true
 });
+
+export default firebase;
+
