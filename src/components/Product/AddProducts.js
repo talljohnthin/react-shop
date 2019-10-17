@@ -54,13 +54,11 @@ export default class AddProducts extends Component {
                 let data = doc.data()
                 item.push(data)
             })
-            console.log(item)
           })
           .catch( error => console.log( error ))
     }
    
     render() {
-        console.log(this.state)
         return (
             <div>
                <form onSubmit={ this.handleAddProducts }>

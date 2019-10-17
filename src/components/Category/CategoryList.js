@@ -13,7 +13,7 @@ export default class CategoryList extends Component {
         })
         return (
             <Fragment>
-            {list}
+                {list}
             </Fragment>
         )
     }

@@ -15,7 +15,6 @@ export default class AddCategory extends Component {
         this.props.handleAddNewCategory(this.state.category)
     }
     render() {
-        console.log(this.state.category)
         return (
             <div>
                 <form onSubmit={this.handleFormSubmit}>

@@ -5,9 +5,7 @@ import { db } from '../config/firebase'
 export default class Categories extends Component {
     state = {
         category:'',
-        isCategoryValid:false,
         categoryList: [],
-        isLoading:false,
         statusMessage: null
     }
 
@@ -31,25 +29,6 @@ export default class Categories extends Component {
         })
     }
 
-    handleAddValidity = () => {
-        let status = null;
-        if ( !this.state.isCategoryValid ) {
-            status = '<div className="alert alert-success">Sucessfully added!</div>'
-        } else {
-            status = '<div className="alert alert-danger">Minimum of 3 characters.</div>'
-        }
-        this.setState({
-            statusMessage : status
-        })
-
-        setTimeout(() => {
-            console.log(this.statusMessage)
-            this.setState({
-                statusMessage : null
-            })
-        }, 3000)
-    }
-
     handleAddNewCategory = (newCategory) => {
         if (newCategory.length > 3) {
             db.collection("category").add({
@@ -62,22 +41,25 @@ export default class Categories extends Component {
                 console.error("Error adding document: ", error);
             });
             this.setState({
-                isCategoryValid:true
+                statusMessage: 'ADD'
             })
         } else {
             this.setState({
-                isCategoryValid:false
+                statusMessage: 'ADD_ERROR'
             })
         }
-        this.handleAddValidity()
     }
 
    handleRemoveCategory = ( id ) => {
-       db.collection("category").doc(id).delete().then(function() {
-            console.log("Document successfully deleted!");
+        db.collection("category").doc(id).delete().then(function() {
+           console.log('deleted')
         }).catch(function(error) {
             console.error("Error removing document: ", error);
         });
+
+        this.setState({
+              statusMessage: 'DELETED'
+        })
    }
 
     render() {
@@ -89,15 +71,51 @@ export default class Categories extends Component {
             handleRemoveCategory={this.handleRemoveCategory}
             /> 
         )
-
+        
+        let status = null;
+        if (this.state.statusMessage != null) {
+            switch(this.state.statusMessage) {
+                case 'ADD':
+                  status = ( <div className="alert alert-success">New category added successfully!</div> )
+                  setTimeout(()=>{
+                    status = null;
+                    this.setState({
+                        statusMessage: null
+                    })
+                  },3000)
+                  break;
+                case 'ADD_ERROR':
+                    status = ( <div className="alert alert-danger">Data is not added!</div> )
+                    setTimeout(()=>{
+                      status = null;
+                      this.setState({
+                          statusMessage: null
+                      })
+                    },3000)
+                  break;
+                case 'DELETED':
+                    status = ( <div className="alert alert-success">Category is removed successfully!</div> )
+                    setTimeout(()=>{
+                      status = null;
+                      this.setState({
+                          statusMessage: null
+                      })
+                    },3000)
+                  break;
+                default:
+                  // code block
+            }
+        }
         return (
+            
             <div>
+                { status != null ? status : '' }
                 <div className="list-group">
                     <a href="#" className="list-group-item list-group-item-action active"> Category List</a>
                     { isLoading }
                 </div>
                
-                { this.statusMessage }
+                
                 <AddCategory 
                     handleAddNewCategory={ this.handleAddNewCategory }
                 /> 
