@@ -6,14 +6,14 @@ export default function Index(props) {
         position: 'absolute',
         top: showAlert ? '0' : '-100%',
         left: '50%',
-        transform: 'translateX(-20%)',
-        transition: 'all ease 0.25s',
+        transform: 'translateX(-50%)',
+        transition: 'all ease 0.25s'
     }
 
     return (
         <Fragment>
             <Alert variant={ type == 'success' ? 'success' : 'danger'} style={alertStyle}>
-                <p>{ message }</p>
+                { message }
             </Alert>
         </Fragment>
     )
