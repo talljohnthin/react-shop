@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFile, faSave, faTimes } from '@fortawesome/free-solid-svg-icons'
 
 export default class Add extends Component {
     constructor(props) {
@@ -37,8 +39,8 @@ export default class Add extends Component {
     render() {
         return (
             <Fragment>
-                <Button variant="primary" onClick={this.handleShow}>
-                    Add Category
+                <Button variant="primary" onClick={this.handleShow} style={ addButton }>
+                <FontAwesomeIcon icon={faFile} /> New Category
                 </Button>
                 <Modal show={this.state.show} onHide={this.handleClose}>
                     <Form onSubmit={this.handleFormSubmit}>
@@ -52,10 +54,10 @@ export default class Add extends Component {
                         </Modal.Body>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={this.handleClose}>
-                            Close
+                                <FontAwesomeIcon icon={faTimes}/> Close
                             </Button>
                             <Button variant="primary" type="submit" onClick={this.handleClose}>
-                                Save Changes
+                            <FontAwesomeIcon icon={faSave}/> Save Changes
                             </Button>
                         </Modal.Footer>
                     </Form>
@@ -65,4 +67,10 @@ export default class Add extends Component {
             </Fragment>
         )
     }
+}
+
+
+const addButton = {
+    marginTop:'10px',
+    float:'right'
 }

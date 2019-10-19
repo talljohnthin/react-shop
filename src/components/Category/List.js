@@ -1,6 +1,7 @@
 import React, { Fragment, Component } from 'react'
-import { Modal , Button } from 'react-bootstrap'
-
+import { Modal , Button, ListGroup } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrashAlt, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons'
 export default class List extends Component {
 
     state = {
@@ -29,13 +30,14 @@ export default class List extends Component {
     }
     render() {
         const list = this.props.categoryList.map(doc => {
-            return (<li key={doc.id} className="list-group-item list-group-item-action"> {doc.name.name}
-                <button className="btn btn-danger" onClick={() => this.handleShow(doc.id)}>remove</button>
-            </li>)
+            return ( <ListGroup.Item as="li" key={doc.id}> {doc.name.name}
+                <FontAwesomeIcon icon={faTrashAlt} onClick={() => this.handleShow(doc.id)}
+                style={{float:'right', cursor:'pointer'}}/>
+                </ListGroup.Item>)
         })
         return (
             <Fragment>
-                {list}
+                { list != '' ? list : 'No category at this moment' }
                 <Modal show={this.state.show} onHide={this.handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Delete Category</Modal.Title>
@@ -46,8 +48,8 @@ export default class List extends Component {
                     </Modal.Body>
 
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={ this.handleClose }>Cancel</Button>
-                        <Button variant="primary" onClick={ this.removeCategory }>Remove</Button>
+                        <Button variant="secondary" onClick={ this.handleClose }><FontAwesomeIcon icon={faTimes}/> Cancel</Button>
+                        <Button variant="primary" onClick={ this.removeCategory }><FontAwesomeIcon icon={faTrash}/> Remove</Button>
                     </Modal.Footer>
                 </Modal>
             </Fragment>

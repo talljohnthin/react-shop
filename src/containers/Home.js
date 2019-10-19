@@ -4,6 +4,7 @@ import Shop from './Shop';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Category from '../components/Category/Index'
 
+
 function Home() {
   return (
   <Router>
