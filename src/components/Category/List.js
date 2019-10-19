@@ -1,6 +1,6 @@
 import React, {Fragment, Component} from 'react'
 
-export default class CategoryList extends Component {
+export default class List extends Component {
 
     removeCategory( id ) {
         this.props.handleRemoveCategory( id )
