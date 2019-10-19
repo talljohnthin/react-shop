@@ -2,10 +2,14 @@ import React, { Component, Fragment } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
 
 export default class Add extends Component {
-    state = {
-        category: '',
-        show:false,
+    constructor(props) {
+        super(props)
+        this.state = {
+            category: '',
+            show:false,
+        }
     }
+   
     handleUpdateStateCategory = e => {
         e.preventDefault()
         this.setState({
@@ -15,6 +19,10 @@ export default class Add extends Component {
     handleFormSubmit = e => {
         e.preventDefault()
         this.props.handleAddNewCategory(this.state.category)
+        this.setState({
+            category:''
+        })
+       
     }
     handleClose = () => {
         this.setState({
@@ -22,7 +30,6 @@ export default class Add extends Component {
         })
     }
     handleShow = () => {
-        console.log('hi')
         this.setState({
             show:true
         })
@@ -40,7 +47,7 @@ export default class Add extends Component {
                         </Modal.Header>
                         <Modal.Body>
                             <Form.Group controlId="formGroupPassword">
-                                <Form.Control name="category" value={ this.state.category } onChange={ this.handleUpdateStateCategory } />
+                                <Form.Control placeholder="like: Tops, T-Shirt, Shoes, Short, Bag" name="category" value={ this.state.category } onChange={ this.handleUpdateStateCategory } />
                             </Form.Group>
                         </Modal.Body>
                         <Modal.Footer>

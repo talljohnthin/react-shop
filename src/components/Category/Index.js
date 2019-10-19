@@ -6,7 +6,8 @@ import { db } from '../../config/firebase'
 import Alert from '../Alert/Index'
 
 const container = {
-    maxWidth:'600px'
+    maxWidth:'600px',
+    marginTop:'60px'
 }
 export default class Index extends Component {
     state = {
