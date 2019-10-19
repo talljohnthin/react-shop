@@ -1,10 +1,13 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
+import {Container, Row, Col } from 'react-bootstrap'
 import List from './List'
 import Add from './Add'
 import { db } from '../../config/firebase'
 import Alert from '../Alert/Index'
 
-
+const container = {
+    maxWidth:'600px'
+}
 export default class Index extends Component {
     state = {
         categories: [],
@@ -12,9 +15,7 @@ export default class Index extends Component {
         showAlert:false,
         alertType:'success'
     }
-
     alertTimeout = null
-
 
     componentDidMount() {
         db.collection("category")
@@ -47,7 +48,6 @@ export default class Index extends Component {
             })
         })
     }
-
     handleAddNewCategory = (newCategory) => {
         if (newCategory.length > 3) {
             db.collection("category").add({
@@ -129,7 +129,9 @@ export default class Index extends Component {
         } else {
             this.handleShowAlert(alertObj)
         }
-   }
+    }
+
+
 
     render() {
         
@@ -143,24 +145,23 @@ export default class Index extends Component {
         
         return (
             
-            <div>
-                {/* show alert*/}
-                <Alert 
-                showAlert={this.state.showAlert} 
-                type={this.state.alertType}
-                message={this.state.alertMessage}
-                />
-
-                <div className="list-group">
-                    <a href="#" className="list-group-item list-group-item-action active"> Category List</a>
-                    { isLoading }
-                </div>
-               
-                
-                <Add
-                    handleAddNewCategory={ this.handleAddNewCategory }
-                /> 
-            </div>
+            <Fragment>
+                <Container style={container}>
+                    <Alert 
+                    showAlert={this.state.showAlert} 
+                    type={this.state.alertType}
+                    message={this.state.alertMessage}
+                    />
+                    <div className="list-group">
+                        <a href="#" className="list-group-item list-group-item-action active"> Category List</a>
+                        { isLoading }
+                    </div>
+                    
+                    <Add
+                        handleAddNewCategory={ this.handleAddNewCategory }
+                    />
+                </Container>
+            </Fragment>
         )
     }
 }
