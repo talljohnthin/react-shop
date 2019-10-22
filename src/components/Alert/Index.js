@@ -12,7 +12,7 @@ export default function Index(props) {
 
     return (
         <Fragment>
-            <Alert variant={ type == 'success' ? 'success' : 'danger'} style={alertStyle}>
+            <Alert variant={ type === 'success' ? 'success' : 'danger'} style={alertStyle}>
                 { message }
             </Alert>
         </Fragment>
