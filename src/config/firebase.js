@@ -8,7 +8,7 @@ var firebaseConfig = {
     authDomain: "shop-39810.firebaseapp.com",
     databaseURL: "https://shop-39810.firebaseio.com",
     projectId: "shop-39810",
-    storageBucket: "",
+    storageBucket: "gs://shop-39810.appspot.com/",
     messagingSenderId: "218930931613",
     appId: "1:218930931613:web:e34792f2e97722b6433174"
 };
