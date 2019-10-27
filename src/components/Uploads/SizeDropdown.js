@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-
+import { Form } from 'react-bootstrap'
 export default function SizeDropdown(props) {
     const sizes = props.sizes
     const populateDropdownSize = (sizes) => {
@@ -9,9 +9,12 @@ export default function SizeDropdown(props) {
     }
     return (
         <Fragment>
-            <select>
-                { sizes ? populateDropdownSize(sizes) : ( <option value="no data">No Data at this moment</option> ) }
-            </select>
+            <Form.Group controlId="size">
+                <Form.Label>Select Size:</Form.Label>
+                <Form.Control as="select">
+                    {sizes ? populateDropdownSize(sizes) : (<option value="no data">No Data at this moment</option>)}   
+                </Form.Control>
+            </Form.Group>
         </Fragment>
     )
 }

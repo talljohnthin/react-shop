@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import { Form } from 'react-bootstrap'
 
 export default function CategoryDropdown(props) {
     const categories = props.categories
@@ -9,9 +10,12 @@ export default function CategoryDropdown(props) {
     }
     return (
         <Fragment>
-            <select>
-                { categories ? populateDropdownCategory(categories) : ( <option value="no data">No Data at this moment</option> ) }
-            </select>
+            <Form.Group controlId="category">
+                <Form.Label>Select Category:</Form.Label>
+                <Form.Control as="select">
+                    { categories ? populateDropdownCategory(categories) : ( <option value="no data">No Data at this moment</option> ) } 
+                </Form.Control>
+            </Form.Group>
         </Fragment>
     )
 }

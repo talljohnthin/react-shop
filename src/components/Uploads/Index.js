@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
-import { ProgressBar } from 'react-bootstrap'
+import { ProgressBar, Form, Card } from 'react-bootstrap'
+import './scss/index.scss'
 import firebase from 'firebase/app'
 import { db } from '../../config/firebase'
 import FileUploader from "react-firebase-file-uploader"
@@ -13,7 +14,7 @@ const container = {
 export default class Index extends Component {
     state = {
         categories: [],
-        sizes:[],
+        sizes: [],
         alertMessage: null,
         showAlert: false,
         alertType: 'success',
@@ -23,12 +24,12 @@ export default class Index extends Component {
         uploadProgress: 0
     }
     alertTimeout = null
-    
+
     componentDidMount() {
         this.getCategories()
         this.getSizes()
     }
-    
+
     handleUploadStart = () => this.setState({
         isUploading: true,
         uploadProgress: 0
@@ -39,64 +40,85 @@ export default class Index extends Component {
     });
 
     handleUploadError = error => {
-    this.setState({
-        isUploading: false
-        // Todo: handle error
-    });
-    console.error(error);
+        this.setState({
+            isUploading: false
+            // Todo: handle error
+        });
+        console.error(error);
     };
 
     handleUploadSuccess = async filename => {
-    const downloadURL = await firebase
-        .storage()
-        .ref("images")
-        .child(filename)
-        .getDownloadURL();
+        const downloadURL = await firebase
+            .storage()
+            .ref("images")
+            .child(filename)
+            .getDownloadURL();
 
-    this.setState(oldState => ({
-        filenames: [...oldState.filenames, filename],
-        downloadURLs: [...oldState.downloadURLs, downloadURL],
-        uploadProgress: 100,
-        isUploading: false
-    }));
+        this.setState(oldState => ({
+            filenames: [...oldState.filenames, filename],
+            downloadURLs: [...oldState.downloadURLs, downloadURL],
+            uploadProgress: 100,
+            isUploading: false
+        }));
     };
 
     getCategories = () => {
         db.collection("category")
-        .onSnapshot(snapshot => {
-            const categories = []
-            snapshot.forEach(doc => {
-                const obj = {
-                    id: doc.id,
-                    name: doc.data()
-                }
-                categories.push(obj)
-            })
-            this.setState({ categories })
-        });
+            .onSnapshot(snapshot => {
+                const categories = []
+                snapshot.forEach(doc => {
+                    const obj = {
+                        id: doc.id,
+                        name: doc.data()
+                    }
+                    categories.push(obj)
+                })
+                this.setState({ categories })
+            });
     }
 
     getSizes = () => {
         db.collection("sizes")
-        .onSnapshot(snapshot => {
-            const sizes = []
-            snapshot.forEach(doc => {
-                const obj = {
-                    id: doc.id,
-                    name: doc.data()
-                }
-                sizes.push(obj)
-            })
-            this.setState({ sizes })
-        });
+            .onSnapshot(snapshot => {
+                const sizes = []
+                snapshot.forEach(doc => {
+                    const obj = {
+                        id: doc.id,
+                        name: doc.data()
+                    }
+                    sizes.push(obj)
+                })
+                this.setState({ sizes })
+            });
     }
 
     render() {
         return (
             <Fragment>
                 <Container style={container}>
-                    <CategoryDropdown categories={this.state.categories}/>
-                    <SizesDropdown sizes={this.state.sizes} />
+                    <div className="cards">
+                        {this.state.downloadURLs.map((downloadURL, i) => {
+                            return (
+                                <Card key={i}>
+                                    <Card.Img variant="top" src={downloadURL}/>
+                                </Card>
+                            )
+                        })}
+                    </div>
+                    <Form>
+                        <Form.Group controlId="productName">
+                            <Form.Label>Product Name:</Form.Label>
+                            <Form.Control type="text" placeholder="T-shirt" />
+                        </Form.Group>
+                        <CategoryDropdown categories={this.state.categories} />
+                        <SizesDropdown sizes={this.state.sizes} />
+                        <Form.Group controlId="descriptions">
+                            <Form.Label>Descriptions:</Form.Label>
+                            <Form.Control as="textarea" rows="3" />
+                        </Form.Group>
+                    </Form>
+
+
                     <button onClick={this.handleUpload}>Upload Images</button>
                     <FileUploader
                         accept="image/*"
@@ -108,16 +130,11 @@ export default class Index extends Component {
                         onUploadSuccess={this.handleUploadSuccess}
                         onProgress={this.handleProgress}
                         multiple
-                        />
-
-                        <ProgressBar now={this.state.uploadProgress}  label={`${this.state.uploadProgress}%`}/>
-
-                        <p>Filenames: {this.state.filenames.join(", ")}</p>
-
-                        <div>
-                        {this.state.downloadURLs.map((downloadURL, i) => {
-                            return <img key={i} src={downloadURL} />;
-                        })}
+                    />
+                    <ProgressBar now={this.state.uploadProgress} label={`${this.state.uploadProgress}%`} />
+                    <p>Filenames: {this.state.filenames.join(", ")}</p>
+                    <div>
+                        
                     </div>
                 </Container>
             </Fragment>
