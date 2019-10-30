@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { ProgressBar, Form, Card } from 'react-bootstrap'
 import './scss/index.scss'
 import firebase from 'firebase/app'
-import { db } from '../../config/firebase'
+import { db, storage } from '../../config/firebase'
 import FileUploader from "react-firebase-file-uploader"
 import { Container } from 'react-bootstrap'
 import CategoryDropdown from './CategoryDropdown'
@@ -92,6 +92,27 @@ export default class Index extends Component {
             });
     }
 
+    handleRemoveImage = i => {
+        let filenames = [...this.state.filenames];
+        let downloadURLs = [...this.state.downloadURLs]
+        const imgRef = storage.ref('images/'+ this.state.filenames[i]);
+        // Delete the file
+        console.log(this.state.filenames[i])
+        imgRef.delete().then(function() {
+            console.log('image deleted success')
+        // File deleted successfully
+            filenames.splice(i, 1)
+            downloadURLs.splice(i, 1)
+            this.setState({
+                filenames,
+                downloadURLs
+            })
+        console.log('image deleted success')
+        }).catch(function(error) {
+        // Uh-oh, an error occurred!
+        });
+    }
+
     render() {
         return (
             <Fragment>
@@ -101,6 +122,7 @@ export default class Index extends Component {
                             return (
                                 <Card key={i}>
                                     <Card.Img variant="top" src={downloadURL}/>
+                                    <button onClick={e => this.handleRemoveImage(i)}>x</button>
                                 </Card>
                             )
                         })}
