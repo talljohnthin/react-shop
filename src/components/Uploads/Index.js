@@ -7,6 +7,8 @@ import FileUploader from "react-firebase-file-uploader"
 import { Container } from 'react-bootstrap'
 import CategoryDropdown from './CategoryDropdown'
 import SizesDropdown from './SizeDropdown'
+import AddVariations from './AddVariations'
+
 const container = {
     maxWidth: '600px',
     marginTop: '60px'
@@ -97,23 +99,24 @@ export default class Index extends Component {
         let downloadURLs = [...this.state.downloadURLs]
         const imgRef = storage.ref('images/'+ this.state.filenames[i]);
         // Delete the file
-        console.log(this.state.filenames[i])
-        imgRef.delete().then(function() {
+        imgRef.delete().then(() => {
             console.log('image deleted success')
-        // File deleted successfully
             filenames.splice(i, 1)
             downloadURLs.splice(i, 1)
+            console.log('asdf')
             this.setState({
                 filenames,
                 downloadURLs
             })
-        console.log('image deleted success')
-        }).catch(function(error) {
-        // Uh-oh, an error occurred!
+       
+        }).catch( error => {
+            console.log(error)
         });
+        console.log(this.state.filenames)
     }
 
     render() {
+        console.log(this.state.filenames)
         return (
             <Fragment>
                 <Container style={container}>
@@ -155,9 +158,7 @@ export default class Index extends Component {
                     />
                     <ProgressBar now={this.state.uploadProgress} label={`${this.state.uploadProgress}%`} />
                     <p>Filenames: {this.state.filenames.join(", ")}</p>
-                    <div>
-                        
-                    </div>
+                    <AddVariations />
                 </Container>
             </Fragment>
         )
