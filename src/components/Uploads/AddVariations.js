@@ -1,34 +1,18 @@
-import React, { Component, Fragment } from 'react'
+import React, { Fragment } from 'react'
 import { Button, FormControl } from 'react-bootstrap'
+import { FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
-export default class AddVariations extends Component {
-    state = {
-        variationsValue: [],
-        variations: ['variation-0']
-    }
-    addVariations = e => {
-        const variation = `variation-${this.state.variations.length}`;
-        this.setState(prevState => ({ 
-            variations: prevState.variations.concat([variation]) 
-        }));
-    }
-    addVariationValue = (e, index) => {
-        // const value = e.target.value
-        // const variationValueCopy = [...this.state.variationsValue, ]
-        // console.log(value + " : " + index)
-        // this.setState({
-        //     variationsValue: prevState.variationsValue[index].concat([value])
-        // })
-    }
-    render() {
-        console.log(this.state.variationsValue)
-        return (
-            <Fragment> 
-                <div id="variationInputs">
-                    {this.state.variations.map(variation => <FormControl key={variation} value={this.state.variationsValue[variation]} onChange={ e => this.addVariationValue(e, variation) }/>)}
-                </div>
-                <button onClick={this.addVariations}>Add Variations</button>
-            </Fragment>
-        )
-    }
+
+export default function AddVariations(props) {
+    return (
+        <Fragment> 
+            <ul className="variation-list">
+                {props.variations.map((variation, index) => <li  key={variation || 0 } ><FormControl onChange={ e => props.handleAddVariationValue(e, index) }/>
+                    <FontAwesomeIcon icon={faTrash} onClick={ () => props.handleRemoveVariation(index) }/>
+                </li>)}
+            </ul>
+            <button onClick={e => props.handleAddVariations() }>Add Variations</button>
+        </Fragment>
+    )
 }

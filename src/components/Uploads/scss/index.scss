@@ -10,3 +10,19 @@
         justify-content: center;
     }
 }
+
+.variation-list {
+    padding:0;
+    li {
+        display: flex;
+        align-items: center;
+        list-style-type: none;
+        margin:0 0 10px;
+        input {
+            margin-right: 8px;
+        }
+        svg {
+            cursor: pointer;
+        }
+    }
+}

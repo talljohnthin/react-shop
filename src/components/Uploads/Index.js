@@ -4,14 +4,16 @@ import './scss/index.scss'
 import firebase from 'firebase/app'
 import { db, storage } from '../../config/firebase'
 import FileUploader from "react-firebase-file-uploader"
+import uuid from 'react-uuid'
 import { Container } from 'react-bootstrap'
 import CategoryDropdown from './CategoryDropdown'
 import SizesDropdown from './SizeDropdown'
 import AddVariations from './AddVariations'
+import AddVariationOptions from './AddVariationOptions'
 
 const container = {
     maxWidth: '600px',
-    marginTop: '60px'
+    margin: '60px 0'
 }
 export default class Index extends Component {
     state = {
@@ -23,7 +25,11 @@ export default class Index extends Component {
         filenames: [],
         downloadURLs: [],
         isUploading: false,
-        uploadProgress: 0
+        uploadProgress: 0,
+        variationsValue: [""],
+        variations: [0],
+        variationOptionValue: [""],
+        variationOptions: [0]
     }
     alertTimeout = null
 
@@ -115,8 +121,64 @@ export default class Index extends Component {
         console.log(this.state.filenames)
     }
 
+    handleAddVariations = e => {
+       const variation = 'variation-' + uuid()
+       console.log(typeof variation)
+       this.setState(prevState => ({ 
+           variations: prevState.variations.concat([variation]) 
+       }));
+    }
+
+    handleRemoveVariation = index => {
+        const variationsValue = [...this.state.variationsValue]
+        variationsValue.splice(index, 1)
+        const variations = [...this.state.variations]
+        variations.splice(index, 1)
+        this.setState({
+            variationsValue,
+            variations
+        })
+    }
+
+    handleAddVariationValue = (e, index) => {
+        const value = e.target.value
+        const variationsValue = [...this.state.variationsValue]
+        variationsValue[index] = value
+        this.setState({
+            variationsValue
+        })
+    }
+
+    handleAddVariationOption = e => {
+        const option = 'variation-option-' + uuid()
+        this.setState(prevState => ({ 
+            variationOptions: prevState.variationOptions.concat([option]) 
+        }));
+     }
+ 
+     handleRemoveVariationOption = index => {
+         const variationOptionValue = [...this.state.variationOptionValue]
+         variationOptionValue.splice(index, 1)
+         const variationOptions = [...this.state.variationOptions]
+         variationOptions.splice(index, 1)
+         this.setState({
+             variationOptionValue,
+             variationOptions
+         })
+     }
+ 
+     handleAddVariationOptionValue = (e, index) => {
+         const value = e.target.value
+         const variationOptionValue = [...this.state.variationOptionValue]
+         variationOptionValue[index] = value
+         this.setState({
+             variationOptionValue
+         })
+     }
+
     render() {
         console.log(this.state.filenames)
+        console.log(this.state.variations)
         return (
             <Fragment>
                 <Container style={container}>
@@ -158,7 +220,18 @@ export default class Index extends Component {
                     />
                     <ProgressBar now={this.state.uploadProgress} label={`${this.state.uploadProgress}%`} />
                     <p>Filenames: {this.state.filenames.join(", ")}</p>
-                    <AddVariations />
+                    <AddVariations 
+                        handleAddVariations = {this.handleAddVariations}
+                        handleRemoveVariation = {this.handleRemoveVariation}
+                        handleAddVariationValue = {this.handleAddVariationValue}
+                        variations = { this.state.variations }
+                    />
+                    <AddVariationOptions
+                        handleAddVariationOption = {this.handleAddVariationOption}
+                        handleRemoveVariationOption = {this.handleRemoveVariationOption}
+                        handleAddVariationOptionValue = {this.handleAddVariationOptionValue}
+                        variationOptions = { this.state.variationOptions }
+                    />
                 </Container>
             </Fragment>
         )

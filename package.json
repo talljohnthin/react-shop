@@ -15,6 +15,7 @@
     "react-firebase-file-uploader": "^2.4.3",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.2",
+    "react-uuid": "^1.0.2",
     "styled-components": "^4.4.0"
   },
   "scripts": {
