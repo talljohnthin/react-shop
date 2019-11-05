@@ -10,6 +10,7 @@ import CategoryDropdown from './CategoryDropdown'
 import SizesDropdown from './SizeDropdown'
 import AddVariations from './AddVariations'
 import AddVariationOptions from './AddVariationOptions'
+import AddPrice from './AddPrice'
 
 const container = {
     maxWidth: '600px',
@@ -154,9 +155,9 @@ export default class Index extends Component {
         this.setState(prevState => ({ 
             variationOptions: prevState.variationOptions.concat([option]) 
         }));
-     }
+    }
  
-     handleRemoveVariationOption = index => {
+    handleRemoveVariationOption = index => {
          const variationOptionValue = [...this.state.variationOptionValue]
          variationOptionValue.splice(index, 1)
          const variationOptions = [...this.state.variationOptions]
@@ -165,9 +166,9 @@ export default class Index extends Component {
              variationOptionValue,
              variationOptions
          })
-     }
+    }
  
-     handleAddVariationOptionValue = (e, index) => {
+    handleAddVariationOptionValue = (e, index) => {
          const value = e.target.value
          const variationOptionValue = [...this.state.variationOptionValue]
          variationOptionValue[index] = value
@@ -177,8 +178,23 @@ export default class Index extends Component {
      }
 
     render() {
-        console.log(this.state.filenames)
-        console.log(this.state.variations)
+        const setPrice = this.state.variationsValue.map( (variation,index) => {
+            let options = []
+            this.state.variationOptionValue.map((option, optionIndex) => {
+                const obj = {
+                    option,
+                    optionIndex
+                }
+                options.push(obj)
+            })
+            return <AddPrice 
+                variation={variation} 
+                key={index} 
+                variationOptions = {options}
+                />
+        })
+        console.log(this.state.variationsValue)
+        console.log(this.state.variationOptionValue)
         return (
             <Fragment>
                 <Container style={container}>
@@ -232,6 +248,8 @@ export default class Index extends Component {
                         handleAddVariationOptionValue = {this.handleAddVariationOptionValue}
                         variationOptions = { this.state.variationOptions }
                     />
+                    <h2>Set price</h2>
+                    { setPrice }
                 </Container>
             </Fragment>
         )
