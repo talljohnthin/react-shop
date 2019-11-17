@@ -10,7 +10,6 @@ import CategoryDropdown from './CategoryDropdown'
 import SizesDropdown from './SizeDropdown'
 import AddVariations from './AddVariations'
 import AddVariationOptions from './AddVariationOptions'
-import AddPrice from './PriceSettings'
 import PriceSettings from './PriceSettings'
 
 const container = {
@@ -31,7 +30,8 @@ export default class Index extends Component {
         variationsValue: [""],
         variations: [0],
         variationOptionValue: [""],
-        variationOptions: [0]
+        variationOptions: [0],
+        priceOptions:[]
     }
     alertTimeout = null
 
@@ -111,7 +111,6 @@ export default class Index extends Component {
             console.log('image deleted success')
             filenames.splice(i, 1)
             downloadURLs.splice(i, 1)
-            console.log('asdf')
             this.setState({
                 filenames,
                 downloadURLs
@@ -125,7 +124,6 @@ export default class Index extends Component {
 
     handleAddVariations = e => {
        const variation = 'variation-' + uuid()
-       console.log(typeof variation)
        this.setState(prevState => ({ 
            variations: prevState.variations.concat([variation]) 
        }));
@@ -178,11 +176,16 @@ export default class Index extends Component {
          })
     }
     
-    handleSetPrice = () => {
-        console.log('set')
+    handleSetPrice = (variation, index) => {
+        const priceOptions = [...this.state.priceOptions]
+        //priceOptions[index] = variation
+        this.setState({
+            priceOptions
+        })
     }
 
     render() {
+        console.log('this:' + this.state.priceOptions)
         const setPrice = this.state.variationsValue.map( (variation,index) => {
             let options = []
             this.state.variationOptionValue.map((option, optionIndex) => {
