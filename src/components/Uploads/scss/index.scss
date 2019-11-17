@@ -26,3 +26,18 @@
         }
     }
 }
+
+// Price Settings
+.each-variation {
+    li {
+        list-style-type: none;
+        border:1px solid #efefef;
+        flex:1;
+        &:not(:last-child) {
+            border-right:0;
+        }
+    }
+    .each-variation-table-items {
+        display: flex;
+    }
+}

@@ -10,7 +10,8 @@ import CategoryDropdown from './CategoryDropdown'
 import SizesDropdown from './SizeDropdown'
 import AddVariations from './AddVariations'
 import AddVariationOptions from './AddVariationOptions'
-import AddPrice from './AddPrice'
+import AddPrice from './PriceSettings'
+import PriceSettings from './PriceSettings'
 
 const container = {
     maxWidth: '600px',
@@ -175,7 +176,11 @@ export default class Index extends Component {
          this.setState({
              variationOptionValue
          })
-     }
+    }
+    
+    handleSetPrice = () => {
+        console.log('set')
+    }
 
     render() {
         const setPrice = this.state.variationsValue.map( (variation,index) => {
@@ -187,14 +192,14 @@ export default class Index extends Component {
                 }
                 options.push(obj)
             })
-            return <AddPrice 
+            return <PriceSettings
                 variation={variation} 
                 key={index} 
                 variationOptions = {options}
+                setPrice = {this.handleSetPrice}
                 />
         })
-        console.log(this.state.variationsValue)
-        console.log(this.state.variationOptionValue)
+     
         return (
             <Fragment>
                 <Container style={container}>
@@ -220,8 +225,6 @@ export default class Index extends Component {
                             <Form.Control as="textarea" rows="3" />
                         </Form.Group>
                     </Form>
-
-
                     <button onClick={this.handleUpload}>Upload Images</button>
                     <FileUploader
                         accept="image/*"
