@@ -125,7 +125,7 @@ export default class Index extends Component {
     handleAddVariations = e => {
        const variation = 'variation-' + uuid()
        this.setState(prevState => ({ 
-           variations: prevState.variations.concat([variation]) 
+           variations: prevState.variations.concat([variation])
        }));
     }
 
@@ -134,18 +134,24 @@ export default class Index extends Component {
         variationsValue.splice(index, 1)
         const variations = [...this.state.variations]
         variations.splice(index, 1)
+        const priceOptions = [...this.state.priceOptions]
+        priceOptions.splice(index, 1)
         this.setState({
             variationsValue,
-            variations
+            variations,
+            priceOptions
         })
     }
 
     handleAddVariationValue = (e, index) => {
         const value = e.target.value
-        const variationsValue = [...this.state.variationsValue]
+        const variationsValue = [...this.state.variationsValue],
+              priceOptions = [...this.state.priceOptions]
         variationsValue[index] = value
+        priceOptions[index] = { variation: value, options : [] }
         this.setState({
-            variationsValue
+            variationsValue,
+            priceOptions
         })
     }
 
@@ -163,30 +169,36 @@ export default class Index extends Component {
          variationOptions.splice(index, 1)
          this.setState({
              variationOptionValue,
-             variationOptions
+             variationOptions,
          })
     }
  
     handleAddVariationOptionValue = (e, index) => {
          const value = e.target.value
-         const variationOptionValue = [...this.state.variationOptionValue]
+         const variationOptionValue = [...this.state.variationOptionValue],
+               priceOptions = [...this.state.priceOptions]
          variationOptionValue[index] = value
+         
+         console.log('i:'+index)
          this.setState({
              variationOptionValue
+             
          })
     }
     
     handleSetPrice = (variation, index) => {
-        const priceOptions = [...this.state.priceOptions]
-        console.log('variation:' + variation)
-        console.log('option index:' + index)
-        this.setState({
-            priceOptions
-        })
+        //const priceOptions = [...this.state.priceOptions]
+        //console.log('variation:' + variation)
+        //console.log('option index:' + index)
+
+       //// this.setState({
+       ////     priceOptions
+       // })
+       
     }
 
     render() {
-        console.log('this:' + this.state.priceOptions)
+        this.state.priceOptions.map( e => console.log(e.variation, e.options))
         const setPrice = this.state.variationsValue.map( (variation,index) => {
             let options = []
             this.state.variationOptionValue.map((option, optionIndex) => {
@@ -198,7 +210,7 @@ export default class Index extends Component {
             })
             return <PriceSettings
                 variation={variation} 
-                variationIndex={index} 
+                key={index} 
                 variationOptions = {options}
                 setPrice = {this.handleSetPrice}
                 />
