@@ -178,7 +178,8 @@ export default class Index extends Component {
     
     handleSetPrice = (variation, index) => {
         const priceOptions = [...this.state.priceOptions]
-        //priceOptions[index] = variation
+        console.log('variation:' + variation)
+        console.log('option index:' + index)
         this.setState({
             priceOptions
         })
@@ -197,7 +198,7 @@ export default class Index extends Component {
             })
             return <PriceSettings
                 variation={variation} 
-                key={index} 
+                variationIndex={index} 
                 variationOptions = {options}
                 setPrice = {this.handleSetPrice}
                 />
