@@ -1,18 +1,21 @@
 import React, {Fragment} from 'react'
 import {FormControl} from 'react-bootstrap'
 
-export default function PriceSettings ({variation, variationIndex, variationOptions, setPrice}) {
+export default function PriceSettings ({variation, variationIndex, variationOptions, setPrice, setMarkup}) {
     let mapOptions = null
-    const handleSetPrice = (index) => {
-        setPrice(variationIndex, index)
+    const handleSetPrice = (variationIndex, index, value) => {
+        setPrice(variationIndex, index, value)
+    }
+    const handleSetMarkup = (variationIndex, index, value) => {
+        setMarkup(variationIndex, index, value)
     }
     if (variationOptions) {
         mapOptions = variationOptions.map( (o,i) => {
             return (
                 <ul key={o.optionIndex} className="each-variation-table-items">
                      <li>{ o.option }</li>
-                     <li><FormControl onChange={() => handleSetPrice(o.optionIndex)}></FormControl></li>
-                     <li><FormControl></FormControl></li>
+                     <li><FormControl onChange={(e) => handleSetPrice(variationIndex, o.optionIndex, e.target.value)}></FormControl></li>
+                     <li><FormControl onChange={(e) => handleSetMarkup(variationIndex, o.optionIndex, e.target.value)}></FormControl></li>
                      <li>Selling Price</li>
                      <li>Availabity</li>
                 </ul>

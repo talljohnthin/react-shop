@@ -30,7 +30,7 @@ export default class Index extends Component {
         variationsValue: [""],
         variations: [0],
         variationOptionValue: [""],
-        variationOptions: [0],
+        variationOptions: [],
         priceOptions:[]
     }
     alertTimeout = null
@@ -125,7 +125,9 @@ export default class Index extends Component {
     handleAddVariations = e => {
        const variation = 'variation-' + uuid()
        this.setState(prevState => ({ 
-           variations: prevState.variations.concat([variation])
+           variations: prevState.variations.concat([variation]),
+           variationOptions: [],
+           variationOptionValue:[]
        }));
     }
 
@@ -197,15 +199,19 @@ export default class Index extends Component {
          })
     }
     
-    handleSetPrice = (variation, index) => {
-        //const priceOptions = [...this.state.priceOptions]
-        console.log('variation:' + variation)
-        console.log('option index:' + index)
-
-       //// this.setState({
-       ////     priceOptions
-       // })
-       
+    handleSetPrice = (variationIndex, optionIndex, value) => {
+        const priceOptions = [...this.state.priceOptions]
+        priceOptions[variationIndex].options[optionIndex].supplier_price = value
+        this.setState({
+            priceOptions
+        })
+    }
+    handleSetMarkup = (variationIndex, optionIndex, value) => {
+        const priceOptions = [...this.state.priceOptions]
+        priceOptions[variationIndex].options[optionIndex].markup = value
+        this.setState({
+            priceOptions
+        })
     }
 
     render() {
@@ -221,9 +227,11 @@ export default class Index extends Component {
             })
             return <PriceSettings
                 variation={variation} 
-                key={index} 
+                variationIndex={index}
+                key={index}
                 variationOptions = {options}
                 setPrice = {this.handleSetPrice}
+                setMarkup = {this.handleSetMarkup}
                 />
         })
      
