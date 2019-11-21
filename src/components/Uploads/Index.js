@@ -187,10 +187,8 @@ export default class Index extends Component {
          priceOptions.map(item => {
             item.options[index] = {
                 option: value,
-                supplier_price: null,
-                markup:null,
-                selling_price: null,
-                is_available: true
+                price: null,
+                is_available: 'Yes'
             }
          })
          this.setState({
@@ -201,14 +199,14 @@ export default class Index extends Component {
     
     handleSetPrice = (variationIndex, optionIndex, value) => {
         const priceOptions = [...this.state.priceOptions]
-        priceOptions[variationIndex].options[optionIndex].supplier_price = value
+        priceOptions[variationIndex].options[optionIndex].price = value
         this.setState({
             priceOptions
         })
     }
-    handleSetMarkup = (variationIndex, optionIndex, value) => {
+    handleSetAvailability = (variationIndex, optionIndex, value) => {
         const priceOptions = [...this.state.priceOptions]
-        priceOptions[variationIndex].options[optionIndex].markup = value
+        priceOptions[variationIndex].options[optionIndex].is_available = value
         this.setState({
             priceOptions
         })
@@ -231,7 +229,7 @@ export default class Index extends Component {
                 key={index}
                 variationOptions = {options}
                 setPrice = {this.handleSetPrice}
-                setMarkup = {this.handleSetMarkup}
+                setAvailability = {this.handleSetAvailability}
                 />
         })
      
