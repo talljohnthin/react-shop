@@ -1,0 +1,22 @@
+$primary-color: #F6F8FA;
+
+$primary-font: 'PT Sans', sans-serif;
+
+body {
+    padding:0;
+    margin:0;
+    font-family: $primary-font;
+    font-weight: 300;
+    width:100%;
+    overflow-x:hidden;
+    overflow-y: scroll;
+    background:$primary-color;
+}
+
+.container {
+    max-width: 1280px;
+    margin:0 auto;
+    @media (max-width:1320px) {
+        padding:0 30px;
+    }
+}

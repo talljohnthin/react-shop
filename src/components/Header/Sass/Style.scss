@@ -1,0 +1,15 @@
+.header {
+    background:#fff;
+    .container {
+        height: 64px;
+        display: flex;
+        font-family: 'Roboto Slab', serif;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .left {
+        span {
+            font-size:30px;
+        }
+    }
+}
