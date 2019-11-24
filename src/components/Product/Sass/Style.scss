@@ -3,23 +3,64 @@ $secondary-color:#39A7AB;
 $primary-font: 'PT Sans', sans-serif;
 $secondary-font:'Roboto', sans-serif;
 
+.home-filter {
+    border-bottom:1px solid #efefef;
+    padding:20px;
+    display: flex;
+    justify-content: center;
+    @media (max-width:767px) {
+        font-size:14px;
+    }
+    li {
+        margin:0 10px;
+    }
+}
+
+.home-filter-categories {
+    display: flex;
+    max-width: 900px;
+    margin:20px auto;
+    justify-content: center;
+    li {
+        color: #333;
+        text-transform: uppercase;
+        font-size:18px;
+        font-family: $secondary-font;
+        font-weight: 300;
+        @media (max-width:767px) {
+            font-size:14px;
+        }
+        &:focus {
+            color:$secondary-color;
+        }
+        &:not(:last-child) {
+            margin-right:20px;
+        }
+    }
+}
+
 .product-list {
     display: flex;
     flex-wrap:wrap;
     justify-content: space-between;
     max-width: 900px;
-    margin:80px auto;
+    margin:20px auto;
     padding:0;
     width:100%;
-
     .card {
         width: calc(33.3% - 25px);
         margin-bottom:40px;
         background:#fff;
         display: block;
-        border-radius: 6px;
+        border-radius: 2px;
         position: relative;
         overflow: hidden;
+        border:0;
+        box-shadow: 0 0.25rem 0.125rem 0 rgba(0,0,0,0.02);
+        @media (max-width:767px) {
+            width:calc(50% - 6px);
+            margin-bottom: 15px;
+        }
     }
     .card-wrapper {
         padding:0;
@@ -33,29 +74,35 @@ $secondary-font:'Roboto', sans-serif;
     .card-price {
         font-weight: 400;
         font-family: $primary-font;
-        font-size:20px;
+        font-size:15px;
         margin-bottom: 5px;
-        color:#333;
+        color:$secondary-color;
+        @media (max-width:767px) {
+            font-size:14px;
+        }
     }
     .card-title {
         color:#666;
         font-family: $secondary-font;
         font-size:14px;
         font-weight: 300;
+        margin:0;
+        @media (max-width:767px) {
+            font-size:12px;
+        }
     }
     .card-cart {
         position: absolute;
         bottom:0;
         right:0;
-        background:$secondary-color;
         width:45px;
-        height:45px;
+        height:60px;
         display: flex;
         align-items: center;
         justify-content: center;
-        color:#fff;
-        font-size: 11px;
-        border-top-left-radius: 8px;
     }
-
+    ion-icon {
+        font-size:20px;
+        color:$secondary-color;
+    }
 }

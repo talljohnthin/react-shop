@@ -10,4 +10,7 @@
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3ab3a8', endColorstr='#37a0ac', GradientType=0);
 	background-size: cover;
 	color: #fff;
+	@media (max-width:767px) {
+		height: 60px;
+	}
 }

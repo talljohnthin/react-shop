@@ -9,7 +9,7 @@ function Product() {
                 <div className="card-body">
                     <p className="card-price">Php 100.00</p>
                     <h4 className="card-title">Product title</h4>
-                    <span className="card-cart"> <FontAwesomeIcon icon={faPlus} /></span>
+                    <span className="card-cart"><ion-icon name="heart-empty"></ion-icon></span>
                 </div>
             </div>
         </div>

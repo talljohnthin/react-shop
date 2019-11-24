@@ -1,5 +1,4 @@
-$primary-color: #F6F8FA;
-
+$primary-color: #f8f9fa;
 $primary-font: 'PT Sans', sans-serif;
 
 body {
@@ -17,6 +16,6 @@ body {
     max-width: 1280px;
     margin:0 auto;
     @media (max-width:1320px) {
-        padding:0 30px;
+        padding:0 15px;
     }
 }
