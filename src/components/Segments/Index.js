@@ -13,7 +13,7 @@ const container = {
 }
 export default class Index extends Component {
     state = {
-        sizes: [],
+        segments: [],
         alertMessage: null,
         showAlert: false,
         alertType: 'success'
@@ -21,40 +21,40 @@ export default class Index extends Component {
     alertTimeout = null
 
     componentDidMount() {
-        db.collection("sizes")
+        db.collection("segments")
             .onSnapshot(snapshot => {
-                const sizes = []
+                const segments = []
                 snapshot.forEach(doc => {
                     const obj = {
                         id: doc.id,
                         name: doc.data()
                     }
-                    sizes.push(obj)
+                    segments.push(obj)
                 })
-                this.setState({ sizes })
+                this.setState({ segments })
             });
         this.setState({ isLoading: true })
-        db.collection("sizes")
+        db.collection("segments")
             .onSnapshot(snapshot => {
-                const sizeList = []
+                const segmentsList = []
                 snapshot.forEach(doc => {
                     const dataObj = {
                         id: doc.id,
                         name: doc.data()
                     }
-                    sizeList.push(dataObj)
+                    segmentsList.push(dataObj)
 
                 })
                 this.setState({
-                    sizeList,
+                    segmentsList,
                     isLoading: false
                 })
             })
     }
-    handleAddNewSizes = (newSize) => {
-        if (newSize.length > 3) {
-            db.collection("sizes").add({
-                name: newSize
+    handleAddNewSegments = (newSegments) => {
+        if (newSegments.length > 2) {
+            db.collection("segments").add({
+                name: newSegments
             })
                 .then(function (docRef) {
                     console.log("Document written with ID: ", docRef.id);
@@ -64,7 +64,7 @@ export default class Index extends Component {
                 });
             const alertObj = {
                 type: 'success',
-                message: 'New Size Added Successfuly!'
+                message: 'New Segments Added Successfuly!'
             }
             if (this.alertTimeout) {
                 clearTimeout(this.alertTimeout)
@@ -81,7 +81,7 @@ export default class Index extends Component {
         } else {
             const alertObj = {
                 type: 'failed',
-                message: 'Character must be greater than 3.'
+                message: 'Character must be greater than 2.'
             }
             if (this.alertTimeout) {
                 clearTimeout(this.alertTimeout)
@@ -110,15 +110,15 @@ export default class Index extends Component {
             }, 3000)
         })
     }
-    handleRemoveSizes = (id) => {
-        db.collection("sizes").doc(id).delete().then(function () {
+    handleRemoveSegments = (id) => {
+        db.collection("segments").doc(id).delete().then(function () {
             console.log('deleted')
         }).catch(function (error) {
             console.error("Error removing document: ", error);
         });
         const alertObj = {
             type: 'success',
-            message: 'Size Deleted Successfuly!'
+            message: 'Segment Deleted Successfuly!'
         }
         if (this.alertTimeout) {
             clearTimeout(this.alertTimeout)
@@ -139,10 +139,10 @@ export default class Index extends Component {
     render() {
 
         const isLoading = this.state.isLoading ?
-            (<div className="loading">Loading Sizes...</div>) :
+            (<div className="loading">Loading segments...</div>) :
             (<List
-                sizeList={this.state.sizes}
-                handleRemoveSizes={this.handleRemoveSizes}
+                segmentsList={this.state.segments}
+                handleRemoveSegments={this.handleRemoveSegments}
             />
             )
 
@@ -157,13 +157,13 @@ export default class Index extends Component {
                     />
                     <ListGroup as="ul">
                         <ListGroup.Item as="li" active>
-                            <FontAwesomeIcon icon={faListOl} /> List of Sizes
+                            <FontAwesomeIcon icon={faListOl} /> List of segments
                         </ListGroup.Item>
                         {isLoading}
                     </ListGroup>
 
                     <Add
-                        handleAddNewSizes={this.handleAddNewSizes}
+                        handleAddNewSegments={this.handleAddNewSegments}
                     />
                 </Container>
             </Fragment>

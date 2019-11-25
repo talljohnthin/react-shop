@@ -7,22 +7,22 @@ export default class Add extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            sizes: '',
+            segments: '',
             show:false,
         }
     }
    
-    handleUpdateStateSizes = e => {
+    handleUpdateStateSegments = e => {
         e.preventDefault()
         this.setState({
-            sizes: e.target.value
+            segments: e.target.value
         })
     }
     handleFormSubmit = e => {
         e.preventDefault()
-        this.props.handleAddNewSizes(this.state.sizes)
+        this.props.handleAddNewSegments(this.state.segments)
         this.setState({
-            sizes:''
+            segments:''
         })
        
     }
@@ -40,16 +40,16 @@ export default class Add extends Component {
         return (
             <Fragment>
                 <Button variant="primary" onClick={this.handleShow} style={ addButton }>
-                <FontAwesomeIcon icon={faFile} /> New Size
+                <FontAwesomeIcon icon={faFile} /> New Segment
                 </Button>
                 <Modal show={this.state.show} onHide={this.handleClose}>
                     <Form onSubmit={this.handleFormSubmit}>
                         <Modal.Header closeButton>
-                            <Modal.Title>Add Size</Modal.Title>
+                            <Modal.Title>Add Segments</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             <Form.Group controlId="formGroupPassword">
-                                <Form.Control placeholder="Like: Free size" name="size" value={ this.state.sizes } onChange={ this.handleUpdateStateSizes } />
+                                <Form.Control placeholder="Like: Free Segment" name="Segment" value={ this.state.segments } onChange={ this.handleUpdateStateSegments } />
                             </Form.Group>
                         </Modal.Body>
                         <Modal.Footer>

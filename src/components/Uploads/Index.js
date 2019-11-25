@@ -7,7 +7,7 @@ import FileUploader from "react-firebase-file-uploader"
 import uuid from 'react-uuid'
 import { Container } from 'react-bootstrap'
 import CategoryDropdown from './CategoryDropdown'
-import SizesDropdown from './SizeDropdown'
+import SegmentsDropdown from './SegmentsDropdown'
 import AddVariations from './AddVariations'
 import AddVariationOptions from './AddVariationOptions'
 import PriceSettings from './PriceSettings'
@@ -19,7 +19,7 @@ const container = {
 export default class Index extends Component {
     state = {
         categories: [],
-        sizes: [],
+        segments: [],
         alertMessage: null,
         showAlert: false,
         alertType: 'success',
@@ -37,7 +37,7 @@ export default class Index extends Component {
 
     componentDidMount() {
         this.getCategories()
-        this.getSizes()
+        this.getSegments()
     }
 
     handleUploadStart = () => this.setState({
@@ -87,18 +87,18 @@ export default class Index extends Component {
             });
     }
 
-    getSizes = () => {
-        db.collection("sizes")
+    getSegments = () => {
+        db.collection("segments")
             .onSnapshot(snapshot => {
-                const sizes = []
+                const segments = []
                 snapshot.forEach(doc => {
                     const obj = {
                         id: doc.id,
                         name: doc.data()
                     }
-                    sizes.push(obj)
+                    segments.push(obj)
                 })
-                this.setState({ sizes })
+                this.setState({ segments })
             });
     }
 
@@ -252,7 +252,7 @@ export default class Index extends Component {
                             <Form.Control type="text" placeholder="T-shirt" />
                         </Form.Group>
                         <CategoryDropdown categories={this.state.categories} />
-                        <SizesDropdown sizes={this.state.sizes} />
+                        <SegmentsDropdown segments={this.state.segments} />
                         <Form.Group controlId="descriptions">
                             <Form.Label>Descriptions:</Form.Label>
                             <Form.Control as="textarea" rows="3" />

@@ -9,9 +9,9 @@ export default class List extends Component {
         idToRemove:null
     }
 
-    removeSizes = () => {
+    removeSegments = () => {
         if(this.state.idToRemove) {
-            this.props.handleRemoveSizes(this.state.idToRemove)
+            this.props.handleRemoveSegments(this.state.idToRemove)
             this.setState({
                 show:false
             })
@@ -29,7 +29,7 @@ export default class List extends Component {
         })
     }
     render() {
-        const list = this.props.sizeList.map(doc => {
+        const list = this.props.segmentsList.map(doc => {
             return ( <ListGroup.Item as="li" key={doc.id}> {doc.name.name}
                 <FontAwesomeIcon icon={faTrashAlt} onClick={() => this.handleShow(doc.id)}
                 style={{float:'right', cursor:'pointer'}}/>
@@ -49,7 +49,7 @@ export default class List extends Component {
 
                     <Modal.Footer>
                         <Button variant="secondary" onClick={ this.handleClose }><FontAwesomeIcon icon={faTimes}/> Cancel</Button>
-                        <Button variant="primary" onClick={ this.removeSizes }><FontAwesomeIcon icon={faTrash}/> Remove</Button>
+                        <Button variant="primary" onClick={ this.removeSegments }><FontAwesomeIcon icon={faTrash}/> Remove</Button>
                     </Modal.Footer>
                 </Modal>
             </Fragment>
