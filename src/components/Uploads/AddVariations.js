@@ -12,7 +12,7 @@ export default function AddVariations(props) {
                     <FontAwesomeIcon icon={faTrash} onClick={ () => props.handleRemoveVariation(index) }/>
                 </li>)}
             </ul>
-            <button onClick={e => props.handleAddVariations() }>Add Variations</button>
+            <button className="btn btn-primary"  onClick={e => props.handleAddVariations() }>Add Variations</button>
         </Fragment>
     )
 }

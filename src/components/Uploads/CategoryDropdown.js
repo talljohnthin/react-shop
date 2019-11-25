@@ -8,11 +8,14 @@ export default function CategoryDropdown(props) {
             return categories.map(category => <option key={category.id} value={category.name.name}>{category.name.name}</option>)
         }
     }
+    const addSelectedCategory = (category) => {
+        props.handleAddSectedCategoryToState(category)
+    }
     return (
         <Fragment>
             <Form.Group controlId="category">
                 <Form.Label>Select Category:</Form.Label>
-                <Form.Control as="select">
+                <Form.Control onChange={ (e) => addSelectedCategory(e.target.value) } as="select">
                     { categories ? populateDropdownCategory(categories) : ( <option value="no data">No Data at this moment</option> ) } 
                 </Form.Control>
             </Form.Group>

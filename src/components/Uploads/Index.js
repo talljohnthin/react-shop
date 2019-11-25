@@ -11,7 +11,7 @@ import SegmentsDropdown from './SegmentsDropdown'
 import AddVariations from './AddVariations'
 import AddVariationOptions from './AddVariationOptions'
 import PriceSettings from './PriceSettings'
-
+import Alert from '../Alert/Index'
 const container = {
     maxWidth: '600px',
     margin: '60px 0'
@@ -31,7 +31,11 @@ export default class Index extends Component {
         variations: [0],
         variationOptionValue: [""],
         variationOptions: [],
-        priceOptions:[]
+        priceOptions:[],
+        productName:null,
+        selectedSegment:null,
+        selectedCategory:null,
+        productDescriptions:null
     }
     alertTimeout = null
 
@@ -204,6 +208,7 @@ export default class Index extends Component {
             priceOptions
         })
     }
+
     handleSetAvailability = (variationIndex, optionIndex, value) => {
         const priceOptions = [...this.state.priceOptions]
         priceOptions[variationIndex].options[optionIndex].is_available = value
@@ -212,8 +217,55 @@ export default class Index extends Component {
         })
     }
 
+    handleAddNameToState = (name) => {
+        this.setState({
+            productName: name
+        })
+    }
+
+    handleAddSectedSegmentToState = (segment) => {
+        this.setState({
+           selectedSegment: segment
+        })
+    }
+
+    handleAddSectedCategoryToState = (category) => {
+        this.setState({
+           selectedCategory: category
+        })
+    }
+
+    handleAddDescriptionsToState = (descriptions) => {
+        this.setState({
+            productDescriptions: descriptions
+        })
+    }
+
+    handleProductEntry = () => {
+        const product = {
+            productName : this.state.productName,
+            productDescriptions : this.state.productDescriptions,
+            segment : this.state.selectedSegment,
+            category: this.state.selectedCategory,
+            descriptions: this.state.productDescriptions,
+            productImages : this.state.downloadURLs,
+            priceOptions : this.state.priceOptions
+        }
+        db.collection("products").add(product)
+        .then(function (docRef) {
+            console.log("Document written with ID: ", docRef.id);
+        })
+        .catch(function (error) {
+            console.error("Error adding document: ", error);
+        });
+    }
     render() {
-        console.log(this.state.priceOptions)
+        console.log("PriceOptions: ", this.state.priceOptions)
+        console.log("Product Name: ", this.state.productName)
+        console.log("Product Segment: ", this.state.selectedSegment)
+        console.log("Product Category: ", this.state.selectedCategory)
+        console.log("Product Descriptions: ", this.state.productDescriptions)
+        console.log("Product Images: ", this.state.downloadURLs)
         const setPrice = this.state.variationsValue.map( (variation,index) => {
             let options = []
             this.state.variationOptionValue.map((option, optionIndex) => {
@@ -249,16 +301,16 @@ export default class Index extends Component {
                     <Form>
                         <Form.Group controlId="productName">
                             <Form.Label>Product Name:</Form.Label>
-                            <Form.Control type="text" placeholder="T-shirt" />
+                            <Form.Control onChange={(e) => this.handleAddNameToState(e.target.value) } type="text" placeholder="T-shirt" />
                         </Form.Group>
-                        <CategoryDropdown categories={this.state.categories} />
-                        <SegmentsDropdown segments={this.state.segments} />
+                        <CategoryDropdown handleAddSectedCategoryToState={this.handleAddSectedCategoryToState} categories={this.state.categories} />
+                        <SegmentsDropdown handleAddSectedSegmentToState={this.handleAddSectedSegmentToState} segments={this.state.segments} />
                         <Form.Group controlId="descriptions">
                             <Form.Label>Descriptions:</Form.Label>
-                            <Form.Control as="textarea" rows="3" />
+                            <Form.Control onChange={(e) => this.handleAddDescriptionsToState(e.target.value) }  as="textarea" rows="3" />
                         </Form.Group>
                     </Form>
-                    <button onClick={this.handleUpload}>Upload Images</button>
+                    <button className="btn btn-primary" onClick={this.handleUpload}>Upload Images</button>
                     <FileUploader
                         accept="image/*"
                         name="image-uploader-multiple"
@@ -286,6 +338,7 @@ export default class Index extends Component {
                     />
                     <h2>Set price</h2>
                     { setPrice }
+                    <button className="btn btn-primary" onClick={this.handleProductEntry}>Add New Product</button>
                 </Container>
             </Fragment>
         )
