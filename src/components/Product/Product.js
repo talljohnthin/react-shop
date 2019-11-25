@@ -1,14 +1,15 @@
 import React from 'react'
 import { FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-function Product() {
+function Product({data}) {
+    const product = data.data;
     return (
         <div className="card">
             <div className="card-wrapper">
-                <img className="card-img" src="https://picsum.photos/600/400" alt="Card image cap" />
+                <img className="card-img" src={ product.productImages[0]} alt={ product.productName } />
                 <div className="card-body">
-                    <p className="card-price">Php 100.00</p>
-                    <h4 className="card-title">Product title</h4>
+                    <p className="card-price">Php { product.priceOptions[0].options[0].price } </p>
+                    <h4 className="card-title">{ product.productName }</h4>
                     <span className="card-cart"><ion-icon name="heart-empty"></ion-icon></span>
                 </div>
             </div>
