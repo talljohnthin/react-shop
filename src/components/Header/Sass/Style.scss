@@ -1,3 +1,6 @@
+@import './../../../styles/variables.scss';
+
+
 .header {
     background:#fff;
     .container {
@@ -11,5 +14,52 @@
         span {
             font-size:30px;
         }
+    }
+    .right {
+        display: flex;
+        .wishlist {
+            margin-right:12px;
+            position: relative;
+            svg {
+                font-size:16px;
+            }
+            .wishlist-count {
+                position: absolute;
+                top:0;
+                right:-7px;
+                background: $secondary-color;
+                width:15px;
+                height:15px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: $secondary-font;
+                font-size:10px;
+                color:#fff;
+            }
+        }
+        .orders {
+            position: relative;
+            svg {
+                font-size:18px;
+            }
+            .orders-count {
+                position: absolute;
+                top:0;
+                right:-7px;
+                background: $secondary-color;
+                width:15px;
+                height:15px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: $secondary-font;
+                font-size:10px;
+                color:#fff;
+            }
+        }
+        
     }
 }

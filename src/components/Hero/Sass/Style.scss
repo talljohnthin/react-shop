@@ -1,3 +1,9 @@
+@import './../../../styles/mixins.scss';
+$primary-color: #F6F8FA;
+$secondary-color:#39A7AB;
+$primary-font: 'PT Sans', sans-serif;
+$secondary-font:'Roboto', sans-serif;
+
 .hero {
     height: 200px;
     background: #3ab3a8;
@@ -10,7 +16,16 @@
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3ab3a8', endColorstr='#37a0ac', GradientType=0);
 	background-size: cover;
 	color: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	@media (max-width:767px) {
 		height: 60px;
+	}
+	h1 {
+		text-align: center;
+		@include font-size(36px, 70px, 500px, 1280px);
+		font-family: $secondary-font;
+		font-weight: 100;
 	}
 }

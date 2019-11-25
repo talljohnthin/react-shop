@@ -51,6 +51,7 @@ export default class Products extends Component {
                             <Product />
                             <Product />
                             <Product />
+                            <div className="card"></div>
                         </div>
                     </div>
                 </Container>

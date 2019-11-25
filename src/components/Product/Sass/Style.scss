@@ -61,6 +61,10 @@ $secondary-font:'Roboto', sans-serif;
             width:calc(50% - 6px);
             margin-bottom: 15px;
         }
+        &:last-child {
+            background:transparent;
+            box-shadow: none;
+        }
     }
     .card-wrapper {
         padding:0;

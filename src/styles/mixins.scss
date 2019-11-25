@@ -1,0 +1,186 @@
+// ROYA MIXINS
+//cross browser Mixin
+@mixin placeHolder() {
+    &::-webkit-input-placeholder {
+      //* Chrome/Opera/Safari */
+      @content;
+    }
+  
+    &::-moz-placeholder {
+      //* Firefox 19+ */
+      @content;
+    }
+  
+    &:-ms-input-placeholder {
+      //* IE 10+ */
+      @content;
+    }
+  
+    &:-moz-placeholder {
+      //* Firefox 18- */
+      @content;
+    }
+  
+    &::-ms-input-placeholder {
+      @content;
+    }
+  }
+  @mixin ios-device(){
+    @supports (-webkit-overflow-scrolling: touch) {
+      @content;
+      //CSS specific to iOS devices
+    }
+  }
+  @mixin not-ios-device(){
+    @supports not (-webkit-overflow-scrolling: touch) {
+      @content;
+    // CSS for other than iOS devices
+    }
+  }
+  @mixin ie(){
+    @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+       @content;
+    //CSS for IE explorer
+    }
+  }
+  @mixin firefox(){
+    @media all and (min--moz-device-pixel-ratio:0) and (max-width: 680px){
+      @content;
+    }
+  }
+  @mixin edge(){
+      @supports (-ms-ime-align: auto) {
+          @content;
+      }
+  }
+  
+  //Responsive Mixins
+  @mixin aspect-ratio($width, $height) {
+   position: relative;
+   &:before {
+     display: block;
+     content: "";
+     width: 100%;
+     padding-top: ($height / $width) * 100%;
+   }
+   > img {
+     position: absolute;
+     top: 0;
+     left: 0;
+     right: 0;
+     bottom: 0;
+   }
+  }
+  
+  // Media query >
+  @mixin min($media){
+    @media(min-width:$media) { @content; }
+  }
+  
+  // Media query <
+  @mixin max($media){
+    @media(max-width:$media) {
+      @content;
+    }
+  }
+  
+  // Media query <>
+  @mixin between($min, $max) {
+     @media screen and (min-width: $min) and (max-width: $max)  {
+        @content;
+    }
+  }
+  
+  @mixin respond-vh($min,$max,$wmin,$wmax){
+    @media only all and (min-height:$min) and (max-height:$max) and (min-width:$wmin) and (max-width:$wmax) {
+      @content;
+    }
+  }
+  // Set container size
+  @function calc-vw-($column){
+    @return  $column/12 * 100vw;
+  }
+  @mixin ry-container($col,$max-w,$mob-col){
+      width: 100% !important;
+    @include between(992px,1920px){
+      width: calc(100% - calc-col($col));
+      padding-left: calc-col($col) !important;
+      padding-right: calc-col($col) !important;
+    }
+    @include min(1921px){
+      max-width: $max-w !important;
+    }
+    @include max(991px){
+      padding-right: calc-col($mob-col) !important;
+      padding-left: calc-col($mob-col) !important;
+    }
+  }
+  
+  @mixin ry-contain($col,$max-w,$mob-col){
+      width: 100%;
+    @include between(992px,1920px){
+      width: calc(100% - calc-col($col));
+      padding-left: calc-col($col);
+      padding-right: calc-col($col);
+    }
+    @include min(1921px){
+      max-width: $max-w;
+    }
+    @include max(991px){
+      padding-right: calc-col($mob-col);
+      padding-left: calc-col($mob-col);
+    }
+  }
+  @function fluidWdth($width, $cWidth) {
+    @return $width / $cWidth * 100%;
+  }
+  @mixin contain($wdt) {
+    max-width: $wdt;
+    margin: 0 auto;
+    float: none;
+  }
+  @mixin section-contain($w,$breakPoint, $percent) {
+    @include contain(fluidWdth($w,1920px));
+    @include min(992px) {
+      max-width: $w;
+    }
+    @include between(992px,$breakPoint) {
+      max-width: $percent;
+    }
+    @include max(991px) {
+      max-width: $percent;
+    }
+  }
+  
+  //font responsive
+  @mixin font-size($min-font-size: 16px, $max-font-size: 21px, $lower-range: 420px, $upper-range: 991px) {
+    font-size: calc(#{$min-font-size} + #{(($max-font-size / ($max-font-size * 0 + 1)) - ($min-font-size / ($min-font-size * 0 + 1)))} * ((100vw - #{$lower-range}) / #{(($upper-range / ($upper-range * 0 + 1)) - ($lower-range / ($lower-range * 0 + 1)))}));
+    @media screen and (max-width: $lower-range) {
+      font-size: $min-font-size;
+    }
+    @media screen and (min-width: $upper-range) {
+      font-size: $max-font-size;
+    }
+  }
+  
+  // ********** Transition ***********//
+  //Possible timing values
+  $primary-timing:cubic-bezier(0.165, 0.84, 0.44, 1);
+  $secondary-timing:cubic-bezier(0.215,.61,.355,1);
+  
+  //How to use: @include primary-transition(ease, all, 400ms, 0s)
+  @mixin primary-transition($timing: $primary-timing, $target:all, $duration:0.3s, $delay:0s) {
+    transition: #{$target} #{$duration} #{$timing}  #{$delay};
+  }
+  
+  //How to use: @include primary-loop-transition(7, ease, 400ms)
+  @mixin primary-loop-transition($length, $timing: $primary-timing, $duration:100ms) {
+    $delay: 0;
+    @for $i from 1 through $length {
+     &:nth-child(#{$i}) {
+      $delay: $delay + $duration;
+      @include primary-transition($timing, all, $duration, $delay);
+    }
+   }
+  }
+  
