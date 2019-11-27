@@ -44,6 +44,38 @@ export default class Index extends Component {
         this.getSegments()
     }
 
+    handleShowAlert = ({ message, type }) => {
+        this.setState({
+            showAlert: true,
+            alertMessage: message,
+            alertType: type
+        }, () => {
+            this.alertTimeout = setTimeout(() => {
+                this.setState({
+                    showAlert: false,
+                })
+            }, 3000)
+        })
+    }
+    handleAlertMessage = (status, message) => {
+        const alertObj = {
+            type: status,
+            message
+        }
+        if (this.alertTimeout) {
+            clearTimeout(this.alertTimeout)
+            this.setState({
+                showAlert: false
+            }, () => {
+                this.alertTimeout = setTimeout(() => {
+                    this.handleShowAlert(alertObj)
+                }, 250)
+            })
+        } else {
+            this.handleShowAlert(alertObj)
+        }
+    }
+
     handleUploadStart = () => this.setState({
         isUploading: true,
         uploadProgress: 0
@@ -244,18 +276,74 @@ export default class Index extends Component {
     handleProductEntry = () => {
         const product = {
             productName : this.state.productName,
-            productDescriptions : this.state.productDescriptions,
             segment : this.state.selectedSegment,
             category: this.state.selectedCategory,
             descriptions: this.state.productDescriptions,
             productImages : this.state.downloadURLs,
             priceOptions : this.state.priceOptions
         }
+
+        if (!product.productName) {
+            this.handleAlertMessage('failed', 'Please enter product name!')
+            return; 
+        }
+        if (!product.segment) {
+            this.handleAlertMessage('failed', 'Please select segment!')
+            return; 
+        }
+        if (!product.category) {
+            this.handleAlertMessage('failed', 'Please select category!')
+            return; 
+        }
+        if (product.productImages.length < 1) {
+            this.handleAlertMessage('failed', 'Please add atleast one image!')
+            return; 
+        }
+        if (product.priceOptions.length < 1) {
+            this.handleAlertMessage('failed', 'Please set variation!')
+            return; 
+        }
+        if (product.priceOptions.length > 0) {
+            let isPrice = true;
+            if (JSON.stringify(product.priceOptions[0].options[0]) === '{}') {
+                this.handleAlertMessage('failed', 'Please set price option!')
+                return;
+            } 
+            product.priceOptions.map( variation => {
+                variation.options.map(option => {
+                    if (option.price == null) {
+                        isPrice = false
+                    }
+                })
+            })
+            if ( !isPrice ) {
+                this.handleAlertMessage('failed', 'Please set all option price!')
+                return;
+            }
+        }
+       
         db.collection("products").add(product)
-        .then(function (docRef) {
+        .then( docRef => {
+            this.handleAlertMessage('success', 'New product has been added!')
             console.log("Document written with ID: ", docRef.id);
+            this.setState({
+                filenames: [],
+                downloadURLs: [],
+                isUploading: false,
+                uploadProgress: 0,
+                variationsValue: [""],
+                variations: [0],
+                variationOptionValue: [""],
+                variationOptions: [],
+                priceOptions:[],
+                productName:null,
+                selectedSegment:null,
+                selectedCategory:null,
+                productDescriptions:null
+            })
         })
-        .catch(function (error) {
+        .catch(error => {
+            this.handleAlertMessage('failed', 'Failed to add product!')
             console.error("Error adding document: ", error);
         });
     }
@@ -288,6 +376,11 @@ export default class Index extends Component {
         return (
             <Fragment>
                 <Container style={container}>
+                    <Alert
+                        showAlert={this.state.showAlert}
+                        type={this.state.alertType}
+                        message={this.state.alertMessage}
+                    />
                     <div className="cards">
                         {this.state.downloadURLs.map((downloadURL, i) => {
                             return (

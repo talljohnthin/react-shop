@@ -3,7 +3,7 @@ import { Alert } from 'react-bootstrap'
 export default function Index(props) {
     const { showAlert, message, type } = props
     const alertStyle = {
-        position: 'absolute',
+        position: 'fixed',
         top: showAlert ? '0' : '-100%',
         left: '50%',
         transform: 'translateX(-50%)',

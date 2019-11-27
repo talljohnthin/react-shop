@@ -147,7 +147,6 @@ export default class Index extends Component {
             )
 
         return (
-
             <Fragment>
                 <Container style={container}>
                     <Alert

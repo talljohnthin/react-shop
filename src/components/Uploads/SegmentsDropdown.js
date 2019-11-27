@@ -15,6 +15,7 @@ export default function SegmentDropdown(props) {
             <Form.Group controlId="size">
                 <Form.Label>Select Segments:</Form.Label>
                 <Form.Control onChange={ (e) => addSelectedSegment(e.target.value)} as="select">
+                <option value="">Select Segment</option>
                     {segments ? populateDropdownSegment(segments) : (<option value="no data">No Data at this moment</option>)}   
                 </Form.Control>
             </Form.Group>
