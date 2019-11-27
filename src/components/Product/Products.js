@@ -66,7 +66,7 @@ export default class Products extends Component {
                         </ul>
                         <div className="row product-list">
                             {
-                                this.state.products.map( product => <Product key={ product.id } data={ product }/>)
+                                this.state.products ? this.state.products.map( product => <Product key={ product.id } data={ product }/>) : ''
                             }
                             <div className="card"></div>
                         </div>
