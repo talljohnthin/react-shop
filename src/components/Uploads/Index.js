@@ -32,10 +32,11 @@ export default class Index extends Component {
         variationOptionValue: [""],
         variationOptions: [],
         priceOptions:[],
-        productName:null,
+        productName:'',
         selectedSegment:null,
         selectedCategory:null,
-        productDescriptions:null
+        productDescriptions:null,
+        cover:''
     }
     alertTimeout = null
 
@@ -267,6 +268,12 @@ export default class Index extends Component {
         })
     }
 
+    handleSetCover = (url) =>  {
+        this.setState({
+            cover: url
+        })
+    }
+
     handleAddDescriptionsToState = (descriptions) => {
         this.setState({
             productDescriptions: descriptions
@@ -325,20 +332,17 @@ export default class Index extends Component {
         db.collection("products").add(product)
         .then( docRef => {
             this.handleAlertMessage('success', 'New product has been added!')
-            console.log("Document written with ID: ", docRef.id);
             this.setState({
                 filenames: [],
                 downloadURLs: [],
                 isUploading: false,
                 uploadProgress: 0,
-                variationsValue: [""],
-                variations: [0],
-                variationOptionValue: [""],
+                variationsValue: [],
+                variations: [],
+                variationOptionValue: [],
                 variationOptions: [],
                 priceOptions:[],
                 productName:null,
-                selectedSegment:null,
-                selectedCategory:null,
                 productDescriptions:null
             })
         })
@@ -384,7 +388,7 @@ export default class Index extends Component {
                     <div className="cards">
                         {this.state.downloadURLs.map((downloadURL, i) => {
                             return (
-                                <Card key={i}>
+                                <Card key={i} onClick={e => this.handleSetCover(downloadURL)}>
                                     <Card.Img variant="top" src={downloadURL}/>
                                     <button onClick={e => this.handleRemoveImage(i)}>x</button>
                                 </Card>
@@ -394,13 +398,13 @@ export default class Index extends Component {
                     <Form>
                         <Form.Group controlId="productName">
                             <Form.Label>Product Name:</Form.Label>
-                            <Form.Control onChange={(e) => this.handleAddNameToState(e.target.value) } type="text" placeholder="T-shirt" />
+                            <Form.Control onChange={(e) => this.handleAddNameToState(e.target.value) } value={this.state.productName || ''} type="text" placeholder="T-shirt" />
                         </Form.Group>
                         <CategoryDropdown handleAddSectedCategoryToState={this.handleAddSectedCategoryToState} categories={this.state.categories} />
                         <SegmentsDropdown handleAddSectedSegmentToState={this.handleAddSectedSegmentToState} segments={this.state.segments} />
                         <Form.Group controlId="descriptions">
                             <Form.Label>Descriptions:</Form.Label>
-                            <Form.Control onChange={(e) => this.handleAddDescriptionsToState(e.target.value) }  as="textarea" rows="3" />
+                            <Form.Control onChange={(e) => this.handleAddDescriptionsToState(e.target.value) } value={this.state.productDescriptions || ''}  as="textarea" rows="3" />
                         </Form.Group>
                     </Form>
                     <button className="btn btn-primary" onClick={this.handleUpload}>Upload Images</button>
