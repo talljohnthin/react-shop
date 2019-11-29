@@ -14,7 +14,18 @@ import PriceSettings from './PriceSettings'
 import Alert from '../Alert/Index'
 const container = {
     maxWidth: '600px',
-    margin: '60px 0'
+    margin: '60px auto',
+    float:'none'
+}
+const imageUpload = {
+    backgroundColor: '#39A7AB', 
+    color: 'white', 
+    padding: 10, 
+    borderRadius: 4, 
+    cursor: 'pointer',
+    display:'flex',
+    alignItems:'center',
+    marginBottom:'15px'
 }
 export default class Index extends Component {
     state = {
@@ -27,9 +38,9 @@ export default class Index extends Component {
         downloadURLs: [],
         isUploading: false,
         uploadProgress: 0,
-        variationsValue: [""],
-        variations: [0],
-        variationOptionValue: [""],
+        variationsValue: [],
+        variations: [],
+        variationOptionValue: [],
         variationOptions: [],
         priceOptions:[],
         productName:'',
@@ -287,7 +298,9 @@ export default class Index extends Component {
             category: this.state.selectedCategory,
             descriptions: this.state.productDescriptions,
             productImages : this.state.downloadURLs,
-            priceOptions : this.state.priceOptions
+            priceOptions : this.state.priceOptions,
+            cover : this.state.cover,
+            timestamp: Math.floor(Date.now() / 1000)
         }
 
         if (!product.productName) {
@@ -310,6 +323,10 @@ export default class Index extends Component {
             this.handleAlertMessage('failed', 'Please set variation!')
             return; 
         }
+        if (product.cover == '') {
+            this.handleAlertMessage('failed', 'Please select product cover!')
+            return; 
+        }
         if (product.priceOptions.length > 0) {
             let isPrice = true;
             if (JSON.stringify(product.priceOptions[0].options[0]) === '{}') {
@@ -328,7 +345,7 @@ export default class Index extends Component {
                 return;
             }
         }
-       
+        //add products
         db.collection("products").add(product)
         .then( docRef => {
             this.handleAlertMessage('success', 'New product has been added!')
@@ -343,7 +360,8 @@ export default class Index extends Component {
                 variationOptions: [],
                 priceOptions:[],
                 productName:null,
-                productDescriptions:null
+                productDescriptions:null,
+                cover:''
             })
         })
         .catch(error => {
@@ -358,6 +376,7 @@ export default class Index extends Component {
         console.log("Product Category: ", this.state.selectedCategory)
         console.log("Product Descriptions: ", this.state.productDescriptions)
         console.log("Product Images: ", this.state.downloadURLs)
+        console.log("Product Cover: ", this.state.cover)
         const setPrice = this.state.variationsValue.map( (variation,index) => {
             let options = []
             this.state.variationOptionValue.map((option, optionIndex) => {
@@ -379,12 +398,39 @@ export default class Index extends Component {
      
         return (
             <Fragment>
+                <div className="hero">
+                    <Container>
+                        <h1>Add New Products</h1>
+                    </Container>
+                </div>
                 <Container style={container}>
+
                     <Alert
                         showAlert={this.state.showAlert}
                         type={this.state.alertType}
                         message={this.state.alertMessage}
                     />
+
+                    <ProgressBar now={this.state.uploadProgress} label={`${this.state.uploadProgress}%`} />
+                    
+                    <p hidden>Filenames: {this.state.filenames.join(", ")}</p>
+
+                    <label style={ imageUpload }>
+                    <ion-icon name="add"></ion-icon> Add Images
+                        <FileUploader
+                            hidden
+                            accept="image/*"
+                            name="image-uploader-multiple"
+                            randomizeFilename
+                            storageRef={firebase.storage().ref("images")}
+                            onUploadStart={this.handleUploadStart}
+                            onUploadError={this.handleUploadError}
+                            onUploadSuccess={this.handleUploadSuccess}
+                            onProgress={this.handleProgress}
+                            multiple
+                        />
+                    </label>
+
                     <div className="cards">
                         {this.state.downloadURLs.map((downloadURL, i) => {
                             return (
@@ -395,7 +441,8 @@ export default class Index extends Component {
                             )
                         })}
                     </div>
-                    <Form>
+
+                    <Form className="add-entry-form">
                         <Form.Group controlId="productName">
                             <Form.Label>Product Name:</Form.Label>
                             <Form.Control onChange={(e) => this.handleAddNameToState(e.target.value) } value={this.state.productName || ''} type="text" placeholder="T-shirt" />
@@ -407,35 +454,29 @@ export default class Index extends Component {
                             <Form.Control onChange={(e) => this.handleAddDescriptionsToState(e.target.value) } value={this.state.productDescriptions || ''}  as="textarea" rows="3" />
                         </Form.Group>
                     </Form>
-                    <button className="btn btn-primary" onClick={this.handleUpload}>Upload Images</button>
-                    <FileUploader
-                        accept="image/*"
-                        name="image-uploader-multiple"
-                        randomizeFilename
-                        storageRef={firebase.storage().ref("images")}
-                        onUploadStart={this.handleUploadStart}
-                        onUploadError={this.handleUploadError}
-                        onUploadSuccess={this.handleUploadSuccess}
-                        onProgress={this.handleProgress}
-                        multiple
-                    />
-                    <ProgressBar now={this.state.uploadProgress} label={`${this.state.uploadProgress}%`} />
-                    <p>Filenames: {this.state.filenames.join(", ")}</p>
+
+                    
+                    
                     <AddVariations 
                         handleAddVariations = {this.handleAddVariations}
                         handleRemoveVariation = {this.handleRemoveVariation}
                         handleAddVariationValue = {this.handleAddVariationValue}
                         variations = { this.state.variations }
                     />
+
                     <AddVariationOptions
                         handleAddVariationOption = {this.handleAddVariationOption}
                         handleRemoveVariationOption = {this.handleRemoveVariationOption}
                         handleAddVariationOptionValue = {this.handleAddVariationOptionValue}
                         variationOptions = { this.state.variationOptions }
                     />
+
                     <h2>Set price</h2>
+
                     { setPrice }
+
                     <button className="btn btn-primary" onClick={this.handleProductEntry}>Add New Product</button>
+                
                 </Container>
             </Fragment>
         )

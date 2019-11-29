@@ -24,7 +24,7 @@ $secondary-font:'Roboto', sans-serif;
 	}
 	h1 {
 		text-align: center;
-		@include font-size(36px, 70px, 500px, 1280px);
+		@include font-size(36px, 60px, 500px, 1280px);
 		font-family: $secondary-font;
 		font-weight: 100;
 	}

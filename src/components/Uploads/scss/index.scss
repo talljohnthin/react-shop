@@ -1,3 +1,5 @@
+@import './../../../styles/variables.scss';
+
 .cards {
     display: flex;
     justify-content: space-between;
@@ -39,5 +41,15 @@
     }
     .each-variation-table-items {
         display: flex;
+    }
+}
+
+// form
+.add-entry-form {
+    @include font-size(15px, 16px, 500px, 1280px);
+    font-family: $secondary-font;
+    .form-label {
+        margin-bottom:6px;
+        font-family: $secondary-font;
     }
 }

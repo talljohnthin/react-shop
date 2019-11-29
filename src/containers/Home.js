@@ -15,11 +15,12 @@ function Home() {
     <Header />
     <Route path="/" exact component={ Hero }/>
     <Route path="/" exact component={ Products }/>
+    <Route path="/upload" exact component={ Uploads } />
     <div className="container">
       <div className="row">
         <Route path="/category" exact component={ Category }/>
         <Route path="/segments" exact component={ Segments } />
-        <Route path="/upload" exact component={ Uploads } />
+        
         <Route path="/signup" exact component={ Signup }/>
       </div>
     </div>
