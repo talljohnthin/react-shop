@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { ProgressBar, Form, Card } from 'react-bootstrap'
+import { ProgressBar, Form, Card, Button } from 'react-bootstrap'
 import './scss/index.scss'
 import firebase from 'firebase/app'
 import { db, storage } from '../../config/firebase'
@@ -25,7 +25,8 @@ const imageUpload = {
     cursor: 'pointer',
     display:'flex',
     alignItems:'center',
-    marginBottom:'15px'
+    marginBottom:'15px',
+    justifyContent:'center'
 }
 export default class Index extends Component {
     state = {
@@ -54,6 +55,9 @@ export default class Index extends Component {
     componentDidMount() {
         this.getCategories()
         this.getSegments()
+    }
+    componentWillUnmount() {
+        console.log(console.log)
     }
 
     handleShowAlert = ({ message, type }) => {
@@ -161,7 +165,8 @@ export default class Index extends Component {
             downloadURLs.splice(i, 1)
             this.setState({
                 filenames,
-                downloadURLs
+                downloadURLs,
+                cover: ''
             })
        
         }).catch( error => {
@@ -280,6 +285,7 @@ export default class Index extends Component {
     }
 
     handleSetCover = (url) =>  {
+       //console.log(this.cardRef.current.class)
         this.setState({
             cover: url
         })
@@ -300,33 +306,40 @@ export default class Index extends Component {
             productImages : this.state.downloadURLs,
             priceOptions : this.state.priceOptions,
             cover : this.state.cover,
+            status : 'available',
             timestamp: Math.floor(Date.now() / 1000)
+        }
+
+        if (product.cover == '') {
+            this.handleAlertMessage('failed', 'Please select product cover!')
+            return; 
         }
 
         if (!product.productName) {
             this.handleAlertMessage('failed', 'Please enter product name!')
             return; 
         }
+
         if (!product.segment) {
             this.handleAlertMessage('failed', 'Please select segment!')
             return; 
         }
+
         if (!product.category) {
             this.handleAlertMessage('failed', 'Please select category!')
             return; 
         }
+
         if (product.productImages.length < 1) {
             this.handleAlertMessage('failed', 'Please add atleast one image!')
             return; 
         }
+
         if (product.priceOptions.length < 1) {
             this.handleAlertMessage('failed', 'Please set variation!')
             return; 
         }
-        if (product.cover == '') {
-            this.handleAlertMessage('failed', 'Please select product cover!')
-            return; 
-        }
+
         if (product.priceOptions.length > 0) {
             let isPrice = true;
             if (JSON.stringify(product.priceOptions[0].options[0]) === '{}') {
@@ -369,6 +382,7 @@ export default class Index extends Component {
             console.error("Error adding document: ", error);
         });
     }
+
     render() {
         console.log("PriceOptions: ", this.state.priceOptions)
         console.log("Product Name: ", this.state.productName)
@@ -403,7 +417,7 @@ export default class Index extends Component {
                         <h1>Add New Products</h1>
                     </Container>
                 </div>
-                <Container style={container}>
+                <Container style={container} className="add-entry-products-container" >
 
                     <Alert
                         showAlert={this.state.showAlert}
@@ -411,12 +425,12 @@ export default class Index extends Component {
                         message={this.state.alertMessage}
                     />
 
-                    <ProgressBar now={this.state.uploadProgress} label={`${this.state.uploadProgress}%`} />
+                    <ProgressBar hidden now={this.state.uploadProgress} label={`${this.state.uploadProgress}%`} />
                     
                     <p hidden>Filenames: {this.state.filenames.join(", ")}</p>
 
                     <label style={ imageUpload }>
-                    <ion-icon name="add"></ion-icon> Add Images
+                        <ion-icon name="add"></ion-icon> Add Images
                         <FileUploader
                             hidden
                             accept="image/*"
@@ -434,9 +448,9 @@ export default class Index extends Component {
                     <div className="cards">
                         {this.state.downloadURLs.map((downloadURL, i) => {
                             return (
-                                <Card key={i} onClick={e => this.handleSetCover(downloadURL)}>
+                                <Card className={ this.state.cover === downloadURL ? 'card-cover' : ''} key={i} onClick={e => this.handleSetCover(downloadURL)}>
                                     <Card.Img variant="top" src={downloadURL}/>
-                                    <button onClick={e => this.handleRemoveImage(i)}>x</button>
+                                    <Button className="card-close" onClick={e => this.handleRemoveImage(i, downloadURL)}><ion-icon name="close"></ion-icon></Button>
                                 </Card>
                             )
                         })}
@@ -445,7 +459,7 @@ export default class Index extends Component {
                     <Form className="add-entry-form">
                         <Form.Group controlId="productName">
                             <Form.Label>Product Name:</Form.Label>
-                            <Form.Control onChange={(e) => this.handleAddNameToState(e.target.value) } value={this.state.productName || ''} type="text" placeholder="T-shirt" />
+                            <Form.Control onChange={(e) => this.handleAddNameToState(e.target.value) } value={this.state.productName || ''} type="text" />
                         </Form.Group>
                         <CategoryDropdown handleAddSectedCategoryToState={this.handleAddSectedCategoryToState} categories={this.state.categories} />
                         <SegmentsDropdown handleAddSectedSegmentToState={this.handleAddSectedSegmentToState} segments={this.state.segments} />
@@ -454,8 +468,6 @@ export default class Index extends Component {
                             <Form.Control onChange={(e) => this.handleAddDescriptionsToState(e.target.value) } value={this.state.productDescriptions || ''}  as="textarea" rows="3" />
                         </Form.Group>
                     </Form>
-
-                    
                     
                     <AddVariations 
                         handleAddVariations = {this.handleAddVariations}
@@ -470,12 +482,10 @@ export default class Index extends Component {
                         handleAddVariationOptionValue = {this.handleAddVariationOptionValue}
                         variationOptions = { this.state.variationOptions }
                     />
-
-                    <h2>Set price</h2>
-
+                    { setPrice ? (<div className="price-title">Set the price below:</div>) : ''}
                     { setPrice }
 
-                    <button className="btn btn-primary" onClick={this.handleProductEntry}>Add New Product</button>
+                    <Button className="btn-product-save" onClick={this.handleProductEntry}> <ion-icon name="add"></ion-icon> Add New Product</Button>
                 
                 </Container>
             </Fragment>

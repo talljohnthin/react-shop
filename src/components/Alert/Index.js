@@ -7,7 +7,10 @@ export default function Index(props) {
         top: showAlert ? '0' : '-100%',
         left: '50%',
         transform: 'translateX(-50%)',
-        transition: 'all ease 0.25s'
+        transition: 'all ease 0.25s',
+        zIndex:'9999',
+        width:'300px',
+        borderRadius:0
     }
 
     return (
