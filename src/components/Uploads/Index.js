@@ -12,6 +12,7 @@ import AddVariations from './AddVariations'
 import AddVariationOptions from './AddVariationOptions'
 import PriceSettings from './PriceSettings'
 import Alert from '../Alert/Index'
+
 const container = {
     maxWidth: '600px',
     margin: '60px auto',
@@ -29,6 +30,7 @@ const imageUpload = {
     justifyContent:'center'
 }
 export default class Index extends Component {
+    
     state = {
         categories: [],
         segments: [],
@@ -51,13 +53,14 @@ export default class Index extends Component {
         cover:''
     }
     alertTimeout = null
+    
 
     componentDidMount() {
         this.getCategories()
         this.getSegments()
+
     }
     componentWillUnmount() {
-        console.log(console.log)
     }
 
     handleShowAlert = ({ message, type }) => {
@@ -172,7 +175,6 @@ export default class Index extends Component {
         }).catch( error => {
             console.log(error)
         });
-        console.log(this.state.filenames)
     }
 
     handleAddVariations = e => {
@@ -414,7 +416,7 @@ export default class Index extends Component {
             <Fragment>
                 <div className="hero">
                     <Container>
-                        <h1>Add New Products</h1>
+                        <h1>Edit Product</h1>
                     </Container>
                 </div>
                 <Container style={container} className="add-entry-products-container" >

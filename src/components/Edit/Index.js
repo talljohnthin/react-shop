@@ -30,6 +30,7 @@ const imageUpload = {
 }
 export default class Index extends Component {
     state = {
+        products: null,
         categories: [],
         segments: [],
         alertMessage: null,
@@ -48,17 +49,51 @@ export default class Index extends Component {
         selectedSegment:null,
         selectedCategory:null,
         productDescriptions:null,
-        cover:''
+        cover:'',
+        status:'',
+        timestamp:''
     }
     alertTimeout = null
+    editId = this.props.match.params.id
 
     componentDidMount() {
+        this.getProduct()
         this.getCategories()
         this.getSegments()
     }
-    componentWillUnmount() {
-        console.log(console.log)
+    
+    getProduct() {
+        db.collection("products")
+        .doc(this.editId)
+        .get().then( doc => {   
+            console.log(doc.data())
+            const { 
+                priceOptions, 
+                cover,
+                descriptions,
+                category,
+                segment, 
+                productName,
+                status,
+                timestamp,
+                productImages
+            } = doc.data()
+            this.setState({ 
+                priceOptions, 
+                cover,
+                productDescriptions: descriptions,
+                selectedCategory: category,
+                selectedSegment: segment, 
+                productName,
+                status,
+                timestamp,
+                downloadURLs: productImages
+            })  
+        }).catch( (error) => { 
+            console.log( error )
+        })
     }
+
 
     handleShowAlert = ({ message, type }) => {
         this.setState({
@@ -391,6 +426,7 @@ export default class Index extends Component {
         console.log("Product Descriptions: ", this.state.productDescriptions)
         console.log("Product Images: ", this.state.downloadURLs)
         console.log("Product Cover: ", this.state.cover)
+        console.log(this.state.products)
         const setPrice = this.state.variationsValue.map( (variation,index) => {
             let options = []
             this.state.variationOptionValue.map((option, optionIndex) => {

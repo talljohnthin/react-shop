@@ -10,7 +10,7 @@ import Uploads from '../components/Uploads/Index'
 import Header from '../components/Header/Index'
 import Hero from '../components/Hero/Index'
 import Update from '../components/Update/Index'
-
+import Edit from '../components/Edit/Index'
 function Home() {
   return (
   <Router>
@@ -19,11 +19,12 @@ function Home() {
     <Route path="/" exact component={ Products }/>
     <Route path="/upload" exact component={ Uploads } />
     <Route path="/update" exact component={ Update } />
+    <Route path="/edit/:id" exact component={ Edit } />
+
     <div className="container">
       <div className="row">
         <Route path="/category" exact component={ Category }/>
         <Route path="/segments" exact component={ Segments } />
-        
         <Route path="/signup" exact component={ Signup }/>
       </div>
     </div>

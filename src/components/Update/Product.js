@@ -1,6 +1,7 @@
 import React, { Fragment, Component} from 'react'
 import Switch from 'react-input-switch'
-import { db} from '../../config/firebase'
+import { db } from '../../config/firebase'
+import { Link } from 'react-router-dom'
 
 export default class Product extends Component {
     state = {
@@ -46,7 +47,8 @@ export default class Product extends Component {
                                       backgroundColor: '#fff'
                                     }
                                   }} 
-                             />
+                            />
+                            <Link to={`/edit/${data.id}`}>Link</Link>
                         </div>
                     </div>
                 </div>
