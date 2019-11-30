@@ -9,6 +9,8 @@ import Segments from '../components/Segments/Index'
 import Uploads from '../components/Uploads/Index'
 import Header from '../components/Header/Index'
 import Hero from '../components/Hero/Index'
+import Update from '../components/Update/Index'
+
 function Home() {
   return (
   <Router>
@@ -16,6 +18,7 @@ function Home() {
     <Route path="/" exact component={ Hero }/>
     <Route path="/" exact component={ Products }/>
     <Route path="/upload" exact component={ Uploads } />
+    <Route path="/update" exact component={ Update } />
     <div className="container">
       <div className="row">
         <Route path="/category" exact component={ Category }/>

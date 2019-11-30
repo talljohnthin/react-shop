@@ -1,0 +1,55 @@
+
+@import './../../../styles/variables.scss';
+
+.UPDATE-product {
+    max-width:600px;
+    margin:40px auto;
+}
+
+.UPDATE-product-list .card {
+    margin-bottom:12px;
+    border-radius: 0;
+    border:0;
+    box-shadow: 0 0.25rem 0.125rem 0 rgba(0,0,0,0.02);
+    .card-img {
+        border-radius: 0;
+    }
+    .card-price {
+        font-weight: 400;
+        font-family: $primary-font;
+        font-size:14px;
+        margin-top: 5px;
+        color:$secondary-color;
+        @media (max-width:767px) {
+            font-size:14px;
+        }
+    }
+    .card-title {
+        color:#666;
+        font-family: $secondary-font;
+        font-size:16px;
+        font-weight: 300;
+        margin:0;
+    }
+    .card-wrapper {
+        display: flex;
+        align-items: center;
+        position: relative;
+    }
+    .left {
+        max-width:80px;
+    }
+    .center {
+        padding-left: 15px;
+    }
+    .right {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        float:right;
+        position: absolute;
+        right:20px;
+        top:0;
+        height: 100%;
+    }
+}

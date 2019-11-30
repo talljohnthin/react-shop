@@ -35,6 +35,7 @@ export default class Products extends Component {
 
     getProducts() {
         db.collection("products")
+        .where("status", "==", "available")
         .onSnapshot(snapshot => {
             const products = []
             snapshot.forEach(doc => {
