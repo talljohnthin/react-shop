@@ -8,15 +8,17 @@ import uuid from 'react-uuid'
 import { Container } from 'react-bootstrap'
 import CategoryDropdown from './CategoryDropdown'
 import SegmentsDropdown from './SegmentsDropdown'
-import AddVariations from './AddVariations'
-import AddVariationOptions from './AddVariationOptions'
+import UpdateVariations from './UpdateVariations'
+import UpdateVariationOptions from './UpdateVariationOptions'
 import PriceSettings from './PriceSettings'
 import Alert from '../Alert/Index'
+
 const container = {
     maxWidth: '600px',
     margin: '60px auto',
     float:'none'
 }
+
 const imageUpload = {
     backgroundColor: '#39A7AB', 
     color: 'white', 
@@ -28,6 +30,7 @@ const imageUpload = {
     marginBottom:'15px',
     justifyContent:'center'
 }
+
 export default class Index extends Component {
     state = {
         products: null,
@@ -108,6 +111,7 @@ export default class Index extends Component {
             }, 3000)
         })
     }
+
     handleAlertMessage = (status, message) => {
         const alertObj = {
             type: status,
@@ -131,7 +135,7 @@ export default class Index extends Component {
         isUploading: true,
         uploadProgress: 0
     });
-
+    
     handleProgress = progress => this.setState({
         uploadProgress: progress
     });
@@ -505,14 +509,14 @@ export default class Index extends Component {
                         </Form.Group>
                     </Form>
                     
-                    <AddVariations 
+                    <UpdateVariations 
                         handleAddVariations = {this.handleAddVariations}
                         handleRemoveVariation = {this.handleRemoveVariation}
                         handleAddVariationValue = {this.handleAddVariationValue}
                         variations = { this.state.variations }
                     />
 
-                    <AddVariationOptions
+                    <UpdateVariationOptions
                         handleAddVariationOption = {this.handleAddVariationOption}
                         handleRemoveVariationOption = {this.handleRemoveVariationOption}
                         handleAddVariationOptionValue = {this.handleAddVariationOptionValue}

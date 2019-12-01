@@ -4,7 +4,7 @@ import { FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 
-export default function AddVariations(props) {
+export default function UpdateVariations(props) {
     return (
         <Fragment>
             <div className="variation-title">Fields of variations:</div>
