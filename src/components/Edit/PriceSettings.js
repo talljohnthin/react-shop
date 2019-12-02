@@ -11,14 +11,15 @@ export default function PriceSettings ({variation, variationIndex, variationOpti
     }
     if (variationOptions) {
         mapOptions = variationOptions.map( (o,i) => {
-            const price = priceOptions[i].options[i].price
+            const price = priceOptions[i].options[i].price,
+                  status = priceOptions[i].options[i].is_available
             
             return (
                 <ul key={o.optionIndex} className="each-variation-table-items">
                      <li>{ o.option }</li>
                      <li><FormControl value={ price } onChange={(e) => handleSetPrice(variationIndex, o.optionIndex, e.target.value)}></FormControl></li>
                      <li>
-                     <Form.Control as="select" onChange={(e) => handleSetAvailability(variationIndex, o.optionIndex, e.target.value)}>
+                     <Form.Control as="select" value={ status } onChange={(e) => handleSetAvailability(variationIndex, o.optionIndex, e.target.value)}>
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
                     </Form.Control>
