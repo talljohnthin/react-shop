@@ -69,7 +69,6 @@ export default class Index extends Component {
         db.collection("products")
         .doc(this.editId)
         .get().then( doc => {   
-            console.log(doc.data())
             const { 
                 priceOptions, 
                 cover,
@@ -90,7 +89,11 @@ export default class Index extends Component {
                 productName,
                 status,
                 timestamp,
-                downloadURLs: productImages
+                downloadURLs: productImages,
+                variations:[0,1],
+                variationsValue:['red','blue'],
+                variationOptionValue: ['small','large'],
+                variationOptions:[0,1]
             })  
         }).catch( (error) => { 
             console.log( error )
@@ -194,24 +197,18 @@ export default class Index extends Component {
     }
 
     handleRemoveImage = i => {
-        let filenames = [...this.state.filenames];
         let downloadURLs = [...this.state.downloadURLs]
-        const imgRef = storage.ref('images/'+ this.state.filenames[i]);
-        // Delete the file
+        const url =  downloadURLs[i].split('images%2F').pop().split('?')[0]
+        const imgRef = storage.ref('images/' + url);
         imgRef.delete().then(() => {
-            console.log('image deleted success')
-            filenames.splice(i, 1)
             downloadURLs.splice(i, 1)
             this.setState({
-                filenames,
                 downloadURLs,
                 cover: ''
             })
-       
         }).catch( error => {
             console.log(error)
         });
-        console.log(this.state.filenames)
     }
 
     handleAddVariations = e => {
@@ -430,7 +427,7 @@ export default class Index extends Component {
         console.log("Product Descriptions: ", this.state.productDescriptions)
         console.log("Product Images: ", this.state.downloadURLs)
         console.log("Product Cover: ", this.state.cover)
-        console.log(this.state.products)
+        console.log("variations: ",this.state.priceOptions)
         const setPrice = this.state.variationsValue.map( (variation,index) => {
             let options = []
             this.state.variationOptionValue.map((option, optionIndex) => {
@@ -447,6 +444,7 @@ export default class Index extends Component {
                 variationOptions = {options}
                 setPrice = {this.handleSetPrice}
                 setAvailability = {this.handleSetAvailability}
+                priceOptions = { this.state.priceOptions }
                 />
         })
      
@@ -514,6 +512,7 @@ export default class Index extends Component {
                         handleRemoveVariation = {this.handleRemoveVariation}
                         handleAddVariationValue = {this.handleAddVariationValue}
                         variations = { this.state.variations }
+                        variationValue = { this.state.variationsValue }
                     />
 
                     <UpdateVariationOptions
@@ -521,6 +520,7 @@ export default class Index extends Component {
                         handleRemoveVariationOption = {this.handleRemoveVariationOption}
                         handleAddVariationOptionValue = {this.handleAddVariationOptionValue}
                         variationOptions = { this.state.variationOptions }
+                        variationOptionValue = { this.state.variationOptionValue }
                     />
                     { setPrice ? (<div className="price-title">Set the price below:</div>) : ''}
                     { setPrice }

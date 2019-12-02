@@ -9,7 +9,7 @@ export default function UpdateVariations(props) {
         <Fragment>
             <div className="variation-title">Fields of variations:</div>
             <ul className="variation-list">
-                {props.variations.map((variation, index) => <li  key={variation || 0 } ><FormControl onChange={ e => props.handleAddVariationValue(e, index) }/>
+                {props.variations.map((variation, index) => <li  key={variation || 0 } ><FormControl value={ props.variationValue[variation] } onChange={ e => props.handleAddVariationValue(e, index) }/>
                     <FontAwesomeIcon icon={faTrash} onClick={ () => props.handleRemoveVariation(index) }/>
                 </li>)}
             </ul>

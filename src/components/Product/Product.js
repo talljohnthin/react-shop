@@ -6,7 +6,7 @@ function Product({data}) {
     return (
         <div className="card">
             <div className="card-wrapper">
-                <img className="card-img" src={ product.cover} alt={ product.productName } />
+                <img className="card-img" src={ product.cover ? product.cover : product.productImages[0] } alt={ product.productName } />
                 <div className="card-body">
                     <p className="card-price">Php { product.priceOptions[0].options[0].price } </p>
                     <h4 className="card-title">{ product.productName }</h4>
