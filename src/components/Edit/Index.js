@@ -90,10 +90,10 @@ export default class Index extends Component {
                 status,
                 timestamp,
                 downloadURLs: productImages,
-                variations:[0,1],
-                variationsValue:['red','blue'],
-                variationOptionValue: ['small','large'],
-                variationOptions:[0,1]
+                variations:priceOptions.map((e,i) => i),
+                variationsValue:priceOptions.map((e,i) => e.variation),
+                variationOptionValue: priceOptions[0].options.map(e =>  e.option),
+                variationOptions:priceOptions[0].options.map((e,i) =>  i)
             })  
         }).catch( (error) => { 
             console.log( error )
