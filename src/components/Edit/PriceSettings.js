@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react'
 import {FormControl, Form} from 'react-bootstrap'
 
-export default function PriceSettings ({variation, variationIndex, variationOptions, setPrice, setAvailability, priceOptions}) {
+export default function PriceSettings ({variationsValue, variation, variationIndex, variationOptions, setPrice, setAvailability, priceOptions}) {
     let mapOptions = null
     const handleSetPrice = (variationIndex, index, value) => {
         setPrice(variationIndex, index, value)
@@ -9,17 +9,18 @@ export default function PriceSettings ({variation, variationIndex, variationOpti
     const handleSetAvailability = (variationIndex, index, value) => {
         setAvailability(variationIndex, index, value)
     }
-    if (variationOptions) {
+    if (variationOptions && variationsValue) {
+
         mapOptions = variationOptions.map( (o,i) => {
-            const price = priceOptions[i].options[i].price,
-                  status = priceOptions[i].options[i].is_available
             
+            const price = priceOptions[variationIndex].options[i].price,
+                status = priceOptions[variationIndex].options[i].is_available
             return (
-                <ul key={o.optionIndex} className="each-variation-table-items">
+                <ul key={o.optionIndex} className="each-variation-table-items edit-component">
                      <li>{ o.option }</li>
-                     <li><FormControl value={ price } onChange={(e) => handleSetPrice(variationIndex, o.optionIndex, e.target.value)}></FormControl></li>
+                     <li><FormControl value= { price || '' } onChange={(e) => handleSetPrice(variationIndex, o.optionIndex, e.target.value)}></FormControl></li>
                      <li>
-                     <Form.Control as="select" value={ status } onChange={(e) => handleSetAvailability(variationIndex, o.optionIndex, e.target.value)}>
+                     <Form.Control as="select" value={ status || '' } onChange={(e) => handleSetAvailability(variationIndex, o.optionIndex, e.target.value)}>
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
                     </Form.Control>

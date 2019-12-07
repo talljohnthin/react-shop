@@ -33,7 +33,7 @@ const imageUpload = {
 
 export default class Index extends Component {
     state = {
-        products: null,
+        products: '',
         categories: [],
         segments: [],
         alertMessage: null,
@@ -49,9 +49,9 @@ export default class Index extends Component {
         variationOptions: [],
         priceOptions:[],
         productName:'',
-        selectedSegment:null,
-        selectedCategory:null,
-        productDescriptions:null,
+        selectedSegment:'',
+        selectedCategory:'',
+        productDescriptions:'',
         cover:'',
         status:'',
         timestamp:''
@@ -230,7 +230,9 @@ export default class Index extends Component {
         this.setState({
             variationsValue,
             variations,
-            priceOptions
+            priceOptions,
+            variationOptions: [],
+            variationOptionValue:[]
         })
     }
 
@@ -333,7 +335,7 @@ export default class Index extends Component {
         })
     }
 
-    handleProductEntry = () => {
+    handleProductUpdate = () => {
         const product = {
             productName : this.state.productName,
             segment : this.state.selectedSegment,
@@ -394,29 +396,18 @@ export default class Index extends Component {
                 return;
             }
         }
-        //add products
-        db.collection("products").add(product)
-        .then( docRef => {
-            this.handleAlertMessage('success', 'New product has been added!')
-            this.setState({
-                filenames: [],
-                downloadURLs: [],
-                isUploading: false,
-                uploadProgress: 0,
-                variationsValue: [],
-                variations: [],
-                variationOptionValue: [],
-                variationOptions: [],
-                priceOptions:[],
-                productName:null,
-                productDescriptions:null,
-                cover:''
-            })
-        })
-        .catch(error => {
-            this.handleAlertMessage('failed', 'Failed to add product!')
-            console.error("Error adding document: ", error);
-        });
+        //update products
+        if (product) {
+            db.collection("products").doc(this.editId)
+            //this.handleAlertMessage('success', 'New product has been added!')
+            .set(product)
+
+            .catch(error => {
+                this.handleAlertMessage('failed', 'Failed to update product!')
+                console.error("Error adding document: ", error);
+            });
+            console.log('product successfully updated')
+        }
     }
 
     render() {
@@ -428,6 +419,7 @@ export default class Index extends Component {
         console.log("Product Images: ", this.state.downloadURLs)
         console.log("Product Cover: ", this.state.cover)
         console.log("variations: ",this.state.priceOptions)
+
         const setPrice = this.state.variationsValue.map( (variation,index) => {
             let options = []
             this.state.variationOptionValue.map((option, optionIndex) => {
@@ -438,6 +430,7 @@ export default class Index extends Component {
                 options.push(obj)
             })
             return <PriceSettings
+                variationsValue={this.state.variationsValue}
                 variation={variation} 
                 variationIndex={index}
                 key={index}
@@ -452,7 +445,7 @@ export default class Index extends Component {
             <Fragment>
                 <div className="hero">
                     <Container>
-                        <h1>Add New Products</h1>
+                        <h1>Edit Product</h1>
                     </Container>
                 </div>
                 <Container style={container} className="add-entry-products-container" >
@@ -463,7 +456,7 @@ export default class Index extends Component {
                         message={this.state.alertMessage}
                     />
 
-                    <ProgressBar hidden now={this.state.uploadProgress} label={`${this.state.uploadProgress}%`} />
+                    <ProgressBar now={this.state.uploadProgress} label={`${this.state.uploadProgress}%`} />
                     
                     <p hidden>Filenames: {this.state.filenames.join(", ")}</p>
 
@@ -525,7 +518,7 @@ export default class Index extends Component {
                     { setPrice ? (<div className="price-title">Set the price below:</div>) : ''}
                     { setPrice }
 
-                    <Button className="btn-product-save" onClick={this.handleProductEntry}> <ion-icon name="add"></ion-icon> Add New Product</Button>
+                    <Button className="btn-product-save" onClick={this.handleProductUpdate}> <ion-icon name="add"></ion-icon> Update Product </Button>
                 
                 </Container>
             </Fragment>
