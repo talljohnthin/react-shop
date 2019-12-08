@@ -9,11 +9,15 @@ export default class Index extends Component {
     state = {
         products:[]
     }
+    _isMounted = false
 
     componentDidMount() {
+        this._isMounted = true
         this.getProducts();
     }
-
+    componentWillUnmount() {
+        this._isMounted = false
+    }
     getProducts() {
         db.collection("products")
         .onSnapshot(snapshot => {
@@ -25,7 +29,9 @@ export default class Index extends Component {
                 }
                 products.push(product)
             })
-            this.setState({ products })
+            if ( this._isMounted ) {
+                this.setState({ products })
+            }
         });
     }
 

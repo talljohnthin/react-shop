@@ -56,13 +56,20 @@ export default class Index extends Component {
         status:'',
         timestamp:''
     }
+    _isMounted = false
     alertTimeout = null
     editId = this.props.match.params.id
 
     componentDidMount() {
+        this._isMounted = true
         this.getProduct()
         this.getCategories()
         this.getSegments()
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false
+        clearTimeout(this.alertTimeout)
     }
     
     getProduct() {
@@ -80,21 +87,24 @@ export default class Index extends Component {
                 timestamp,
                 productImages
             } = doc.data()
-            this.setState({ 
-                priceOptions, 
-                cover,
-                productDescriptions: descriptions,
-                selectedCategory: category,
-                selectedSegment: segment, 
-                productName,
-                status,
-                timestamp,
-                downloadURLs: productImages,
-                variations:priceOptions.map((e,i) => i),
-                variationsValue:priceOptions.map((e,i) => e.variation),
-                variationOptionValue: priceOptions[0].options.map(e =>  e.option),
-                variationOptions:priceOptions[0].options.map((e,i) =>  i)
-            })  
+            if ( this._isMounted ) {
+                this.setState({ 
+                    priceOptions, 
+                    cover,
+                    productDescriptions: descriptions,
+                    selectedCategory: category,
+                    selectedSegment: segment, 
+                    productName,
+                    status,
+                    timestamp,
+                    downloadURLs: productImages,
+                    variations:priceOptions.map((e,i) => i),
+                    variationsValue:priceOptions.map((e,i) => e.variation),
+                    variationOptionValue: priceOptions[0].options.map(e =>  e.option),
+                    variationOptions:priceOptions[0].options.map((e,i) =>  i)
+                }) 
+            }
+            
         }).catch( (error) => { 
             console.log( error )
         })
@@ -102,17 +112,19 @@ export default class Index extends Component {
 
 
     handleShowAlert = ({ message, type }) => {
-        this.setState({
-            showAlert: true,
-            alertMessage: message,
-            alertType: type
-        }, () => {
-            this.alertTimeout = setTimeout(() => {
-                this.setState({
-                    showAlert: false,
-                })
-            }, 3000)
-        })
+        if ( this._isMounted ) {
+            this.setState({
+                showAlert: true,
+                alertMessage: message,
+                alertType: type
+            }, () => {
+                this.alertTimeout = setTimeout(() => {
+                    this.setState({
+                        showAlert: false,
+                    })
+                }, 3000)
+            })
+        }
     }
 
     handleAlertMessage = (status, message) => {
@@ -122,13 +134,15 @@ export default class Index extends Component {
         }
         if (this.alertTimeout) {
             clearTimeout(this.alertTimeout)
-            this.setState({
-                showAlert: false
-            }, () => {
-                this.alertTimeout = setTimeout(() => {
-                    this.handleShowAlert(alertObj)
-                }, 250)
-            })
+            if ( this._isMounted ) {
+                this.setState({
+                    showAlert: false
+                }, () => {
+                    this.alertTimeout = setTimeout(() => {
+                        this.handleShowAlert(alertObj)
+                    }, 250)
+                })
+            }
         } else {
             this.handleShowAlert(alertObj)
         }
@@ -157,13 +171,14 @@ export default class Index extends Component {
             .ref("images")
             .child(filename)
             .getDownloadURL();
-
-        this.setState(oldState => ({
-            filenames: [...oldState.filenames, filename],
-            downloadURLs: [...oldState.downloadURLs, downloadURL],
-            uploadProgress: 100,
-            isUploading: false
-        }));
+        if ( this._isMounted ) {
+            this.setState(oldState => ({
+                filenames: [...oldState.filenames, filename],
+                downloadURLs: [...oldState.downloadURLs, downloadURL],
+                uploadProgress: 100,
+                isUploading: false
+            }));
+        }
     };
 
     getCategories = () => {
@@ -177,7 +192,9 @@ export default class Index extends Component {
                     }
                     categories.push(obj)
                 })
-                this.setState({ categories })
+                if ( this._isMounted ) {
+                    this.setState({ categories })
+                }
             });
     }
 
@@ -192,7 +209,9 @@ export default class Index extends Component {
                     }
                     segments.push(obj)
                 })
-                this.setState({ segments })
+                if ( this._isMounted ) {
+                    this.setState({ segments })
+                }
             });
     }
 
@@ -378,6 +397,11 @@ export default class Index extends Component {
             return; 
         }
 
+        if (product.priceOptions[0].options.length < 1) {
+            this.handleAlertMessage('failed', 'Please add price options!')
+            return; 
+        }
+
         if (product.priceOptions.length > 0) {
             let isPrice = true;
             if (JSON.stringify(product.priceOptions[0].options[0]) === '{}') {
@@ -419,28 +443,26 @@ export default class Index extends Component {
         console.log("Product Images: ", this.state.downloadURLs)
         console.log("Product Cover: ", this.state.cover)
         console.log("variations: ",this.state.priceOptions)
-
-        const setPrice = this.state.variationsValue.map( (variation,index) => {
-            let options = []
-            this.state.variationOptionValue.map((option, optionIndex) => {
-                const obj = {
-                    option,
-                    optionIndex
-                }
-                options.push(obj)
-            })
-            return <PriceSettings
-                variationsValue={this.state.variationsValue}
-                variation={variation} 
-                variationIndex={index}
-                key={index}
-                variationOptions = {options}
-                setPrice = {this.handleSetPrice}
-                setAvailability = {this.handleSetAvailability}
-                priceOptions = { this.state.priceOptions }
+            const setPrice = this.state.variationsValue.map( (variation,index) => {
+                let options = []
+                this.state.variationOptionValue.map((option, optionIndex) => {
+                    const obj = {
+                        option,
+                        optionIndex
+                    }
+                    options.push(obj)
+                })
+                return <PriceSettings
+                    variationsValue={this.state.variationsValue}
+                    variation={variation} 
+                    variationIndex={index}
+                    key={index}
+                    variationOptions = {options}
+                    setPrice = {this.handleSetPrice}
+                    setAvailability = {this.handleSetAvailability}
+                    priceOptions = { this.state.priceOptions }
                 />
-        })
-     
+            })
         return (
             <Fragment>
                 <div className="hero">

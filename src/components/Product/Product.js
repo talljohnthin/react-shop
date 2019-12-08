@@ -4,6 +4,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 function Product({data}) {
     const product = data.data;
     return (
+        product.priceOptions[0].options.length > 0 ?
         <div className="card">
             <div className="card-wrapper">
                 <img className="card-img" src={ product.cover ? product.cover : product.productImages[0] } alt={ product.productName } />
@@ -13,7 +14,8 @@ function Product({data}) {
                     <span className="card-cart"><ion-icon name="heart-empty"></ion-icon></span>
                 </div>
             </div>
-        </div>
+        </div> :
+        ''
      )
   }
 export default Product;

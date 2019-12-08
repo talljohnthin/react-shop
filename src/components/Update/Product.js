@@ -20,6 +20,7 @@ export default class Product extends Component {
         const product = data.data
         return (
             <Fragment>
+                {product.priceOptions[0].options.length > 0 ? 
                 <div className="card">
                     <div className="card-wrapper">
                         <div className="left">
@@ -51,7 +52,9 @@ export default class Product extends Component {
                             <Link to={`/edit/${data.id}`}>Link</Link>
                         </div>
                     </div>
-                </div>
+                </div> :
+                    ''
+                }
             </Fragment>
         )
     }
