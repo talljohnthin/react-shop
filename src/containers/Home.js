@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import firebase from './../config/firebase';
 import './../styles/reset.scss';
 import './../styles/global.scss';
-import Signup from '../components/auth/Signup';
+import Auth from '../components/Auth/Index';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Products from '../components/Product/Products'
 import Category from '../components/Category/Index'
@@ -11,25 +12,52 @@ import Header from '../components/Header/Index'
 import Hero from '../components/Hero/Index'
 import Update from '../components/Update/Index'
 import Edit from '../components/Edit/Index'
-function Home() {
-  return (
-  <Router>
-    <Header />
-    <Route path="/" exact component={ Hero }/>
-    <Route path="/" exact component={ Products }/>
-    <Route path="/upload" exact component={ Uploads } />
-    <Route path="/update" exact component={ Update } />
-    <Route path="/edit/:id" exact component={ Edit } />
 
-    <div className="container">
-      <div className="row">
-        <Route path="/category" exact component={ Category }/>
-        <Route path="/segments" exact component={ Segments } />
-        <Route path="/signup" exact component={ Signup }/>
-      </div>
-    </div>
-  </Router>
-  );
+class Home extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      user: null
+    }
+  }
+
+  componentDidMount() {
+    this.authListener()
+  }
+
+  authListener() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if(user) {
+        this.setState({ user })
+      } else {
+        this.setState({ user: null })
+      }
+    })
+  }
+
+  render() {
+    return ( 
+      <Fragment>
+        <Router>
+          <Header />
+          
+          <Route path="/" exact component={ Hero }/>
+          <Route path="/" exact component={ Products }/>
+          <Route path="/upload" exact component={ Uploads } />
+          <Route path="/update" exact component={ Update } />
+          <Route path="/edit/:id" exact component={ Edit } />
+          <Route path="/auth" exact component={ Auth }/>
+      
+          <div className="container">
+            <div className="row">
+              <Route path="/category" exact component={ Category }/>
+              <Route path="/segments" exact component={ Segments } />
+            </div>
+          </div>
+        </Router>
+      </Fragment>
+    );
+  }
 }
 
 export default Home;
