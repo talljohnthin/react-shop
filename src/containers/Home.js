@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, useEffect, useContext } from 'react';
 import firebase from './../config/firebase';
 import './../styles/reset.scss';
 import './../styles/global.scss';
@@ -15,47 +15,51 @@ import Update from '../components/Update/Index'
 import Edit from '../components/Edit/Index'
 import { AuthContext } from '../contexts/AuthContext'
 
-class Home extends React.Component {
+const Home = () => {
+  const { state, dispatch } = useContext(AuthContext)
 
-  componentDidMount() {
-    this.authListener()
-    const value = this.context
-    console.log('current user: ', value.state.user)
-  }
+  useEffect(() => {
+    authListener()
+  }, [])
 
-  authListener() {
+  useEffect(() => {
+    console.log("im the user: ", state.user)
+  })
+  const authListener = () => {
     firebase.auth().onAuthStateChanged((user) => {
       if(user) {
-        this.setState({ user })
+        dispatch({
+          type: "SIGNIN",
+          payload: user
+        })
       } else {
-        this.setState({ user: null })
+        dispatch({
+          type: "SIGNIN",
+          payload: null
+        })
       }
     })
   }
 
-  render() {
-    return ( 
-      <Fragment>
-        <Router>
-          <Header />
-          
-          <Route path="/" exact component={ Hero }/>
-          <Route path="/" exact component={ Products }/>
-          <Route path="/upload" exact component={ Uploads } />
-          <Route path="/update" exact component={ Update } />
-          <Route path="/edit/:id" exact component={ Edit } />
-          <Route path="/signup" exact component={ SignUp }/>
-          <Route path="/login" exact component={ Login }/>
-          <div className="container">
-            <div className="row">
-              <Route path="/category" exact component={ Category }/>
-              <Route path="/segments" exact component={ Segments } />
-            </div>
+  return ( 
+    <Fragment>
+      <Router>
+        <Header />
+        <Route path="/" exact component={ Hero }/>
+        <Route path="/" exact component={ Products }/>
+        <Route path="/upload" exact component={ Uploads } />
+        <Route path="/update" exact component={ Update } />
+        <Route path="/edit/:id" exact component={ Edit } />
+        <Route path="/signup" exact component={ SignUp }/>
+        <Route path="/login" exact component={ Login }/>
+        <div className="container">
+          <div className="row">
+            <Route path="/category" exact component={ Category }/>
+            <Route path="/segments" exact component={ Segments } />
           </div>
-        </Router>
-      </Fragment>
-    );
-  }
+        </div>
+      </Router>
+    </Fragment>
+  );
 }
-Home.contextType = AuthContext
 export default Home;
