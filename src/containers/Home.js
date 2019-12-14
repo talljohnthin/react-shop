@@ -2,7 +2,8 @@ import React, { Fragment } from 'react';
 import firebase from './../config/firebase';
 import './../styles/reset.scss';
 import './../styles/global.scss';
-import Auth from '../components/Auth/Index';
+import SignUp from '../components/Auth/SignUp';
+import Login from '../components/Auth/Login'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Products from '../components/Product/Products'
 import Category from '../components/Category/Index'
@@ -12,17 +13,14 @@ import Header from '../components/Header/Index'
 import Hero from '../components/Hero/Index'
 import Update from '../components/Update/Index'
 import Edit from '../components/Edit/Index'
+import { AuthContext } from '../contexts/AuthContext'
 
 class Home extends React.Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      user: null
-    }
-  }
 
   componentDidMount() {
     this.authListener()
+    const value = this.context
+    console.log('current user: ', value.state.user)
   }
 
   authListener() {
@@ -46,8 +44,8 @@ class Home extends React.Component {
           <Route path="/upload" exact component={ Uploads } />
           <Route path="/update" exact component={ Update } />
           <Route path="/edit/:id" exact component={ Edit } />
-          <Route path="/auth" exact component={ Auth }/>
-      
+          <Route path="/signup" exact component={ SignUp }/>
+          <Route path="/login" exact component={ Login }/>
           <div className="container">
             <div className="row">
               <Route path="/category" exact component={ Category }/>
@@ -59,5 +57,5 @@ class Home extends React.Component {
     );
   }
 }
-
+Home.contextType = AuthContext
 export default Home;

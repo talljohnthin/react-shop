@@ -1,0 +1,24 @@
+.login-container {
+    max-width:380px;
+    margin:0 auto;
+    padding:40px 20px;
+    ._loading_overlay_wrapper {
+        background:rgba(0,0,0, 0.4);
+       
+    }
+    label {
+        margin-bottom:5px;
+    }
+    input {
+        margin-bottom:15px;
+    }
+    .btn-primary {
+        float:right;
+        width:100%;
+        display: block;
+    }
+    .alert {
+        display: block;
+        width:100%;
+    }
+}
