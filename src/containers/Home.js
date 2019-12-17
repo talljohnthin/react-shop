@@ -14,9 +14,12 @@ import Hero from '../components/Hero/Index'
 import Update from '../components/Update/Index'
 import Edit from '../components/Edit/Index'
 import { AuthContext } from '../contexts/AuthContext'
+import { WishListContext } from '../contexts/WishListContext'
 
 const Home = () => {
   const { state, dispatch } = useContext(AuthContext)
+  
+
   useEffect(() => {
    authListener()
   }, [])
@@ -32,7 +35,6 @@ const Home = () => {
           type: "SIGNIN",
           payload: user
         })
-        console.log('the user:', firebase.auth().currentUser.displayName)
       } else {
         dispatch({
           type: "SIGNIN",

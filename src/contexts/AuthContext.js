@@ -1,9 +1,7 @@
 import React, { createContext, useReducer } from 'react'
 import AuthReducer from '../reducers/AuthReducer'
 
-
 export const AuthContext = createContext()
-export const AuthConsumer = AuthContext.Consumer
 
 const initState = {
     user: {}
