@@ -1,13 +1,14 @@
-import React, { Fragment, useContext } from 'react'
+import React, { Fragment, useContext, useEffect, useState } from 'react'
 import firebase from '../../config/firebase'
 import { Container } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import { AuthContext } from './../../contexts/AuthContext'
 import './Sass/Style.scss'
 
 const Index = () => {
-    const { state, dispatch } = useContext(AuthContext)
-
+    const {state, dispatch} = useContext(AuthContext)
     const handleLogout = () => {
+        dispatch({type: "LOGOUT", payload:null})
         firebase.auth().signOut()
     }
     return (
@@ -40,18 +41,17 @@ const Index = () => {
                             <div className="orders-count">2</div>
                         </div>
                         <div className="user-login">
-                            <AuthContext.Consumer>{(context) => {
-                                if (context.state.user === null) {
-                                    return <div className="user-button">Login</div>
-                                } else {
-                                    return (
-                                        <Fragment>
-                                            <p>{context.state.user.displayName}</p>
-                                            <div className="user-button" onClick={handleLogout}>Logout</div>
-                                        </Fragment>
-                                    )
-                                }
-                            }}
+                            <AuthContext.Consumer>
+                                {(value) => {
+                                    if ( value.state.user === null ) {
+                                        return <Link to="/login"><div className="user-button">Login</div></Link>
+                                    } else {
+                                        return  <Fragment>
+                                                    <div className="user-name">{firebase.auth().currentUser && firebase.auth().currentUser.displayName}</div>
+                                                    <div className="user-button" onClick={handleLogout}>Logout</div>
+                                                </Fragment>
+                                    }
+                                }}
                             </AuthContext.Consumer>
                         </div>
                     </div>

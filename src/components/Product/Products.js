@@ -50,7 +50,6 @@ export default class Products extends Component {
     }
 
     render() {
-        console.log(this.state.products)
         const filterItem = this.state.categories.map(e => <li key={e.id}>{e.name.name}</li>)
         return (
             <Fragment>

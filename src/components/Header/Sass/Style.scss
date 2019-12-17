@@ -17,6 +17,7 @@
     }
     .right {
         display: flex;
+        align-items: center;
         .wishlist {
             margin-right:12px;
             position: relative;
@@ -58,6 +59,17 @@
                 font-family: $secondary-font;
                 font-size:10px;
                 color:#fff;
+            }
+        }
+        .user-login {
+            margin-left: 15px;
+            .user-name {
+                font-family: $secondary-font;
+                font-size:10px;
+            }
+            .user-button {
+                cursor: pointer;
+                font-family: $secondary-font;
             }
         }
         

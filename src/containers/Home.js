@@ -17,14 +17,14 @@ import { AuthContext } from '../contexts/AuthContext'
 
 const Home = () => {
   const { state, dispatch } = useContext(AuthContext)
-
   useEffect(() => {
-    authListener()
+   authListener()
   }, [])
 
   useEffect(() => {
-    console.log("im the user: ", state.user)
+   // console.log(state.user !== null && state.user.email)
   })
+
   const authListener = () => {
     firebase.auth().onAuthStateChanged((user) => {
       if(user) {
@@ -32,6 +32,7 @@ const Home = () => {
           type: "SIGNIN",
           payload: user
         })
+        console.log('the user:', firebase.auth().currentUser.displayName)
       } else {
         dispatch({
           type: "SIGNIN",
