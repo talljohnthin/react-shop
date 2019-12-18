@@ -1,4 +1,7 @@
-import React, { Fragment, useState, useEffect, useContext } from 'react';
+import React, { Fragment, useEffect, useContext } from 'react';
+import ReactNotifications from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
+import 'animate.css';
 import firebase from './../config/firebase';
 import './../styles/reset.scss';
 import './../styles/global.scss';
@@ -15,6 +18,7 @@ import Update from '../components/Update/Index'
 import Edit from '../components/Edit/Index'
 import { AuthContext } from '../contexts/AuthContext'
 import { WishListContext } from '../contexts/WishListContext'
+
 
 const Home = () => {
   const { state, dispatch } = useContext(AuthContext)
@@ -47,6 +51,7 @@ const Home = () => {
 
   return ( 
     <Fragment>
+      <ReactNotifications />
       <Router>
         <Header />
         <Route path="/" exact component={ Hero }/>
