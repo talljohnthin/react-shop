@@ -18,6 +18,7 @@ import { WishListContext } from '../contexts/WishListContext'
 
 const Home = () => {
   const { state, dispatch } = useContext(AuthContext)
+  const { wishListState, wishListDispatch } = useContext(WishListContext)
   
 
   useEffect(() => {
@@ -25,7 +26,7 @@ const Home = () => {
   }, [])
 
   useEffect(() => {
-   // console.log(state.user !== null && state.user.email)
+   console.log('wish: ', wishListState)
   })
 
   const authListener = () => {

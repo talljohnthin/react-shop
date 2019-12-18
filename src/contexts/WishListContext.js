@@ -6,8 +6,8 @@ const initState = {
     products: []
 }
 const WishListProvider = props => {
-    const [ state, dispatch ] = useReducer(WishListReducer, initState)
-    const value = {state, dispatch}
+    const [ wishListState, wishListDispatch ] = useReducer(WishListReducer, initState)
+    const value = {wishListState, wishListDispatch }
     return (
         <WishListContext.Provider value={value}>
             {props.children}

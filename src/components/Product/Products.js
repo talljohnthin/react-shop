@@ -1,24 +1,21 @@
-import React, { Component, Fragment } from 'react'
+import React, { Fragment, useState, useEffect, useContext } from 'react'
 import Product from './Product'
-import AddProducts from './AddProducts'
 import './Sass/Style.scss'
 import { Container } from 'react-bootstrap'
-import firebase from 'firebase/app'
 import { db, storage } from '../../config/firebase'
+import { ProductContext } from '../../contexts/ProductContext'
 
-export default class Products extends Component {
+const Products = () => {
+    const [categories, setCategories] = useState([])
+    const [products, setProducts] = useState([])
+    const {productState, productDispatch} = useContext(ProductContext)
+    
+    useEffect(()=> {
+        getCategories();
+        getProducts();
+    }, [])
 
-    state = {
-        categories : [],
-        products:[]
-    }
-
-    componentDidMount() {
-        this.getCategories();
-        this.getProducts();
-    }
-
-    getCategories = () => {
+    const getCategories = () => {
         db.collection("category")
         .onSnapshot(snapshot => {
             const categories = []
@@ -29,11 +26,11 @@ export default class Products extends Component {
                 }
                 categories.push(obj)
             })
-            this.setState({ categories })
+            setCategories(categories)
         });
     }
 
-    getProducts() {
+    const getProducts = () => {
         db.collection("products")
         .where("status", "==", "available")
         .onSnapshot(snapshot => {
@@ -45,34 +42,39 @@ export default class Products extends Component {
                 }
                 products.push(product)
             })
-            this.setState({ products })
+            productDispatch({
+                type:'ADD_PRODUCT',
+                payload: [...products]
+            })
+            setProducts(products)
         });
     }
 
-    render() {
-        const filterItem = this.state.categories.map(e => <li key={e.id}>{e.name.name}</li>)
-        return (
-            <Fragment>
-                <ul className="home-filter">
-                    <li>MEN</li>
-                    <li>WOMEN</li>
-                    <li>KIDS</li>
-                    <li>OTHERS</li>
-                </ul>
-                <Container>
-                    <div>
-                        <ul className="home-filter-categories">
-                            { filterItem }
-                        </ul>
-                        <div className="row product-list">
-                            {
-                                this.state.products ? this.state.products.map( product => <Product key={ product.id } data={ product }/>) : ''
-                            }
-                            <div className="card"></div>
-                        </div>
+    const filterItem = categories.map(e => <li key={e.id}>{e.name.name}</li>)
+    return (
+        <Fragment>
+            { productState !== undefined && productState.products.map( product => console.log('hello:', product) ) }
+            <ul className="home-filter">
+                <li>MEN</li>
+                <li>WOMEN</li>
+                <li>KIDS</li>
+                <li>OTHERS</li>
+            </ul>
+            <Container>
+                <div>
+                    <ul className="home-filter-categories">
+                        { filterItem }
+                    </ul>
+                    <div className="row product-list">
+                        {
+                            products ? products.map( product => <Product key={ product.id } data={ product }/>) : ''
+                        }
+                        <div className="card"></div>
                     </div>
-                </Container>
-            </Fragment>
-        )
-    }
+                </div>
+            </Container>
+        </Fragment>
+    )
 }
+
+export default Products

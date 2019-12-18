@@ -2,12 +2,18 @@ import React, { useContext} from 'react'
 import { WishListContext } from './../../contexts/WishListContext'
 function Product({data}) {
     const product = data.data;
-    const {state, dispatch} = useContext(WishListContext)
+    const {wishListState, wishListDispatch } = useContext(WishListContext)
     
     const handleClickWish = id => {
-        console.log(id)
+        if (id) {
+            wishListDispatch({
+                type:"ADD_WISH",
+                payload: id
+            })
+        }
     }
     return (
+       
         product.priceOptions[0].options.length > 0 ?
         <div className="card">
             <div className="card-wrapper">

@@ -1,15 +1,21 @@
-import React, { Fragment, useContext, useEffect, useState } from 'react'
+import React, { Fragment, useContext} from 'react'
 import firebase from '../../config/firebase'
 import { Container } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { AuthContext } from './../../contexts/AuthContext'
+import { WishListContext} from './../../contexts/WishListContext'
 import './Sass/Style.scss'
 
 const Index = () => {
-    const {state, dispatch} = useContext(AuthContext)
+    const {dispatch} = useContext(AuthContext)
+    const {wishListState} = useContext(WishListContext)
     const handleLogout = () => {
         dispatch({type: "LOGOUT", payload:null})
         firebase.auth().signOut()
+    }
+    let wishListCount = null
+    if ( wishListState) {
+        wishListCount = wishListState.products.length <= 0 ? {opacity:0} : {opacity:1};
     }
     return (
         <Fragment>
@@ -28,7 +34,9 @@ const Index = () => {
                                 <path id="path" style={{ style }} d=" M 300 172C 250 172 203 192 167 227C 132 262 113 310 113 360C 113 360 113 360 113 360C 113 360 113 360 113 360C 113 409 132 457 168 492C 168 492 168 492 168 492C 168 492 459 805 459 805C 476 821 489 828 500 828C 510 828 523 821 541 805C 541 805 827 498 827 498C 827 498 836 507 836 507C 834 504 832 501 832 498C 832 494 833 491 836 489C 869 454 887 408 888 360C 887 310 868 262 833 227C 797 192 750 172 700 172C 650 172 603 192 568 227C 553 243 542 256 532 265C 522 274 512 281 500 281C 488 281 478 274 468 265C 458 256 447 243 432 227C 397 192 350 172 300 172C 300 172 300 172 300 172M 300 147C 356 147 410 170 450 209C 450 210 451 210 451 210C 465 227 476 239 485 246C 493 254 497 256 500 256C 503 256 507 254 515 246C 524 239 535 227 549 210C 549 210 550 210 550 209C 590 170 644 147 700 147C 756 147 810 170 850 209C 890 249 912 303 913 360C 913 360 913 360 913 360C 912 413 892 465 856 504C 855 505 855 505 854 506C 854 506 559 822 559 822C 559 822 559 823 559 823C 538 842 520 853 500 853C 479 853 461 841 441 823C 441 823 441 822 441 822C 441 822 150 510 150 510C 150 510 150 510 150 510C 110 470 88 416 88 360C 87 360 87 360 88 360C 88 303 110 249 150 209C 190 170 244 147 300 147C 300 147 300 147 300 147" transform="">
                                 </path>
                             </svg>
-                            <div className="wishlist-count">2</div>
+                            <div className="wishlist-count" style={ wishListCount }>
+                                {  wishListState.products.length }
+                            </div>
                         </div>
                         <div className="orders">
                             <svg style={{
