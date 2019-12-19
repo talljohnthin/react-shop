@@ -1,6 +1,6 @@
 import React, { useContext} from 'react'
 import { WishListContext } from './../../contexts/WishListContext'
-import { store } from 'react-notifications-component';
+import notification from './../Helpers/functions'
 function Product({data}) {
     const product = data.data;
     const {wishListState, wishListDispatch } = useContext(WishListContext)
@@ -11,17 +11,7 @@ function Product({data}) {
                 type:"ADD_WISH",
                 payload: id
             })
-            store.addNotification({
-                title: 'Wish',
-                message: 'Product is now added to wish list',
-                type: 'success',                         // 'default', 'success', 'info', 'warning'
-                container: 'top-center',
-                animationIn: ["animated", "fadeIn"],     // animate.css classes that's applied
-                animationOut: ["animated", "fadeOut"],   // animate.css classes that's applied
-                dismiss: {
-                    duration: 1500 
-                }               // where to position the notifications
-            })
+            notification('Wish', 'New product added to wish list!', 'success')
         }
     }
     return (
