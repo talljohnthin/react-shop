@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useContext } from 'react';
 import ReactNotifications from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
-import 'animate.css';
+//import 'animate.css';
 import firebase from './../config/firebase';
 import './../styles/reset.scss';
 import './../styles/global.scss';
