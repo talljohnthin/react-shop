@@ -1,10 +1,17 @@
-import React, { useContext, useState} from 'react'
+import React, { useContext, useState, useEffect} from 'react'
 import { WishListContext } from './../../contexts/WishListContext'
 import { Modal } from 'react-bootstrap'
 import notification from './../Helpers/functions'
 function Product({data}) {
     const product = data.data;
     const {wishListState, wishListDispatch } = useContext(WishListContext)
+
+    useEffect(()=> {
+        if(wishListState.products.length > 0) {
+          //  localStorage.setItem('wish-list', JSON.stringify(wishListState.products))
+        }
+    }, [])
+
     
     const handleClickWish = source => {
         const data = source.data;

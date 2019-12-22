@@ -27,12 +27,9 @@ export default function Index() {
                   color="#39A7AB"
                   height={50}
                   width={50}
-                  timeout={3000}
-         
                   /> : 
                   wish.map(product => {
-                      console.log(product.name)
-                      return <Product key={product.id} data={product}/>
+                      return <Product key={product.id} product={product} id={product.id}/>
                   })
                }
             </div>

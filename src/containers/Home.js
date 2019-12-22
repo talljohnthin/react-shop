@@ -8,6 +8,7 @@ import './../styles/global.scss';
 import SignUp from '../components/Auth/SignUp';
 import Login from '../components/Auth/Login'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { checkWishList } from '../components/Helpers/functions'
 import Products from '../components/Product/Products'
 import Category from '../components/Category/Index'
 import Segments from '../components/Segments/Index'
@@ -24,11 +25,49 @@ import { WishListContext } from '../contexts/WishListContext'
 const Home = () => {
   const { state, dispatch } = useContext(AuthContext)
   const { wishListState, wishListDispatch } = useContext(WishListContext)
-  
 
   useEffect(() => {
    authListener()
   }, [])
+
+  useEffect(()=> {
+    console.log('from state :', wishListState)
+    console.log('from localStorage: ', JSON.parse(localStorage.getItem('wish-list')))
+
+    if(wishListState.products.length <= 0) {
+      console.log(wishListState.products.length)
+      const local = JSON.parse(localStorage.getItem('wish-list'))
+      if (local) {
+        if( local.products.length > 0 )  {
+            console.log(local.products)
+           wishListDispatch({
+            type:"ADD_WISH",
+            payload: {products: local.products}
+           })
+        }
+      }
+    }
+   
+      //const localSource = JSON.parse(localStorage.getItem('wish-list'))
+      //console.log(localSource.products)
+      // if (localSource.products.length > 0 ) {
+      //   wishListDispatch({
+      //     type:"ADD_WISH",
+      //     payload: localStorage.products
+      //   })
+      // }
+   
+  })
+  
+  const checkWishList = () => {
+    // const products = JSON.parse(localStorage.getItem('wish-list'))
+    // if (products) {
+    //     wishListDispatch({
+    //       type:"ADD_WISH",
+    //       payload: products
+    //     })
+    // }
+  }
 
   const authListener = () => {
     firebase.auth().onAuthStateChanged((user) => {
