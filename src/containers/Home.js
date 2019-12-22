@@ -33,41 +33,19 @@ const Home = () => {
   useEffect(()=> {
     console.log('from state :', wishListState)
     console.log('from localStorage: ', JSON.parse(localStorage.getItem('wish-list')))
-
     if(wishListState.products.length <= 0) {
-      console.log(wishListState.products.length)
       const local = JSON.parse(localStorage.getItem('wish-list'))
       if (local) {
         if( local.products.length > 0 )  {
-            console.log(local.products)
            wishListDispatch({
-            type:"ADD_WISH",
-            payload: {products: local.products}
+            type:"REPLACE_WISH",
+            payload: local.products.map(item => item)
            })
         }
       }
     }
-   
-      //const localSource = JSON.parse(localStorage.getItem('wish-list'))
-      //console.log(localSource.products)
-      // if (localSource.products.length > 0 ) {
-      //   wishListDispatch({
-      //     type:"ADD_WISH",
-      //     payload: localStorage.products
-      //   })
-      // }
-   
   })
   
-  const checkWishList = () => {
-    // const products = JSON.parse(localStorage.getItem('wish-list'))
-    // if (products) {
-    //     wishListDispatch({
-    //       type:"ADD_WISH",
-    //       payload: products
-    //     })
-    // }
-  }
 
   const authListener = () => {
     firebase.auth().onAuthStateChanged((user) => {

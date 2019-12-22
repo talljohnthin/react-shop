@@ -13,12 +13,13 @@
     .card-img {
         border-radius: 0;
     }
-    .card-price {
+    .card-total {
         font-weight: 400;
         font-family: $primary-font;
         font-size:14px;
         margin-top: 5px;
         color:$secondary-color;
+        margin-bottom: 5px;;
         @media (max-width:767px) {
             font-size:14px;
         }
@@ -27,8 +28,15 @@
         color:#666;
         font-family: $secondary-font;
         font-size:16px;
-        font-weight: 300;
-        margin:0;
+        font-weight: 600;
+        margin:0 0 5px;
+    }
+    .card-variation,
+    .card-option,
+    .card-price {
+        margin-bottom: 5px;
+        font-size:13px;
+        font-family: $secondary-font;
     }
     .card-wrapper {
         display: flex;
@@ -43,12 +51,18 @@
     }
     .right {
         display: flex;
-        justify-content: flex-end;
+        justify-content: center;
+        flex-direction: column;
         align-items: center;
         float:right;
         position: absolute;
         right:20px;
         top:0;
         height: 100%;
+
+        .card-units-wrapper {
+            display: flex;
+            align-items: center;
+        }
     }
 }

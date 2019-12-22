@@ -9,7 +9,7 @@ export default function Index() {
     const { wishListState, wishListDispatch } = useContext(WishListContext)
     useEffect(()=>{
         setWish(wishListState.products)
-    }, [])
+    }, [wishListState])
     return (
         <Fragment>
         <div className="hero">
@@ -28,8 +28,8 @@ export default function Index() {
                   height={50}
                   width={50}
                   /> : 
-                  wish.map(product => {
-                      return <Product key={product.id} product={product} id={product.id}/>
+                  wish.map((product, productIndex) => {
+                        return <Product key={productIndex} productIndex={productIndex} product={product} id={product.id}/>
                   })
                }
             </div>
