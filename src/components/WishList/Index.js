@@ -32,6 +32,9 @@ export default function Index() {
                         return <Product key={productIndex} productIndex={productIndex} product={product} id={product.id}/>
                   })
                }
+               {
+                   console.log('set wish', wishListState)
+               }
             </div>
         </Container>
         </div>

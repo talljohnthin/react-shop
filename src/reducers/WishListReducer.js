@@ -8,6 +8,8 @@ const WishListReducer = (state, action) => {
             return removeWish(state, action)
         case "ADD_UNIT_WISH":
             return unitWish(state, action)
+        case "SELECT_VARIATION_WISH":
+            return selectVariation(state, action)
         default:
             return state
     }
@@ -50,4 +52,9 @@ const unitWish = ( state, action ) => {
     localStorage.setItem('wish-list', JSON.stringify( {...state, products: [...copyState.products]} ))
     return {...state, products: [...copyState.products]}
 }
+
+const selectVariation  = ( state, action) => {
+   // return {...state, select_variation: action.payload.index}
+}
+
 export default WishListReducer;

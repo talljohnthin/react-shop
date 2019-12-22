@@ -26,6 +26,17 @@ const Product = ({product, id, productIndex}) => {
             }
         }
     }
+    const handleSelectVariation = () => {
+        console.log('clicked')
+        // if (wishListState) {
+        //     if( wishListState.products.length > 0) {
+        //         wishListDispatch({
+        //             type: 'SELECT_VARIATION_WISH',
+        //             payload: {index: productIndex, id:id}
+        //         })
+        //     }
+        // }
+    }
     return (
         <Fragment>
                 <div className="card">
@@ -42,15 +53,15 @@ const Product = ({product, id, productIndex}) => {
                         </div>
                         <div className="right">
                             <div className="card-variation">
-                                <ion-icon name="settings"></ion-icon>
+                                <ion-icon name="settings" onClick={handleSelectVariation}></ion-icon>
                             </div>
                             <div className="card-remove" onClick={handleRemove}>
                                 <ion-icon name="trash" ></ion-icon>
                             </div>
                             <div className="card-units-wrapper">
-                                <ion-icon name="add" onClick={e => handleUnit('+')}></ion-icon>
+                                <ion-icon name="add" onClick={() => handleUnit('+')}></ion-icon>
                                 <div className="card-units">{unit}</div>
-                                <ion-icon name="remove" onClick={e => handleUnit('-')}></ion-icon>
+                                <ion-icon name="remove" onClick={() => handleUnit('-')}></ion-icon>
                             </div>
                         </div>
                     </div>
