@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useContext } from 'react';
 import ReactNotifications from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
-//import 'animate.css';
+import 'animate.css';
 import firebase from './../config/firebase';
 import './../styles/reset.scss';
 import './../styles/global.scss';
@@ -16,6 +16,7 @@ import Header from '../components/Header/Index'
 import Hero from '../components/Hero/Index'
 import Update from '../components/Update/Index'
 import Edit from '../components/Edit/Index'
+import WishList from '../components/WishList/Index'
 import { AuthContext } from '../contexts/AuthContext'
 import { WishListContext } from '../contexts/WishListContext'
 
@@ -28,10 +29,6 @@ const Home = () => {
   useEffect(() => {
    authListener()
   }, [])
-
-  useEffect(() => {
-   console.log('wish: ', wishListState)
-  })
 
   const authListener = () => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -61,6 +58,8 @@ const Home = () => {
         <Route path="/edit/:id" exact component={ Edit } />
         <Route path="/signup" exact component={ SignUp }/>
         <Route path="/login" exact component={ Login }/>
+        <Route path="/wish-list" exact component={ WishList }/>
+        
         <div className="container">
           <div className="row">
             <Route path="/category" exact component={ Category }/>

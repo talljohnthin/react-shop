@@ -15,6 +15,7 @@
     "react-dom": "^16.9.0",
     "react-firebase-file-uploader": "^2.4.3",
     "react-input-switch": "^2.2.1",
+    "react-loader-spinner": "^3.1.5",
     "react-notifications-component": "^2.2.4",
     "react-router-dom": "^5.0.1",
     "react-scripts": "^3.3.0",

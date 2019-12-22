@@ -1,9 +1,12 @@
 import React, { Fragment, useState, useEffect, useContext } from 'react'
 import Product from './Product'
-import './Sass/Style.scss'
 import { Container } from 'react-bootstrap'
-import { db, storage } from '../../config/firebase'
+import { db } from '../../config/firebase'
+import Loader from 'react-loader-spinner'
 import { ProductContext } from '../../contexts/ProductContext'
+
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
+import './Sass/Style.scss'
 
 const Products = () => {
     const [categories, setCategories] = useState([])
@@ -13,6 +16,7 @@ const Products = () => {
     useEffect(()=> {
         getCategories();
         getProducts();
+        console.log("loaded products: ", products)
     }, [])
 
     const getCategories = () => {
@@ -53,7 +57,6 @@ const Products = () => {
     const filterItem = categories.map(e => <li key={e.id}>{e.name.name}</li>)
     return (
         <Fragment>
-            { productState !== undefined && productState.products.map( product => console.log('hello:', product) ) }
             <ul className="home-filter">
                 <li>MEN</li>
                 <li>WOMEN</li>
@@ -64,10 +67,21 @@ const Products = () => {
                 <div>
                     <ul className="home-filter-categories">
                         { filterItem }
+                        {
+                            products.length <= 0 ? <Loader
+                                className="loader-spin"
+                                type="TailSpin"
+                                color="#39A7AB"
+                                height={50}
+                                width={50}
+                                timeout={3000}
+                       
+                            /> : ''
+                        }
                     </ul>
                     <div className="row product-list">
-                        {
-                            products ? products.map( product => <Product key={ product.id } data={ product }/>) : ''
+                        { 
+                           products && products.map( product => <Product key={ product.id } data={ product }/>) 
                         }
                         <div className="card"></div>
                     </div>

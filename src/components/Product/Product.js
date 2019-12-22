@@ -35,7 +35,6 @@ function Product({data}) {
             price:Number(pPrice),
             unit:1,
             total: Number(pPrice)
-            
         }
         if (obj.id && obj.name && obj.option && obj.image && obj.variation && obj.price && obj.unit && obj.total) {
             wishListDispatch({
