@@ -8,8 +8,10 @@ const WishListReducer = (state, action) => {
             return removeWish(state, action)
         case "ADD_UNIT_WISH":
             return unitWish(state, action)
-        case "SELECT_VARIATION_WISH":
-            return selectVariation(state, action)
+        case "UPDATE_VARIATION_WISH":
+            return updateVariation(state, action)
+        case "UPDATE_OPTION_WISH":
+            return updateOption(state, action)
         default:
             return state
     }
@@ -21,6 +23,7 @@ const addWish = (state, action) => {
 }
 
 const replaceWish = ( state, action ) => {
+    localStorage.setItem('wish-list', JSON.stringify( {...state, products: [...action.payload]} ))
     return {...state, products: [...action.payload]}
 }
 
@@ -53,8 +56,26 @@ const unitWish = ( state, action ) => {
     return {...state, products: [...copyState.products]}
 }
 
-const selectVariation  = ( state, action) => {
-   // return {...state, select_variation: action.payload.index}
+const updateVariation  = ( state, action) => {
+    const id = action.action.id
+    const variation = action.action.variation
+    const copyState = {...state}
+    const product = copyState.products.find(item => item.id == id)
+    product.variation = variation
+    return  {...state, products: [...copyState.products]}
 }
+
+const updateOption  = ( state, action) => {
+    const id = action.action.id
+    const option = action.action.option
+    const price = action.action.price
+    const copyState = {...state}
+    const product = copyState.products.find(item => item.id == id)
+    product.option = option
+    product.price = price
+    product.total = product.unit * price
+    return  {...state, products: [...copyState.products]}
+}
+
 
 export default WishListReducer;

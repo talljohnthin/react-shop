@@ -2,13 +2,12 @@ import React, { Fragment, useEffect, useContext } from 'react';
 import ReactNotifications from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import 'animate.css';
-import firebase from './../config/firebase';
+import firebase, { db } from './../config/firebase';
 import './../styles/reset.scss';
 import './../styles/global.scss';
 import SignUp from '../components/Auth/SignUp';
 import Login from '../components/Auth/Login'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { checkWishList } from '../components/Helpers/functions'
 import Products from '../components/Product/Products'
 import Category from '../components/Category/Index'
 import Segments from '../components/Segments/Index'
@@ -20,19 +19,22 @@ import Edit from '../components/Edit/Index'
 import WishList from '../components/WishList/Index'
 import { AuthContext } from '../contexts/AuthContext'
 import { WishListContext } from '../contexts/WishListContext'
-
+import { ProductContext } from '../contexts/ProductContext'
 
 const Home = () => {
   const { state, dispatch } = useContext(AuthContext)
   const { wishListState, wishListDispatch } = useContext(WishListContext)
+  const {productState, productDispatch} = useContext(ProductContext)
 
   useEffect(() => {
    authListener()
-  }, [])
+   getProducts()
+   }, [])
 
   useEffect(()=> {
     console.log('from state :', wishListState)
     console.log('from localStorage: ', JSON.parse(localStorage.getItem('wish-list')))
+    console.log('productState', productState.products)
     if(wishListState.products.length <= 0) {
       const local = JSON.parse(localStorage.getItem('wish-list'))
       if (local) {
@@ -63,13 +65,31 @@ const Home = () => {
     })
   }
 
+  const getProducts = () => {
+    db.collection("products")
+     .where("status", "==", "available")
+     .onSnapshot(snapshot => {
+         const products = []
+         snapshot.forEach(doc => {
+             const product = {
+                 id: doc.id,
+                 data: doc.data()
+             }
+             products.push(product)
+         })
+         productDispatch({
+             type:'LOAD_PRODUCTS',
+             payload: [...products]
+         })
+     }); 
+  }
   return ( 
     <Fragment>
       <ReactNotifications />
       <Router>
         <Header />
         <Route path="/" exact component={ Hero }/>
-        <Route path="/" exact component={ Products }/>
+       { <Route path="/" exact component={ Products }/> }
         <Route path="/upload" exact component={ Uploads } />
         <Route path="/update" exact component={ Update } />
         <Route path="/edit/:id" exact component={ Edit } />

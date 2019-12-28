@@ -65,4 +65,11 @@
             align-items: center;
         }
     }
+    .change-variation,
+    .change-option {
+        color:blue;
+        text-decoration: underline;
+        cursor:pointer;
+        margin-left:6px;
+    }
 }

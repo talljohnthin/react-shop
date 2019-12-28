@@ -2,14 +2,18 @@ import React, {Fragment, useContext, useState, useEffect } from 'react'
 import { Container } from 'react-bootstrap'
 import Loader from 'react-loader-spinner'
 import { WishListContext } from '../../contexts/WishListContext'
+import { ProductContext } from '../../contexts/ProductContext'
 import Product from './Product'
 
 export default function Index() {
     const [wish, setWish] = useState([])
     const { wishListState, wishListDispatch } = useContext(WishListContext)
+    
     useEffect(()=>{
         setWish(wishListState.products)
     }, [wishListState])
+
+
     return (
         <Fragment>
         <div className="hero">
@@ -31,9 +35,6 @@ export default function Index() {
                   wish.map((product, productIndex) => {
                         return <Product key={productIndex} productIndex={productIndex} product={product} id={product.id}/>
                   })
-               }
-               {
-                   console.log('set wish', wishListState)
                }
             </div>
         </Container>

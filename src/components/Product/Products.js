@@ -16,7 +16,7 @@ const Products = () => {
     useEffect(()=> {
         getCategories();
         getProducts();
-        console.log("loaded products: ", products)
+        setProducts(productState.products)
     }, [])
 
     const getCategories = () => {
@@ -35,7 +35,7 @@ const Products = () => {
     }
 
     const getProducts = () => {
-        db.collection("products")
+       db.collection("products")
         .where("status", "==", "available")
         .onSnapshot(snapshot => {
             const products = []
@@ -51,7 +51,7 @@ const Products = () => {
                 payload: [...products]
             })
             setProducts(products)
-        });
+        }); 
     }
 
     const filterItem = categories.map(e => <li key={e.id}>{e.name.name}</li>)
