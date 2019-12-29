@@ -73,3 +73,91 @@
         margin-left:6px;
     }
 }
+
+.WISHLIST-product-total {
+    background:#fff;
+    box-shadow: 0 0.25rem 0.125rem 0 rgba(0,0,0,0.02);
+    margin-bottom: 12px;
+    margin-top: 20px;
+    .title {
+        background:$secondary-color;
+        color:#fff;
+        padding: 10px 20px;
+        font-size:14px;
+        font-family: $secondary-font;
+    }
+    ul {
+        padding:20px;
+        li {
+            display: flex;
+            margin-bottom: 4px;
+            span {
+                flex:1;
+                text-align: right;
+            }
+            &:first-child {
+                .amount {
+                    font-size:15px;
+                    font-weight: 600;
+                }
+            }
+            &:last-child {
+                .amount {
+                    font-size:10px;
+                    text-transform: uppercase;
+                }
+            }
+        }
+        .label {
+            font-size:13px;
+            font-weight: $secondary-font;
+        }
+        .amount {
+            font-family: $secondary-font;
+        }
+    }
+}
+
+.WISHLIST-shipping-info {
+    margin-bottom:12px;
+    border-radius: 0;
+    border:0;
+    background:#fff;
+    box-shadow: 0 0.25rem 0.125rem 0 rgba(0,0,0,0.02);
+    .title {
+        background:$secondary-color;
+        color:#fff;
+        padding: 10px 20px;
+        font-size:14px;
+        font-family: $secondary-font;
+    }
+    form {
+        padding:20px;
+    }
+    .form-check {
+        margin-bottom: 20px;
+        input {
+            margin-top:3px;
+        }
+        label {
+            font-size:13px;
+            font-family: $secondary-font;
+        }
+    }
+    .each {
+        margin-bottom: 8px;
+        .label {
+            font-size:13px;
+            margin-bottom: 8px;
+        }
+        .form-group {
+            margin:0;
+        }
+        .form-control {
+            font-size: 13px;
+            font-family: $secondary-font;
+            border:1px solid #eee;
+            border-radius: 0;
+        }
+    }
+}
