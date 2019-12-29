@@ -157,22 +157,22 @@ const Product = ({product, id, productIndex}) => {
                         <div className="left">
                             <img className="card-img" src={ image } alt={ name } />
                         </div>
-                        <div className="center">
-                            <h4 className="card-title">{ name }</h4>
-                            { variation && <p className="card-variation">Variation: {variation} <span onClick={()=> modalVariation('open')} className="change-variation">Change</span></p>}
-                            { option && <p className="card-option">Option: { option }  <span onClick={()=> modalOption('open')} className="change-option">Change</span></p>}
-                            <p className="card-price">Price: {price}</p>
-                            <p className="card-total">Total: {total}</p>
-                        </div>
                         <div className="right">
                             <div className="card-remove" onClick={handleRemove}>
-                                <ion-icon name="trash" ></ion-icon>
+                                <ion-icon name="close"></ion-icon>
                             </div>
-                            <div className="card-units-wrapper">
-                                <ion-icon name="add" onClick={() => handleUnit('+')}></ion-icon>
-                                <div className="card-units">{unit}</div>
-                                <ion-icon name="remove" onClick={() => handleUnit('-')}></ion-icon>
-                            </div>
+                            <h4 className="card-title">{ name }</h4>
+                            { variation && <p className="card-variation">Variation: {variation} <span onClick={()=> modalVariation('open')} className="change-variation"><ion-icon name="create"></ion-icon></span></p>}
+                            { option && <p className="card-option">Option: { option }  <span onClick={()=> modalOption('open')} className="change-option"><ion-icon name="create"></ion-icon></span></p>}
+                            <p className="card-unit">Qty:  
+                                <div className="card-units-wrapper">
+                                    <ion-icon name="add" onClick={() => handleUnit('+')}></ion-icon>
+                                    <div className="card-units">{unit}</div>
+                                    <ion-icon name="remove" onClick={() => handleUnit('-')}></ion-icon>
+                                </div>
+                            </p>
+                            <p className="card-price">Price: {price}</p>
+                            <p className="card-total">Total: {total}</p>
                         </div>
                     </div>
                 </div>

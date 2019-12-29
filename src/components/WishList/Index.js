@@ -12,27 +12,17 @@ export default function Index() {
     const [currentUserName, setCurrentUserName] = useState(null)
     const [currentUserPhone, setCurrentUserPhone] = useState(null)
     const [currentUserAddress, setCurrentUserAddress] = useState(null)
+    const [useCurUserInfo, setUseCurUserInfo] = useState(false)
     const { wishListState, wishListDispatch } = useContext(WishListContext)
     
     useEffect(()=>{
         setWish(wishListState.products)
         getTotal()
-        console.log(firebase.auth().currentUser && firebase.auth().currentUser.phoneNumber)
     }, [wishListState])
 
     const getTotal = () => {
         const totalResult = wishListState.products.reduce((acc, item) => item.total + acc, 0)
         setTotal(totalResult)
-    }
-
-    const getCurrentUserInfo = () => {
-        if (firebase.auth().currentUser) {
-            setCurrentUserName(firebase.auth().currentUser.displayName)
-            setCurrentUserPhone(firebase.auth().currentUser.phoneNumber)
-        } else {
-            notification('Wish', 'You must be logged in to continue. Thank you!', 'danger')
-        }
-        
     }
 
     const handleOrder = () => {
@@ -41,11 +31,38 @@ export default function Index() {
             const phone = firebase.auth().currentUser.phoneNumber
             const userName = firebase.auth().currentUser.displayName
 
+            console.log(currentUserName)
+            console.log(currentUserAddress)
+            console.log(currentUserPhone)
+
         } else {
             notification('Wish', 'You must be logged in to order. Thank you!', 'danger')
         }
     }
 
+    const handleChangeName = (e) =>  {
+        setCurrentUserName(e.target.value)
+    }
+    const handleChangeAddress = (e) =>  {
+        setCurrentUserAddress(e.target.value)
+    }
+    const handleChangePhone = (e) =>  {
+        setCurrentUserPhone(e.target.value)
+    }
+    const handleUseUserInfo = () => {
+        setUseCurUserInfo(!useCurUserInfo)
+        if( useCurUserInfo === false) {
+            if (firebase.auth().currentUser) {
+                setCurrentUserName(firebase.auth().currentUser.displayName)
+                setCurrentUserPhone(firebase.auth().currentUser.phoneNumber)
+            } else {
+                notification('Wish', 'You must be logged in to continue. Thank you!', 'danger')
+            }
+        } else {
+            setCurrentUserName('')
+            setCurrentUserPhone('')
+        }
+    }
 
     return (
         <Fragment>
@@ -68,31 +85,29 @@ export default function Index() {
             <div className="title">Total</div>
                 <ul>
                     <li><span className="label">Total :</span><span className="amount">{total}</span></li>
-                    <li><span className="label">Shipping :</span><span className="amount">Added later</span></li>
+                    <li><span className="label">Shipping :</span><span className="amount">Add later</span></li>
                 </ul>
             </div>
-
             <div className="WISHLIST-shipping-info">
                 <div className="title">Add Shipping Info</div>
                 <form>
-                            
-                <div className="form-check">
-                    <input className="form-check-input" name="user-info" type="checkbox" />
-                    <label className="form-check-label">
-                        Use current login information
-                    </label>
-                </div>
+                    <div className="form-check">
+                        <input checked={useCurUserInfo} onChange={handleUseUserInfo} className="form-check-input" name="user-info" type="checkbox" />
+                        <label className="form-check-label"  onClick={handleUseUserInfo}>
+                            Use current login information
+                        </label>
+                    </div>
                     <div className="each">
                         <div className="label">Ship to:</div>
-                        <div className="form-group"><input type="text" name="name" placeholder="Input name" value={currentUserName} className="form-control"/></div>
+                        <div className="form-group"><input type="text" name="name" placeholder="Input name" onChange={handleChangeName} value={currentUserName || ''} className="form-control"/></div>
                     </div>
                     <div className="each">
                         <div className="label">Shipping Address:</div>
-                        <div className="form-group"><input type="text" name="address" placeholder="Input address" value={currentUserAddress} className="form-control"/></div>
+                        <div className="form-group"><input type="text" name="address" placeholder="Input address" onChange={handleChangeAddress}  value={currentUserAddress || ''} className="form-control"/></div>
                     </div>
                     <div className="each">
                         <div className="label">Phone/Mobile Number:</div>
-                        <div className="form-group"><input type="number" name="phone" placeholder="Input phone" value={currentUserPhone} className="form-control"/></div>
+                        <div className="form-group"><input type="number" name="phone" placeholder="Input phone" onChange={handleChangePhone}  value={currentUserPhone || ''} className="form-control"/></div>
                     </div>
                 </form>
             </div>

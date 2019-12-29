@@ -25,18 +25,21 @@
         }
     }
     .card-title {
-        color:#666;
+        color:#000;
         font-family: $secondary-font;
-        font-size:16px;
+        font-size:13px;
         font-weight: 600;
         margin:0 0 5px;
+        text-transform: uppercase;
     }
     .card-variation,
     .card-option,
-    .card-price {
+    .card-price,
+    .card-unit {
         margin-bottom: 5px;
         font-size:13px;
         font-family: $secondary-font;
+        display: flex;
     }
     .card-wrapper {
         display: flex;
@@ -44,25 +47,18 @@
         position: relative;
     }
     .left {
-        max-width:80px;
-    }
-    .center {
-        padding-left: 15px;
+        max-width:100px;
     }
     .right {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        align-items: center;
-        float:right;
-        position: absolute;
-        right:20px;
-        top:0;
-        height: 100%;
-
+        padding-left: 15px;
         .card-units-wrapper {
             display: flex;
             align-items: center;
+        }
+        .card-remove {
+            position:absolute;
+            right:8px;
+            top:8px;
         }
     }
     .change-variation,
@@ -159,5 +155,17 @@
             border:1px solid #eee;
             border-radius: 0;
         }
+    }
+}
+
+.WISHLIST-submit {
+    display: flex;
+    justify-content: flex-end;
+    .btn {
+        font-size:13px;
+        font-family: $secondary-font;
+        border-radius: 0;
+        border-color:$secondary-color;
+        background:$secondary-color;
     }
 }
