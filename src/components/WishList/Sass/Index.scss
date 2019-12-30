@@ -35,11 +35,19 @@
     .card-variation,
     .card-option,
     .card-price,
-    .card-unit {
+    .card-unit,
+    .card-total {
         margin-bottom: 5px;
         font-size:13px;
         font-family: $secondary-font;
         display: flex;
+        span {
+            flex:1;
+            &:first-child {
+                max-width: 80px;
+                text-transform: uppercase;
+            }
+        }
     }
     .card-wrapper {
         display: flex;
@@ -47,13 +55,32 @@
         position: relative;
     }
     .left {
-        max-width:100px;
+        max-width:160px;
     }
     .right {
+        width:100%;
         padding-left: 15px;
         .card-units-wrapper {
             display: flex;
             align-items: center;
+            ion-icon {
+                width:13px;
+                height:13px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background:$secondary-color;
+                color:#fff;
+            }
+            .card-units {
+                font-size:13px;
+                width:16px;
+                height:16px;
+                margin:0 3px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
         }
         .card-remove {
             position:absolute;
@@ -63,8 +90,7 @@
     }
     .change-variation,
     .change-option {
-        color:blue;
-        text-decoration: underline;
+        color:$secondary-color;
         cursor:pointer;
         margin-left:6px;
     }
