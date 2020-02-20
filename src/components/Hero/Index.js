@@ -10,7 +10,7 @@ export default class Index extends Component {
             <Fragment>
                 <div className="hero">
                     <Container>
-                       <h1>Hero</h1>
+                       <h1>Watches</h1>
                     </Container>
                 </div>
             </Fragment>
