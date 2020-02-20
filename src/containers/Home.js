@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useContext } from 'react';
 import ReactNotifications from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import 'animate.css';
+import { Link } from 'react-router-dom'
 import firebase, { db } from './../config/firebase';
 import './../styles/reset.scss';
 import './../styles/global.scss';
@@ -102,6 +103,18 @@ const Home = () => {
             <Route path="/category" exact component={ Category }/>
             <Route path="/segments" exact component={ Segments } />
           </div>
+        </div>
+        <div class="quicklinks"><p>TEMPORARY LINKS</p>
+        <ul>
+          <li><Link to="/">PRODUCTS</Link></li>
+          <li><Link to="/upload">ADD PRODUCTS</Link></li>
+          <li><Link to="/update">UPDATE PRODUCTS</Link></li>
+          <li><Link to="/wish-list">WISHLIST</Link></li>
+          <li><Link to="/category">PRODUCT CATEGORY</Link></li>
+          <li><Link to="/category">PRODUCT SEGMENT</Link></li>
+          <li><Link to="/signup">SIGN UP</Link></li>
+          <li><Link to="/login">LOGIN</Link></li>
+        </ul>
         </div>
       </Router>
     </Fragment>

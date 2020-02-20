@@ -49,7 +49,7 @@ export default class Product extends Component {
                                     }
                                   }} 
                             />
-                            <Link to={`/edit/${data.id}`}>Link</Link>
+                            <Link to={`/edit/${data.id}`}>Update Product</Link>
                         </div>
                     </div>
                 </div> :
