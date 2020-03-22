@@ -1,7 +1,10 @@
 import React, { Component, Fragment } from 'react'
+import firebase from 'firebase/app'
+import FileUploader from "react-firebase-file-uploader"
 import { Button, Form, Modal } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFile, faSave, faTimes } from '@fortawesome/free-solid-svg-icons'
+import './scss/index.scss'
 
 export default class Add extends Component {
     constructor(props) {
@@ -9,9 +12,11 @@ export default class Add extends Component {
         this.state = {
             category: '',
             show:false,
+            isUploading: false,
+            progress: 0,
+            imageURL: ""
         }
     }
-   
     handleUpdateStateCategory = e => {
         e.preventDefault()
         this.setState({
@@ -20,7 +25,7 @@ export default class Add extends Component {
     }
     handleFormSubmit = e => {
         e.preventDefault()
-        this.props.handleAddNewCategory(this.state.category)
+        this.props.handleAddNewCategory(this.state.category, this.state.imageURL)
         this.setState({
             category:''
         })
@@ -36,6 +41,21 @@ export default class Add extends Component {
             show:true
         })
     }
+    handleUploadStart = () => this.setState({ isUploading: true, progress: 0 });
+    handleProgress = progress => this.setState({ progress });
+    handleUploadError = error => {
+        this.setState({ isUploading: false });
+        console.error(error);
+    };
+    handleUploadSuccess = filename => {
+        this.setState({ progress: 100, isUploading: false });
+        firebase
+          .storage()
+          .ref("images")
+          .child(filename)
+          .getDownloadURL()
+          .then(url => this.setState({ imageURL: url }));
+      };
     render() {
         return (
             <Fragment>
@@ -48,6 +68,21 @@ export default class Add extends Component {
                             <Modal.Title>Add Category</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
+                        <span style={{display:'block'}}>Select Category Image: </span>
+                        {this.state.imageURL && <img className="category-image" src={this.state.imageURL} />}
+                        <FileUploader
+                            accept="image/*"
+                            name="avatar"
+                            randomizeFilename
+                            storageRef={firebase.storage().ref("images")}
+                            onUploadStart={this.handleUploadStart}
+                            onUploadError={this.handleUploadError}
+                            onUploadSuccess={this.handleUploadSuccess}
+                            onProgress={this.handleProgress}
+                            className="category-file-uploader"
+                        />
+                         {this.state.isUploading && <p>Progress: {this.state.progress}</p>}
+                            <span style={{marginBottom:10,marginTop:10, display:'block'}}>Add category name: </span>
                             <Form.Group controlId="formGroupPassword">
                                 <Form.Control placeholder="like: Tops, T-Shirt, Shoes, Short, Bag" name="category" value={ this.state.category } onChange={ this.handleUpdateStateCategory } />
                             </Form.Group>
@@ -61,9 +96,7 @@ export default class Add extends Component {
                             </Button>
                         </Modal.Footer>
                     </Form>
-                   
                 </Modal>
-                
             </Fragment>
         )
     }

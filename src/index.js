@@ -14,3 +14,4 @@ ReactDOM.render(
         </ProductProvider>
     </AuthProvider>
 , document.getElementById('root'));
+

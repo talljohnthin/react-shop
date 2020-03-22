@@ -18,10 +18,13 @@
     "react-input-switch": "^2.2.1",
     "react-loader-spinner": "^3.1.5",
     "react-notifications-component": "^2.3.0",
+    "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.4.0",
     "react-uuid": "^1.0.2",
     "reactjs-popup": "^1.5.0",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
     "styled-components": "^4.4.1"
   },
   "scripts": {

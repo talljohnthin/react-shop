@@ -51,10 +51,11 @@ export default class Index extends Component {
                 })
             })
     }
-    handleAddNewCategory = (newCategory) => {
-        if (newCategory.length > 3) {
+    handleAddNewCategory = (newCategory, categoryImage) => {
+        if (newCategory.length > 3 && categoryImage.length) {
             db.collection("category").add({
-                name: newCategory
+                name: newCategory,
+                url:categoryImage
             })
                 .then(function (docRef) {
                     console.log("Document written with ID: ", docRef.id);
@@ -81,7 +82,7 @@ export default class Index extends Component {
         } else {
             const alertObj = {
                 type: 'failed',
-                message: 'Character must be greater than 3.'
+                message: 'Character must be greater than 3 and It must have a category image'
             }
             if (this.alertTimeout) {
                 clearTimeout(this.alertTimeout)

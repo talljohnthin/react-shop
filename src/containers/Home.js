@@ -111,7 +111,7 @@ const Home = () => {
           <li><Link to="/update">UPDATE PRODUCTS</Link></li>
           <li><Link to="/wish-list">WISHLIST</Link></li>
           <li><Link to="/category">PRODUCT CATEGORY</Link></li>
-          <li><Link to="/category">PRODUCT SEGMENT</Link></li>
+          <li><Link to="/segments">PRODUCT SEGMENT</Link></li>
           <li><Link to="/signup">SIGN UP</Link></li>
           <li><Link to="/login">LOGIN</Link></li>
         </ul>
