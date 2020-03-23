@@ -18,6 +18,7 @@ import Hero from '../components/Hero/Index'
 import Update from '../components/Update/Index'
 import Edit from '../components/Edit/Index'
 import WishList from '../components/WishList/Index'
+import Order from '../components/Order/Index'
 import { AuthContext } from '../contexts/AuthContext'
 import { WishListContext } from '../contexts/WishListContext'
 import { ProductContext } from '../contexts/ProductContext'
@@ -49,7 +50,6 @@ const Home = () => {
     }
   })
   
-
   const authListener = () => {
     firebase.auth().onAuthStateChanged((user) => {
       if(user) {
@@ -89,8 +89,22 @@ const Home = () => {
       <ReactNotifications />
       <Router>
         <Header />
+          <div className="quicklinks"><p>TEMPORARY LINKS</p>
+            <ul>
+              <li><Link to="/">PRODUCTS</Link></li>
+              <li><Link to="/order">ORDERS</Link></li>
+              <li><Link to="/upload">ADD PRODUCTS</Link></li>
+              <li><Link to="/update">UPDATE PRODUCTS</Link></li>
+              <li><Link to="/wish-list">WISHLIST</Link></li>
+              <li><Link to="/category">PRODUCT CATEGORY</Link></li>
+              <li><Link to="/segments">PRODUCT SEGMENT</Link></li>
+              <li><Link to="/signup">SIGN UP</Link></li>
+              <li><Link to="/login">LOGIN</Link></li>
+            </ul>
+          </div>
         <Route path="/" exact component={ Hero }/>
        { <Route path="/" exact component={ Products }/> }
+        <Route path="/order" exact component={ Order } />
         <Route path="/upload" exact component={ Uploads } />
         <Route path="/update" exact component={ Update } />
         <Route path="/edit/:id" exact component={ Edit } />
@@ -104,18 +118,7 @@ const Home = () => {
             <Route path="/segments" exact component={ Segments } />
           </div>
         </div>
-        <div class="quicklinks"><p>TEMPORARY LINKS</p>
-        <ul>
-          <li><Link to="/">PRODUCTS</Link></li>
-          <li><Link to="/upload">ADD PRODUCTS</Link></li>
-          <li><Link to="/update">UPDATE PRODUCTS</Link></li>
-          <li><Link to="/wish-list">WISHLIST</Link></li>
-          <li><Link to="/category">PRODUCT CATEGORY</Link></li>
-          <li><Link to="/segments">PRODUCT SEGMENT</Link></li>
-          <li><Link to="/signup">SIGN UP</Link></li>
-          <li><Link to="/login">LOGIN</Link></li>
-        </ul>
-        </div>
+        
       </Router>
     </Fragment>
   );
