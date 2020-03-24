@@ -1,0 +1,197 @@
+@import './../../../styles/variables.scss';
+
+.WISHLIST-product {
+    max-width:600px;
+    margin:40px auto;
+}
+
+.WISHLIST-product-list .card {
+    margin-bottom:12px;
+    border-radius: 0;
+    border:0;
+    box-shadow: 0 0.25rem 0.125rem 0 rgba(0,0,0,0.02);
+    .card-img {
+        border-radius: 0;
+    }
+    .card-total {
+        font-weight: 400;
+        font-family: $primary-font;
+        font-size:14px;
+        margin-top: 5px;
+        color:$secondary-color;
+        margin-bottom: 5px;;
+        @media (max-width:767px) {
+            font-size:14px;
+        }
+    }
+    .card-title {
+        color:#000;
+        font-family: $secondary-font;
+        font-size:13px;
+        font-weight: 600;
+        margin:0 0 5px;
+        text-transform: uppercase;
+    }
+    .card-variation,
+    .card-option,
+    .card-price,
+    .card-unit,
+    .card-total {
+        margin-bottom: 5px;
+        font-size:13px;
+        font-family: $secondary-font;
+        display: flex;
+        span {
+            flex:1;
+            &:first-child {
+                max-width: 80px;
+                text-transform: uppercase;
+            }
+        }
+    }
+    .card-wrapper {
+        display: flex;
+        align-items: center;
+        position: relative;
+    }
+    .left {
+        max-width:160px;
+    }
+    .right {
+        width:100%;
+        padding-left: 15px;
+        .card-units-wrapper {
+            display: flex;
+            align-items: center;
+            ion-icon {
+                width:13px;
+                height:13px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background:$secondary-color;
+                color:#fff;
+            }
+            .card-units {
+                font-size:13px;
+                width:16px;
+                height:16px;
+                margin:0 3px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+        .card-remove {
+            position:absolute;
+            right:8px;
+            top:8px;
+        }
+    }
+    .change-variation,
+    .change-option {
+        color:$secondary-color;
+        cursor:pointer;
+        margin-left:6px;
+    }
+}
+
+.WISHLIST-product-total {
+    background:#fff;
+    box-shadow: 0 0.25rem 0.125rem 0 rgba(0,0,0,0.02);
+    margin-bottom: 12px;
+    margin-top: 20px;
+    .title {
+        background:$secondary-color;
+        color:#fff;
+        padding: 10px 20px;
+        font-size:14px;
+        font-family: $secondary-font;
+    }
+    ul {
+        padding:20px;
+        li {
+            display: flex;
+            margin-bottom: 4px;
+            span {
+                flex:1;
+                text-align: right;
+            }
+            &:first-child {
+                .amount {
+                    font-size:15px;
+                    font-weight: 600;
+                }
+            }
+            &:last-child {
+                .amount {
+                    font-size:10px;
+                    text-transform: uppercase;
+                }
+            }
+        }
+        .label {
+            font-size:13px;
+            font-weight: $secondary-font;
+        }
+        .amount {
+            font-family: $secondary-font;
+        }
+    }
+}
+
+.WISHLIST-shipping-info {
+    margin-bottom:12px;
+    border-radius: 0;
+    border:0;
+    background:#fff;
+    box-shadow: 0 0.25rem 0.125rem 0 rgba(0,0,0,0.02);
+    .title {
+        background:$secondary-color;
+        color:#fff;
+        padding: 10px 20px;
+        font-size:14px;
+        font-family: $secondary-font;
+    }
+    form {
+        padding:20px;
+    }
+    .form-check {
+        margin-bottom: 20px;
+        input {
+            margin-top:3px;
+        }
+        label {
+            font-size:13px;
+            font-family: $secondary-font;
+        }
+    }
+    .each {
+        margin-bottom: 8px;
+        .label {
+            font-size:13px;
+            margin-bottom: 8px;
+        }
+        .form-group {
+            margin:0;
+        }
+        .form-control {
+            font-size: 13px;
+            font-family: $secondary-font;
+            border:1px solid #eee;
+            border-radius: 0;
+        }
+    }
+}
+
+.WISHLIST-submit {
+    display: flex;
+    justify-content: flex-end;
+    .btn {
+        font-size:13px;
+        font-family: $secondary-font;
+        border-radius: 0;
+        border-color:$secondary-color;
+        background:$secondary-color;
+    }
+}
