@@ -19,6 +19,7 @@ import Update from '../components/Update/Index'
 import Edit from '../components/Edit/Index'
 import WishList from '../components/WishList/Index'
 import Order from '../components/Order/Index'
+import ViewOrder from '../components/Order/ViewOrder'
 import { AuthContext } from '../contexts/AuthContext'
 import { WishListContext } from '../contexts/WishListContext'
 import { ProductContext } from '../contexts/ProductContext'
@@ -106,6 +107,7 @@ const Home = () => {
        { <Route path="/" exact component={ Products }/> }
         <Route path="/order" exact component={ Order } />
         <Route path="/upload" exact component={ Uploads } />
+        <Route path="/order/ViewOrder" exact component={ ViewOrder } />
         <Route path="/update" exact component={ Update } />
         <Route path="/edit/:id" exact component={ Edit } />
         <Route path="/signup" exact component={ SignUp }/>
