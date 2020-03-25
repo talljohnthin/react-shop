@@ -2,16 +2,17 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { Container } from 'react-bootstrap'
 import  { Redirect } from 'react-router-dom'
+import { formatMoney } from './../../utils/Index'
 import Product from './Product'
 
-const ViewOrder = ({ orders, selectedOrderId }) => {
-    const order = orders.filter(e => e.id === selectedOrderId)[0]
+const ViewOrder = ({ selectedOrder, selectedOrderId }) => {
+    const order = selectedOrder
     if (!selectedOrderId) {
         return <Redirect to='/Order'  />
     }
     const hasOrder = () => {
         return order.name.products.map((product, productIndex) => {
-            return <Product key={productIndex} productIndex={productIndex} product={product} id={product.id}/>
+            return <Product key={productIndex} index={productIndex} product={product} id={product.id}/>
         })
     }
     return (
@@ -23,7 +24,7 @@ const ViewOrder = ({ orders, selectedOrderId }) => {
                 <div className="WISHLIST-product-total">
                 <div className="title">Total</div>
                     <ul>
-                        <li><span className="label">Total :</span><span className="amount">2000</span></li>
+                        <li><span className="label">Total :</span><span className="amount">&#8369; { formatMoney(order.name.total_amount) }</span></li>
                         <li><span className="label">Shipping :</span><span className="amount">Add later</span></li>
                     </ul>
                 </div>
@@ -36,7 +37,7 @@ const ViewOrder = ({ orders, selectedOrderId }) => {
 }
 
 const mapStateToProps = (state) => ({
-    orders: state.orders.orders,
+    selectedOrder: state.orders.selectedOrder,
     selectedOrderId: state.orders.selectedOrderId
 })
 export default connect(mapStateToProps)(ViewOrder)

@@ -10,7 +10,12 @@ import {
     DELETE_ORDER,
     PROCEED_TO_ON_SHIP,
     RECEIVE_ORDER,
-    GET_ORDERS_BY_CUSTOMER
+    GET_ORDERS_BY_CUSTOMER,
+    ADD_QUANTITY,
+    SUBTRACT_QUANTITY,
+    REMOVE_TO_ORDER,
+    EMPTY_ORDER,
+    SUM_TOTAL_IN_THE_ORDER
 } from './orderTypes'
 
 export const getOrders = (orderStatus) => {
@@ -151,6 +156,37 @@ export const receiveOrder = (orderId) => {
         }).catch(function(error) {
             console.error("Error on proceeding order: ", error);
         });
+    }
+}
+
+
+
+export const removeToOrder = (index) => {
+    return {
+        type: REMOVE_TO_ORDER,
+        payload: index
+    }
+}
+export const addQuantity = (index) => {
+    return {
+        type: ADD_QUANTITY,
+        payload: index
+    }
+}
+export const subtractQuantity = (index) => {
+    return {
+        type: SUBTRACT_QUANTITY,
+        payload: index
+    }
+}
+export const sumProductsInOrder = () => {
+    return {
+        type: SUM_TOTAL_IN_THE_ORDER
+    }
+}
+export const emptyOrder = () => {
+    return {
+        type: EMPTY_ORDER
     }
 }
 

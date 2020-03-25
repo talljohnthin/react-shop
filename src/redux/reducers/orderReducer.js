@@ -6,7 +6,12 @@ import {
     GET_ORDERS,
     SELECT_ORDER,
     DELETE_ORDER,
-    GET_ORDERS_BY_CUSTOMER
+    GET_ORDERS_BY_CUSTOMER,
+    ADD_QUANTITY,
+    SUBTRACT_QUANTITY,
+    REMOVE_TO_ORDER,
+    EMPTY_ORDER,
+    SUM_TOTAL_IN_THE_ORDER
 } from './../actions/order/orderTypes'
 
 const initialState = {
@@ -14,7 +19,8 @@ const initialState = {
     isSuccess:false,
     ordersLoading:false,
     message:'',
-    selectedOrderId:''
+    selectedOrderId:'',
+    selectedOrder:{}
 }
 
 const reducer = ( state = initialState, action) => {
@@ -34,7 +40,8 @@ const reducer = ( state = initialState, action) => {
         case SELECT_ORDER: 
             return {
                 ...state,
-                selectedOrderId : action.payload
+                selectedOrderId : action.payload,
+                selectedOrder: selectedOrderFunc(state, action.payload)
             }
         case DELETE_ORDER: 
             return {
@@ -68,8 +75,118 @@ const reducer = ( state = initialState, action) => {
                 isSuccess:false,
                 message: action.payload
             }
+        case REMOVE_TO_ORDER :
+            return {
+                ...state,
+                orders: removeToOrder(state, action.payload)
+            }
+        case ADD_QUANTITY :
+            return {
+                ...state,
+                selectedOrder: addQTY(state, action.payload)
+            }
+        case SUBTRACT_QUANTITY :
+            return {
+                ...state,
+                selectedOrder: subtractQTY(state, action.payload)
+            }
+        case SUM_TOTAL_IN_THE_ORDER :
+            return {
+                ...state,
+                selectedOrder: {...state.selectedOrder, ...state.selectedOrder.name.total_amount = sumProductsInOrder(state)}
+            }
+        case EMPTY_ORDER :
+            return {
+                ...state,
+                orders: [],
+                //OrderTotal:0
+            }
         default : return state
     }
 }
 
 export default reducer
+
+const selectedOrderFunc = (state, id ) => {
+    const orders = [...state.orders]
+    if(id) {
+        const index = orders.findIndex(e => e.id === id)
+        if(index !== null || index !== undefined) {
+            return orders[index]
+        }
+    }
+    return {}
+}
+
+const addQTY = (state, index) => {
+    const selectedOrder = {...state.selectedOrder}
+    const orders = selectedOrder.name.products
+    if (index !== undefined || index !== null || index !== '') {
+        if(orders.length) {
+            const productObj = {
+                id: orders[index].id,
+                name: orders[index].name,
+                option:orders[index].option,
+                price:orders[index].price,
+                qty:orders[index].qty + 1,
+                variation:orders[index].variation,
+                cover:orders[index].cover,
+                total: ( orders[index].qty + 1 ) * Number(orders[index].price)
+            }
+            orders[index] = productObj
+            return {...selectedOrder, ...selectedOrder.name.products = orders}
+        } else {
+            return state.selectedOrder
+        }
+    } else {
+        return state.selectedOrder
+    }
+}
+const subtractQTY = (state, index) => {
+    const selectedOrder = {...state.selectedOrder}
+    const orders = selectedOrder.name.products
+    if (index !== undefined || index !== null || index !== '') {
+        if(orders.length) {
+            const productObj = {
+                id: orders[index].id,
+                name: orders[index].name,
+                option:orders[index].option,
+                price:orders[index].price,
+                qty:orders[index].qty <= 1 ? 1 : orders[index].qty - 1,
+                variation:orders[index].variation,
+                cover:orders[index].cover,
+                total: ( orders[index].qty <= 1 ? 1 : orders[index].qty - 1 ) * Number(orders[index].price) 
+            }
+            orders[index] = productObj
+            return {...selectedOrder, ...selectedOrder.name.products = orders}
+        } else {
+            return state.selectedOrder
+        }
+    } else {
+        return state.selectedOrder
+    }
+}
+const removeToOrder = (state, index) => {
+    const order = [...state.order]
+    if (index !== undefined || index !== null || index !== '') {
+        if(order.length) {
+            order.splice(index, 1)
+            return order
+        } else {
+            return state.order
+        }
+    } else {
+        return state.order
+    }
+}
+const sumProductsInOrder = (state) => {
+    const selectedOrder = {...state.selectedOrder}
+    const orders = selectedOrder.name.products
+    if(orders.length) {
+        const total = orders.map(item => item.total)
+        .reduce((prev, curr) => prev + curr, 0);
+       return total
+    } else {
+        return 0
+    }
+}
