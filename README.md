@@ -4,7 +4,7 @@ This project can be viewed temporarily in (http://just10.netlify.com/).
 
 This app this built in React and Firebase BackEnd.
 
-This app is not yet styled on functionalities are made.
+This app is not yet styled I focus on functionalities first.
 
 Please also note that this app is still in development.
 
