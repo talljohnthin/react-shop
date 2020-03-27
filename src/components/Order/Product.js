@@ -2,6 +2,7 @@ import React, { Fragment, useContext, useState, useEffect } from 'react'
 import { formatMoney } from './../../utils/Index'
 import { connect } from 'react-redux'
 import { addQuantity, sumProductsInOrder,  subtractQuantity , removeToOrder} from './../../redux/actions/order/orderActions'
+
 import './Sass/Index.scss'
 
 const Product = (props) => {

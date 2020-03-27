@@ -11,7 +11,9 @@ import {
     SUBTRACT_QUANTITY,
     REMOVE_TO_ORDER,
     EMPTY_ORDER,
-    SUM_TOTAL_IN_THE_ORDER
+    SUM_TOTAL_IN_THE_ORDER,
+    UPDATE_SHIPPING_FEE,
+    PROCESS_ORDER
 } from './../actions/order/orderTypes'
 
 const initialState = {
@@ -99,7 +101,15 @@ const reducer = ( state = initialState, action) => {
             return {
                 ...state,
                 orders: [],
-                //OrderTotal:0
+            }
+        case UPDATE_SHIPPING_FEE :
+            return {
+                ...state,
+                selectedOrder:{...state.selectedOrder, ...state.selectedOrder.name.shipping_fee = action.payload}
+            }
+        case PROCESS_ORDER :
+            return {
+                ...state,
             }
         default : return state
     }
@@ -134,7 +144,7 @@ const addQTY = (state, index) => {
                 total: ( orders[index].qty + 1 ) * Number(orders[index].price)
             }
             orders[index] = productObj
-            return {...selectedOrder, ...selectedOrder.name.products = orders}
+            return selectedOrder
         } else {
             return state.selectedOrder
         }
@@ -158,7 +168,7 @@ const subtractQTY = (state, index) => {
                 total: ( orders[index].qty <= 1 ? 1 : orders[index].qty - 1 ) * Number(orders[index].price) 
             }
             orders[index] = productObj
-            return {...selectedOrder, ...selectedOrder.name.products = orders}
+            return selectedOrder
         } else {
             return state.selectedOrder
         }
@@ -167,25 +177,27 @@ const subtractQTY = (state, index) => {
     }
 }
 const removeToOrder = (state, index) => {
-    const order = [...state.order]
+    const selectedOrder = {...state.selectedOrder}
+    const orders = selectedOrder.name.products
     if (index !== undefined || index !== null || index !== '') {
-        if(order.length) {
-            order.splice(index, 1)
-            return order
+        if(orders.length) {
+            orders.splice(index, 1)
+            return orders
         } else {
-            return state.order
+            return state.selectedOrder
         }
     } else {
-        return state.order
+        return state.selectedOrder
     }
 }
 const sumProductsInOrder = (state) => {
     const selectedOrder = {...state.selectedOrder}
     const orders = selectedOrder.name.products
+    const shipping_fee = selectedOrder.name.shipping_fee
     if(orders.length) {
         const total = orders.map(item => item.total)
         .reduce((prev, curr) => prev + curr, 0);
-       return total
+       return total + Number(shipping_fee)
     } else {
         return 0
     }
