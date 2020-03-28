@@ -30,7 +30,7 @@ export default class List extends Component {
     render() {
         const list = this.props.segmentsList.map(doc => {
             return ( <ListGroup.Item as="li" key={doc.id}> {doc.name.name}
-                <FontAwesomeIcon icon={faTrashAlt} onClick={() => this.handleShow(doc.id)}
+                <FontAwesomeIcon size="xs" icon={faTrashAlt} onClick={() => this.handleShow(doc.id)}
                 style={{float:'right', cursor:'pointer'}}/>
                 </ListGroup.Item>
                 )

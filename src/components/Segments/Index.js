@@ -8,8 +8,8 @@ import Alert from '../Alert/Index'
 import Hero from './../Hero/Index'
 
 const container = {
-    marginTop: 50,
-    padding:30
+    padding:30,
+    paddingTop:0
 }
 export default class Index extends Component {
     state = {

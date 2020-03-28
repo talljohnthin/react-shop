@@ -1,17 +1,18 @@
 import React, { Component, Fragment } from 'react'
-import { ListGroup } from 'react-bootstrap'
+import { ListGroup, Card } from 'react-bootstrap'
 import Container from 'react-bootstrap/Container'
 import List from './List'
 import Add from './Add'
 import { db } from '../../config/firebase'
+import Hero from './../Hero/Index'
 import Alert from '../Alert/Index'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faListOl } from '@fortawesome/free-solid-svg-icons'
+
 
 const container = {
-    maxWidth: '600px',
-    marginTop: '60px'
+    padding:30,
+    paddingTop:0
 }
+
 export default class Index extends Component {
     state = {
         categories: [],
@@ -136,8 +137,6 @@ export default class Index extends Component {
         }
     }
 
-
-
     render() {
 
         const isLoading = this.state.isLoading ?
@@ -150,22 +149,26 @@ export default class Index extends Component {
 
         return (
             <Fragment>
+                <Hero title="Categories" />
                 <Container style={container}>
                     <Alert
                         showAlert={this.state.showAlert}
                         type={this.state.alertType}
                         message={this.state.alertMessage}
                     />
-                    <ListGroup as="ul">
-                        <ListGroup.Item as="li" active>
-                            <FontAwesomeIcon icon={faListOl} /> List of Categories
-                        </ListGroup.Item>
-                        {isLoading}
-                    </ListGroup>
-
-                    <Add
-                        handleAddNewCategory={this.handleAddNewCategory}
-                    />
+                     <Card>
+                        <Card.Header>
+                            <h5>List of Categories</h5>
+                        </Card.Header>
+                        <Card.Body>
+                            <ListGroup as="ul">
+                                {isLoading}
+                            </ListGroup>
+                            <Add
+                                handleAddNewCategory={this.handleAddNewCategory}
+                            />
+                        </Card.Body>
+                    </Card>
                 </Container>
             </Fragment>
         )

@@ -62,7 +62,7 @@ export default class Add extends Component {
                                 <FontAwesomeIcon icon={faTimes}/> Close
                             </Button>
                             <Button variant="primary" type="submit" onClick={this.handleClose}>
-                            <FontAwesomeIcon icon={faSave}/> Save Changes
+                            <FontAwesomeIcon icon={faSave} size="xs"/> Save Changes
                             </Button>
                         </Modal.Footer>
                     </Form>

@@ -3,7 +3,7 @@ import firebase from 'firebase/app'
 import FileUploader from "react-firebase-file-uploader"
 import { Button, Form, Modal } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFile, faSave, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faSave, faTimes } from '@fortawesome/free-solid-svg-icons'
 import './scss/index.scss'
 
 export default class Add extends Component {
@@ -60,7 +60,7 @@ export default class Add extends Component {
         return (
             <Fragment>
                 <Button variant="primary" onClick={this.handleShow} style={ addButton }>
-                <FontAwesomeIcon icon={faFile} /> New Category
+                <FontAwesomeIcon size="xs" icon={faPlus} /> New Category
                 </Button>
                 <Modal show={this.state.show} onHide={this.handleClose}>
                     <Form onSubmit={this.handleFormSubmit}>
