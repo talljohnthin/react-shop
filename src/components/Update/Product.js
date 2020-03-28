@@ -2,6 +2,8 @@ import React, { Fragment, Component} from 'react'
 import Switch from 'react-input-switch'
 import { db } from '../../config/firebase'
 import { Link } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCog } from '@fortawesome/free-solid-svg-icons'
 
 export default class Product extends Component {
     state = {
@@ -49,7 +51,9 @@ export default class Product extends Component {
                                     }
                                   }} 
                             />
-                            <Link to={`/edit/${data.id}`}>Update Product</Link>
+                            <Link to={`/edit/${data.id}`}>
+                                <FontAwesomeIcon icon={faCog}/>
+                            </Link>
                         </div>
                     </div>
                 </div> :

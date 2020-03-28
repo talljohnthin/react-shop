@@ -62,7 +62,11 @@ export default class Add extends Component {
                 <Button variant="primary" onClick={this.handleShow} style={ addButton }>
                 <FontAwesomeIcon size="xs" icon={faPlus} /> New Category
                 </Button>
-                <Modal show={this.state.show} onHide={this.handleClose}>
+                <Modal 
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+                    show={this.state.show} 
+                    onHide={this.handleClose}>
                     <Form onSubmit={this.handleFormSubmit}>
                         <Modal.Header closeButton>
                             <Modal.Title>Add Category</Modal.Title>

@@ -7,7 +7,6 @@ import { db } from '../../config/firebase'
 import Hero from './../Hero/Index'
 import Alert from '../Alert/Index'
 
-
 const container = {
     padding:30,
     paddingTop:0

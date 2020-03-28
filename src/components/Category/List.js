@@ -38,7 +38,12 @@ export default class List extends Component {
         return (
             <Fragment>
                 { list != '' ? list : 'No category at this moment' }
-                <Modal show={this.state.show} onHide={this.handleClose}>
+                <Modal 
+                show={this.state.show} 
+                onHide={this.handleClose}
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                >
                     <Modal.Header closeButton>
                         <Modal.Title>Delete Category</Modal.Title>
                     </Modal.Header>

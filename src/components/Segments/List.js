@@ -38,9 +38,14 @@ export default class List extends Component {
         return (
             <Fragment>
                 { list != '' ? list : 'No size at this moment' }
-                <Modal show={this.state.show} onHide={this.handleClose}>
+                <Modal 
+                    show={this.state.show} 
+                    onHide={this.handleClose}
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+                    >
                     <Modal.Header closeButton>
-                        <Modal.Title>Delete Size</Modal.Title>
+                        <Modal.Title>Delete</Modal.Title>
                     </Modal.Header>
 
                     <Modal.Body>

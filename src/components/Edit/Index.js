@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { ProgressBar, Form, Button} from 'react-bootstrap'
+import { ProgressBar, Form, Button, Card} from 'react-bootstrap'
 import './scss/index.scss'
 import firebase from 'firebase/app'
 import { db, storage } from '../../config/firebase'
@@ -15,7 +15,8 @@ import Alert from '../Alert/Index'
 
 const container = {
     maxWidth: '600px',
-    margin: '60px auto',
+    margin: 15,
+    marginTop:15,
     float:'none'
 }
 
@@ -435,14 +436,6 @@ export default class Index extends Component {
     }
 
     render() {
-        console.log("PriceOptions: ", this.state.priceOptions)
-        console.log("Product Name: ", this.state.productName)
-        console.log("Product Segment: ", this.state.selectedSegment)
-        console.log("Product Category: ", this.state.selectedCategory)
-        console.log("Product Descriptions: ", this.state.productDescriptions)
-        console.log("Product Images: ", this.state.downloadURLs)
-        console.log("Product Cover: ", this.state.cover)
-        console.log("variations: ",this.state.priceOptions)
             const setPrice = this.state.variationsValue.map( (variation,index) => {
                 let options = []
                 this.state.variationOptionValue.map((option, optionIndex) => {
@@ -477,71 +470,78 @@ export default class Index extends Component {
                         type={this.state.alertType}
                         message={this.state.alertMessage}
                     />
+                    <Card>
+                        <Card.Header>
+                            <h5>List of Categories</h5>
+                        </Card.Header>
+                        <Card.Body>
+                            {/* <ProgressBar now={this.state.uploadProgress} label={`${this.state.uploadProgress}%`} />
+                         */}
+                            <p hidden>Filenames: {this.state.filenames.join(", ")}</p>
 
-                    <ProgressBar now={this.state.uploadProgress} label={`${this.state.uploadProgress}%`} />
-                    
-                    <p hidden>Filenames: {this.state.filenames.join(", ")}</p>
+                            <label style={ imageUpload }>
+                                <ion-icon name="add"></ion-icon> Add Images
+                                <FileUploader
+                                    hidden
+                                    accept="image/*"
+                                    name="image-uploader-multiple"
+                                    randomizeFilename
+                                    storageRef={firebase.storage().ref("images")}
+                                    onUploadStart={this.handleUploadStart}
+                                    onUploadError={this.handleUploadError}
+                                    onUploadSuccess={this.handleUploadSuccess}
+                                    onProgress={this.handleProgress}
+                                    multiple
+                                />
+                            </label>
 
-                    <label style={ imageUpload }>
-                        <ion-icon name="add"></ion-icon> Add Images
-                        <FileUploader
-                            hidden
-                            accept="image/*"
-                            name="image-uploader-multiple"
-                            randomizeFilename
-                            storageRef={firebase.storage().ref("images")}
-                            onUploadStart={this.handleUploadStart}
-                            onUploadError={this.handleUploadError}
-                            onUploadSuccess={this.handleUploadSuccess}
-                            onProgress={this.handleProgress}
-                            multiple
-                        />
-                    </label>
+                            <div className="cards">
+                                {this.state.downloadURLs.map((downloadURL, i) => {
+                                    return (
+                                        <div className={ this.state.cover === downloadURL ? 'card-cover' : ''} key={i} onClick={e => this.handleSetCover(downloadURL)}>
+                                            <img src={downloadURL} />
+                                            <Button className="card-close" onClick={e => this.handleRemoveImage(i, downloadURL)}><ion-icon name="close"></ion-icon></Button>
+                                        </div>
+                                    )
+                                })}
+                            </div>
 
-                    <div className="cards">
-                        {this.state.downloadURLs.map((downloadURL, i) => {
-                            return (
-                                <div className={ this.state.cover === downloadURL ? 'card-cover' : ''} key={i} onClick={e => this.handleSetCover(downloadURL)}>
-                                    <img src={downloadURL} />
-                                    <Button className="card-close" onClick={e => this.handleRemoveImage(i, downloadURL)}><ion-icon name="close"></ion-icon></Button>
-                                </div>
-                            )
-                        })}
-                    </div>
+                            <Form className="add-entry-form">
+                                <Form.Group controlId="productName">
+                                    <Form.Label>Product Name:</Form.Label>
+                                    <Form.Control onChange={(e) => this.handleAddNameToState(e.target.value) } value={this.state.productName || ''} type="text" />
+                                </Form.Group>
+                                <CategoryDropdown handleAddSectedCategoryToState={this.handleAddSectedCategoryToState} categories={this.state.categories} />
+                                <SegmentsDropdown handleAddSectedSegmentToState={this.handleAddSectedSegmentToState} segments={this.state.segments} />
+                                <Form.Group controlId="descriptions">
+                                    <Form.Label>Descriptions:</Form.Label>
+                                    <Form.Control onChange={(e) => this.handleAddDescriptionsToState(e.target.value) } value={this.state.productDescriptions || ''}  as="textarea" rows="3" />
+                                </Form.Group>
+                            </Form>
+                            
+                            <UpdateVariations 
+                                handleAddVariations = {this.handleAddVariations}
+                                handleRemoveVariation = {this.handleRemoveVariation}
+                                handleAddVariationValue = {this.handleAddVariationValue}
+                                variations = { this.state.variations }
+                                variationValue = { this.state.variationsValue }
+                            />
 
-                    <Form className="add-entry-form">
-                        <Form.Group controlId="productName">
-                            <Form.Label>Product Name:</Form.Label>
-                            <Form.Control onChange={(e) => this.handleAddNameToState(e.target.value) } value={this.state.productName || ''} type="text" />
-                        </Form.Group>
-                        <CategoryDropdown handleAddSectedCategoryToState={this.handleAddSectedCategoryToState} categories={this.state.categories} />
-                        <SegmentsDropdown handleAddSectedSegmentToState={this.handleAddSectedSegmentToState} segments={this.state.segments} />
-                        <Form.Group controlId="descriptions">
-                            <Form.Label>Descriptions:</Form.Label>
-                            <Form.Control onChange={(e) => this.handleAddDescriptionsToState(e.target.value) } value={this.state.productDescriptions || ''}  as="textarea" rows="3" />
-                        </Form.Group>
-                    </Form>
-                    
-                    <UpdateVariations 
-                        handleAddVariations = {this.handleAddVariations}
-                        handleRemoveVariation = {this.handleRemoveVariation}
-                        handleAddVariationValue = {this.handleAddVariationValue}
-                        variations = { this.state.variations }
-                        variationValue = { this.state.variationsValue }
-                    />
+                            <UpdateVariationOptions
+                                handleAddVariationOption = {this.handleAddVariationOption}
+                                handleRemoveVariationOption = {this.handleRemoveVariationOption}
+                                handleAddVariationOptionValue = {this.handleAddVariationOptionValue}
+                                variationOptions = { this.state.variationOptions }
+                                variationOptionValue = { this.state.variationOptionValue }
+                            />
+                            { setPrice ? (<div className="price-title">Set the price below:</div>) : ''}
+                            { setPrice }
 
-                    <UpdateVariationOptions
-                        handleAddVariationOption = {this.handleAddVariationOption}
-                        handleRemoveVariationOption = {this.handleRemoveVariationOption}
-                        handleAddVariationOptionValue = {this.handleAddVariationOptionValue}
-                        variationOptions = { this.state.variationOptions }
-                        variationOptionValue = { this.state.variationOptionValue }
-                    />
-                    { setPrice ? (<div className="price-title">Set the price below:</div>) : ''}
-                    { setPrice }
+                            <Button className="btn-product-save" onClick={this.handleProductUpdate}> <ion-icon name="add"></ion-icon> Update Product </Button>
+                        
+                        </Card.Body>
+                    </Card>
 
-                    <Button className="btn-product-save" onClick={this.handleProductUpdate}> <ion-icon name="add"></ion-icon> Update Product </Button>
-                
                 </Container>
             </Fragment>
         )
