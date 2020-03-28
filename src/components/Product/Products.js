@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect, useContext } from 'react'
 import Product from './Product'
-import { Container } from 'react-bootstrap'
+import Container from 'react-bootstrap/Container'
 import { db } from '../../config/firebase'
 import Loader from 'react-loader-spinner'
 import { ProductContext } from '../../contexts/ProductContext'

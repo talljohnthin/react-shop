@@ -3,6 +3,13 @@
 
 .header {
     background:#fff;
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    z-index: 99999;
+    overflow: hidden;
+    box-shadow: 0 0 10px 1px rgba(68,102,242,.05);
     .container {
         height: 64px;
         display: flex;
@@ -11,8 +18,8 @@
         align-items: center;
     }
     .left {
-        span {
-            font-size:30px;
+        .logo {
+            max-width: 150px;
         }
     }
     .right {

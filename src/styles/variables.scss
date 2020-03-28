@@ -1,5 +1,26 @@
 @import './mixins.scss';
-$primary-color: #F6F8FA;
-$secondary-color:#39A7AB;
-$primary-font: 'PT Sans', sans-serif;
+$primary-color: rgb(247,249,252);
+$secondary-color:#00807d;
+$primary-font: 'Work Sans', sans-serif;
 $secondary-font:'Roboto', sans-serif;
+
+
+//Card settings
+$card-padding        :30px;
+$card-margin-bottom  :30px;
+$card-border-width   :0px;
+$card-border-color   :#f6f7fb;
+$card-border-radious :8px;
+$card-box-shadow     :1px 5px 24px 0 rgba(68,102,242,.05);
+$card-header-font-weight : 700;
+$card-header-bg-color : #fff;
+$card-header-font-size : 18px;
+$card-header-font-transform : uppercase;
+$card-header-font-color :#333;
+$card-header-span-size : 12px;
+$card-header-span-color :#333;
+$card-body-bg-color : transparent;
+$card-footer-bg-color : #fff;
+
+
+

@@ -1,16 +1,17 @@
 import React, { Component, Fragment } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCartArrowDown } from '@fortawesome/free-solid-svg-icons'
-import { Container } from 'react-bootstrap'
+import Container from 'react-bootstrap/Container'
 import './Sass/Style.scss'
 
 export default class Index extends Component {
+    constructor(props) {
+        super(props)
+    }
     render() {
         return (
             <Fragment>
                 <div className="hero">
                     <Container>
-                       <h1>Watches</h1>
+                       <h1>{this.props.title}</h1>
                     </Container>
                 </div>
             </Fragment>

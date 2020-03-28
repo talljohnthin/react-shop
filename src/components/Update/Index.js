@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { Container } from 'react-bootstrap'
+import Container from 'react-bootstrap/Container'
 import Product from './Product'
 import { db } from '../../config/firebase'
 import './Sass/Index.scss'

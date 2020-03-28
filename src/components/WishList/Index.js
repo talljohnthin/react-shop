@@ -1,5 +1,5 @@
 import React, {Fragment, useContext, useState, useEffect } from 'react'
-import { Container } from 'react-bootstrap'
+import Container from 'react-bootstrap/Container'
 import { WishListContext } from '../../contexts/WishListContext'
 import { Link } from 'react-router-dom'
 import Product from './Product'

@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFile, faSave, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faFile, faSave, faTimes, faPlus } from '@fortawesome/free-solid-svg-icons'
 
 export default class Add extends Component {
     constructor(props) {
@@ -40,9 +40,14 @@ export default class Add extends Component {
         return (
             <Fragment>
                 <Button variant="primary" onClick={this.handleShow} style={ addButton }>
-                <FontAwesomeIcon icon={faFile} /> New Segment
+                <FontAwesomeIcon icon={faPlus} style={{fontSize:14}}/> Add New Segment
                 </Button>
-                <Modal show={this.state.show} onHide={this.handleClose}>
+                <Modal 
+                    show={this.state.show} 
+                    onHide={this.handleClose}
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+                    >
                     <Form onSubmit={this.handleFormSubmit}>
                         <Modal.Header closeButton>
                             <Modal.Title>Add Segments</Modal.Title>

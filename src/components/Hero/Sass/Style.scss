@@ -5,27 +5,22 @@ $primary-font: 'PT Sans', sans-serif;
 $secondary-font:'Roboto', sans-serif;
 
 .hero {
-    height: 200px;
-    background: #3ab3a8;
-	background: -moz-linear-gradient(top, #3ab3a8 0, #37a0ac 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #3ab3a8), color-stop(100%, #37a0ac));
-	background: -webkit-linear-gradient(top, #3ab3a8 0, #37a0ac 100%);
-	background: -o-linear-gradient(top, #3ab3a8 0, #37a0ac 100%);
-	background: -ms-linear-gradient(top, #3ab3a8 0, #37a0ac 100%);
-	background: linear-gradient(to bottom, #3ab3a8 0, #37a0ac 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3ab3a8', endColorstr='#37a0ac', GradientType=0);
-	background-size: cover;
-	color: #fff;
+	height: 80px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	position: fixed;
+	width: 100%;
+	padding:0 15px;
 	@media (max-width:767px) {
 		height: 60px;
 	}
 	h1 {
-		text-align: center;
-		@include font-size(24px, 60px, 500px, 1280px);
-		font-family: $secondary-font;
-		font-weight: 100;
+		text-align: left;
+		@include font-size(19px, 19px, 500px, 1280px);
+		font-family: $primary-font;
+		letter-spacing: 0.5px;
+		font-weight: 700;
+		text-transform: uppercase;
 	}
 }

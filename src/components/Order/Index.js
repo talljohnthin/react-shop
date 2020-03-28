@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import { ListGroup, Container, Form, Button } from 'react-bootstrap'
+import { ListGroup, Form, Button } from 'react-bootstrap'
+import Container from 'react-bootstrap/Container'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight, faListOl, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'

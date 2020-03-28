@@ -3,7 +3,6 @@ import { Modal , Button, ListGroup } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons'
 export default class List extends Component {
-
     state = {
         show:false,
         idToRemove:null
@@ -33,7 +32,8 @@ export default class List extends Component {
             return ( <ListGroup.Item as="li" key={doc.id}> {doc.name.name}
                 <FontAwesomeIcon icon={faTrashAlt} onClick={() => this.handleShow(doc.id)}
                 style={{float:'right', cursor:'pointer'}}/>
-                </ListGroup.Item>)
+                </ListGroup.Item>
+                )
         })
         return (
             <Fragment>

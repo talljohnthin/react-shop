@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import { Container } from 'react-bootstrap'
+import Container from 'react-bootstrap/Container'
 import  { Redirect } from 'react-router-dom'
 import { formatMoney } from './../../utils/Index'
 import { db } from './../../config/firebase'

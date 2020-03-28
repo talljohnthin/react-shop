@@ -1,11 +1,11 @@
 import React, { Component, Fragment } from 'react'
-import { ProgressBar, Form, Card, Button } from 'react-bootstrap'
+import { ProgressBar, Form, Button} from 'react-bootstrap'
 import './scss/index.scss'
 import firebase from 'firebase/app'
 import { db, storage } from '../../config/firebase'
 import FileUploader from "react-firebase-file-uploader"
 import uuid from 'react-uuid'
-import { Container } from 'react-bootstrap'
+import Container from 'react-bootstrap/Container'
 import CategoryDropdown from './CategoryDropdown'
 import SegmentsDropdown from './SegmentsDropdown'
 import UpdateVariations from './UpdateVariations'
@@ -501,10 +501,10 @@ export default class Index extends Component {
                     <div className="cards">
                         {this.state.downloadURLs.map((downloadURL, i) => {
                             return (
-                                <Card className={ this.state.cover === downloadURL ? 'card-cover' : ''} key={i} onClick={e => this.handleSetCover(downloadURL)}>
-                                    <Card.Img variant="top" src={downloadURL}/>
+                                <div className={ this.state.cover === downloadURL ? 'card-cover' : ''} key={i} onClick={e => this.handleSetCover(downloadURL)}>
+                                    <img src={downloadURL} />
                                     <Button className="card-close" onClick={e => this.handleRemoveImage(i, downloadURL)}><ion-icon name="close"></ion-icon></Button>
-                                </Card>
+                                </div>
                             )
                         })}
                     </div>

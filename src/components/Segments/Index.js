@@ -1,15 +1,15 @@
 import React, { Component, Fragment } from 'react'
-import { Container, ListGroup } from 'react-bootstrap'
+import { ListGroup, Card } from 'react-bootstrap'
+import Container from 'react-bootstrap/Container'
 import List from './List'
 import Add from './Add'
 import { db } from '../../config/firebase'
 import Alert from '../Alert/Index'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faListOl } from '@fortawesome/free-solid-svg-icons'
+import Hero from './../Hero/Index'
 
 const container = {
-    maxWidth: '600px',
-    marginTop: '60px'
+    marginTop: 50,
+    padding:30
 }
 export default class Index extends Component {
     state = {
@@ -134,10 +134,7 @@ export default class Index extends Component {
         }
     }
 
-
-
     render() {
-
         const isLoading = this.state.isLoading ?
             (<div className="loading">Loading segments...</div>) :
             (<List
@@ -147,24 +144,29 @@ export default class Index extends Component {
             )
 
         return (
-
             <Fragment>
+                <Hero title="Segments" />
                 <Container style={container}>
                     <Alert
                         showAlert={this.state.showAlert}
                         type={this.state.alertType}
                         message={this.state.alertMessage}
                     />
-                    <ListGroup as="ul">
-                        <ListGroup.Item as="li" active>
-                            <FontAwesomeIcon icon={faListOl} /> List of segments
-                        </ListGroup.Item>
-                        {isLoading}
-                    </ListGroup>
-
-                    <Add
-                        handleAddNewSegments={this.handleAddNewSegments}
-                    />
+                    
+                    <Card>
+                        <Card.Header>
+                            <h5>List of segments</h5>
+                        </Card.Header>
+                        <Card.Body>
+                            <ListGroup as="ul">
+                                {isLoading}
+                            </ListGroup>
+                            <Add
+                                handleAddNewSegments={this.handleAddNewSegments}
+                            />
+                        </Card.Body>
+                    </Card>
+                    
                 </Container>
             </Fragment>
         )

@@ -1,9 +1,10 @@
 import React, { Fragment, useContext} from 'react'
 import firebase from '../../config/firebase'
-import { Container } from 'react-bootstrap'
+import Container from 'react-bootstrap/Container'
 import { Link } from 'react-router-dom'
 import { AuthContext } from './../../contexts/AuthContext'
 import { WishListContext} from './../../contexts/WishListContext'
+import logo from './../../SHIQA.png'
 import './Sass/Style.scss'
 
 const Index = () => {
@@ -22,7 +23,7 @@ const Index = () => {
             <div className="header">
                 <Container>
                     <div className="left">
-                        <span>JUST 10</span>
+                        <img className="logo" src={logo} />
                     </div>
                     <div className="right">
                         <div className="wishlist">
