@@ -6,6 +6,12 @@
     padding-top:0;
 }
 
+.UPDATE-product-list {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
 .UPDATE-product-list .card {
     margin-bottom:12px;
     border-radius: 6px !important;
@@ -13,6 +19,11 @@
     border:0;
     box-shadow: 0 0.25rem 0.125rem 0 rgba(0,0,0,0.02);
     transition: 0.3s;
+    max-width: 32%;
+    width:100%;
+    @media (max-width:1199px) {
+        max-width: 48.5%;
+    }
     &:hover {
         background-color:#f6f7fb;
     }
