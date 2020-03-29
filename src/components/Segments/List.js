@@ -1,5 +1,5 @@
 import React, { Fragment, Component } from 'react'
-import { Modal , Button, ListGroup } from 'react-bootstrap'
+import { Modal , Button, ListGroup, Badge } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons'
 export default class List extends Component {
@@ -28,9 +28,9 @@ export default class List extends Component {
         })
     }
     render() {
-        const list = this.props.segmentsList.map(doc => {
-            return ( <ListGroup.Item as="li" key={doc.id}> {doc.name.name}
-                <FontAwesomeIcon size="xs" icon={faTrashAlt} onClick={() => this.handleShow(doc.id)}
+        const list = this.props.segmentsList.map((doc, index) => {
+            return ( <ListGroup.Item as="li" key={doc.id}><span><Badge>{index + 1}</Badge> {doc.name.name}</span>
+                <FontAwesomeIcon color="#00807d" icon={faTrashAlt} onClick={() => this.handleShow(doc.id)}
                 style={{float:'right', cursor:'pointer'}}/>
                 </ListGroup.Item>
                 )
@@ -45,7 +45,7 @@ export default class List extends Component {
                     centered
                     >
                     <Modal.Header closeButton>
-                        <Modal.Title>Delete</Modal.Title>
+                        <Modal.Title>Delete Segment</Modal.Title>
                     </Modal.Header>
 
                     <Modal.Body>
@@ -54,10 +54,16 @@ export default class List extends Component {
 
                     <Modal.Footer>
                         <Button variant="secondary" onClick={ this.handleClose }><FontAwesomeIcon icon={faTimes}/> Cancel</Button>
-                        <Button variant="primary" onClick={ this.removeSegments }><FontAwesomeIcon icon={faTrash}/> Remove</Button>
+                        <Button  style={removeButton} variant="primary" onClick={ this.removeSegments }><FontAwesomeIcon icon={faTrash}/> Remove</Button>
                     </Modal.Footer>
                 </Modal>
             </Fragment>
         )
     }
+}
+
+
+const removeButton = {
+    backgroundColor:'#f53d2d',
+    borderColor:'#f53d2d'
 }

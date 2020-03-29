@@ -424,14 +424,13 @@ export default class Index extends Component {
         //update products
         if (product) {
             db.collection("products").doc(this.editId)
-            //this.handleAlertMessage('success', 'New product has been added!')
-            .set(product)
-
+            .set(product).then(res => {
+                this.handleAlertMessage('success', 'Product Updated Successfully!')
+            })
             .catch(error => {
                 this.handleAlertMessage('failed', 'Failed to update product!')
                 console.error("Error adding document: ", error);
             });
-            console.log('product successfully updated')
         }
     }
 
@@ -472,7 +471,7 @@ export default class Index extends Component {
                     />
                     <Card>
                         <Card.Header>
-                            <h5>List of Categories</h5>
+                            <h5>Form Update</h5>
                         </Card.Header>
                         <Card.Body>
                             {/* <ProgressBar now={this.state.uploadProgress} label={`${this.state.uploadProgress}%`} />

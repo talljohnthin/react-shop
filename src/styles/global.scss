@@ -101,8 +101,27 @@ body {
 // RESET STRAP
 
 .list-group-item {
-    padding: 0.9rem 1.25rem;
+    padding: 1.1rem 1.25rem;
     border: 0.5px solid #e8e8e8;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    span {
+      display: flex;
+      align-items: center;
+    }
+    span.badge {
+      background:$secondary-color;
+      border-radius: 50%;
+      color:#fff;
+      width:20px;
+      height:20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-right:10px;
+      font-size:11px;
+    }
     &:hover{
         background-color: #f6f7fb;
     }

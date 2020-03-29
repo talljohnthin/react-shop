@@ -76,5 +76,7 @@ export default class Add extends Component {
 
 const addButton = {
     marginTop:'10px',
-    float:'right'
+    float:'right',
+    backgroundColor:'#00807d',
+    borderColor:'#00807d'
 }
