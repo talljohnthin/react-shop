@@ -58,19 +58,21 @@ body {
         width: 100%;
         padding:30px;
         padding-top:20px;
-        .listIcon {
+        ion-icon {
             margin-right:8px;
         }
         a{
             color:#fff;
             text-transform: capitalize !important;
             padding: 12px;
-            display:block;
             text-decoration: none;
             border-radius: 2px;
             transition: 0.3s;
             position: relative;
             outline: none;
+            display: flex;
+            align-items: center;
+            
             &:hover {
                 background:$secondary-color;
             }
@@ -94,9 +96,69 @@ body {
 }
 
 .MainContent {
-    width: 100%;
+  width: 100%;
 }
 
+//orders
+.order-search-id {
+  padding:30px;
+  background:#f2f4f7;
+  span {
+    font-family: "PT Sans", sans-serif;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .search-input {
+    display: flex;
+  }
+
+}
+.order-radio {
+  margin-bottom: 10px;
+  label {
+    input {
+      margin-right: 5px;
+    }
+  }
+}
+.list-of-orders {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  .card {
+    margin-bottom: 12px;
+    border-radius: 6px !important;
+    overflow: hidden;
+    border: 0;
+    box-shadow: 0 0.25rem 0.125rem 0 rgba(0, 0, 0, 0.02);
+    max-width: 32%;
+    width:100%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    padding:25px 16px;
+    cursor:pointer;
+    transition: 0.3s;
+    &:hover {
+      box-shadow: 0 0.25rem 0.125rem 0 rgba(0, 0, 0, 0.06);
+      span {
+        color:'#00807d' !important;
+      }
+    }
+    @media (max-width:1199px) {
+        max-width: 48.5%;
+    }
+    span {
+      font-weight: 600;
+      font-size: 14px;
+      transition: 0.3s;
+      position: relative;
+      top:2px;
+    }
+  }
+}
 
 // RESET STRAP
 

@@ -15,11 +15,11 @@ const Sidebar = () => {
     return <Fragment>
             <div className="MainSidebar">
                 <ul>
-                    <li><Link style={ current === 1 ? selected : null}  onClick={()=> setCurrent(1)} to="/order"><FontAwesomeIcon icon={faClipboardList} className="listIcon"/>List Of Orders</Link></li>
-                    <li><Link style={ current === 2 ? selected : null}  onClick={()=> setCurrent(2)} to="/upload"> <FontAwesomeIcon icon={faPlusSquare} className="listIcon"/>Add Product</Link></li>
-                    <li><Link style={ current === 3 ? selected : null}  onClick={()=> setCurrent(3)} to="/update"> <FontAwesomeIcon icon={faPenSquare} className="listIcon"/>Update Products</Link></li>
-                    <li><Link style={ current === 4 ? selected : null}  onClick={()=> setCurrent(4)} to="/category"> <FontAwesomeIcon icon={faListAlt} className="listIcon"/>Categories</Link></li>
-                    <li><Link style={ current === 5 ? selected : null}  onClick={()=> setCurrent(5)} to="/segments"> <FontAwesomeIcon icon={faPenSquare} className="listIcon"/>Segments</Link></li>
+                    <li><Link style={ current === 1 ? selected : null}  onClick={()=> setCurrent(1)} to="/order"><ion-icon name="cart-outline" style={{fontSize:18}}></ion-icon> List Of Orders</Link></li>
+                    <li><Link style={ current === 3 ? selected : null}  onClick={()=> setCurrent(3)} to="/update"> <ion-icon name="create-outline" style={{fontSize:18}}></ion-icon> Update Products</Link></li>
+                    <li><Link style={ current === 2 ? selected : null}  onClick={()=> setCurrent(2)} to="/upload"><ion-icon name="add-circle-outline" style={{fontSize:18}}></ion-icon> Add Product</Link></li>
+                    <li><Link style={ current === 4 ? selected : null}  onClick={()=> setCurrent(4)} to="/category"><ion-icon name="duplicate-outline"></ion-icon> Categories</Link></li>
+                    <li><Link style={ current === 5 ? selected : null}  onClick={()=> setCurrent(5)} to="/segments"><ion-icon name="layers-outline"></ion-icon> Segments</Link></li>
                 </ul>
             </div>
     </Fragment>

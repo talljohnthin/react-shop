@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import { ListGroup, Form, Button } from 'react-bootstrap'
+import { ListGroup, Form, Button, Card } from 'react-bootstrap'
 import Container from 'react-bootstrap/Container'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight, faListOl, faSearch } from '@fortawesome/free-solid-svg-icons'
@@ -68,27 +68,30 @@ const Index = ({ stateOrders, getOrders, getOrdersByCustomer, selectOrder }) => 
     }
 
     const listOfOrders = stateOrders.length < 1 ? 
-    <Spinner/> : 
+    <div>Loading items...</div> : 
     stateOrders.map((e,i) => {
          const orderDate = formatOrderDate(e.name.order_date)
-        return <ListGroup.Item as="li" 
+        return <Card 
                 key={i} 
                 onClick={ ()=> handleCheckOrder(e.id) }> 
-                    { orderDate } 
-                    <FontAwesomeIcon icon={faArrowRight}
-                    style={{float:'right', cursor:'pointer'}}/>
-            </ListGroup.Item>
+                    <span> { orderDate } </span>
+                    <ion-icon style={{color:'#00807d', fontSize:18}} name="arrow-forward-outline"></ion-icon>
+            </Card>
     })
     return (
         <Fragment>
-            <Container style={container}>
-                <div style={{marginBottom:15, display:'flex', alignItems:'center'}}>
-                    <input type="text" className="form-control" placeholder="Customer ID" value={customerId} onChange={e => setCustomerId(e.currentTarget.value)} />
-                    <Button style={{marginLeft:6, height:35}} onClick={()=> handleSearchOrderByCustomer() }> <FontAwesomeIcon icon={faSearch}
-                    style={{float:'right', cursor:'pointer'}}/></Button>
+            <div class="order-search-id">
+                <span>Search by order ID:</span>
+                <div class="search-input">
+                    <input type="text" className="form-control" placeholder="ex: 5ndA00CPnQzx11zLgb7L" value={customerId} onChange={e => setCustomerId(e.currentTarget.value)} />
+                    <Button style={{marginLeft:6, height:37, backgroundColor:'#00807d', border:0}} onClick={()=> handleSearchOrderByCustomer() }> 
+                    <ion-icon name="search-outline" style={{fontSize:18,position: 'relative',top:3}}></ion-icon></Button>
                 </div>
+            </div>
+            <Container style={container}>
+                
                 <Form style={formRadio}>
-                    <div className="radio" >
+                    <div className="order-radio" >
                         <label>
                             <input type="radio" 
                                 value="To Review" 
@@ -98,7 +101,7 @@ const Index = ({ stateOrders, getOrders, getOrdersByCustomer, selectOrder }) => 
                             To Review
                         </label>
                     </div>
-                    <div className="radio" style={{paddingLeft:10,paddingRight:10}}>
+                    <div className="order-radio" style={{paddingLeft:10,paddingRight:10}}>
                         <label>
                             <input type="radio" 
                                 value="To Proccess" 
@@ -107,7 +110,7 @@ const Index = ({ stateOrders, getOrders, getOrdersByCustomer, selectOrder }) => 
                             To Proccess
                         </label>
                     </div>
-                    <div className="radio">
+                    <div className="order-radio">
                         <label>
                             <input type="radio" 
                             value="Completed" 
@@ -117,12 +120,9 @@ const Index = ({ stateOrders, getOrders, getOrdersByCustomer, selectOrder }) => 
                         </label>
                     </div>
                 </Form>
-                <ListGroup as="ul">
-                    <ListGroup.Item as="li" active>
-                            <FontAwesomeIcon icon={faListOl} /> List of Orders
-                    </ListGroup.Item>
+                <div className="list-of-orders">
                     { listOfOrders }
-                </ListGroup>
+                </div>
             </Container>
         </Fragment>
     )
@@ -136,8 +136,7 @@ const mapDispatchToProps = { getOrders, getOrdersByCustomer, selectOrder }
 export default connect(mapStateToProps, mapDispatchToProps)(Index)
 
 const container = {
-    maxWidth: '600px',
-    marginTop: '60px'
+    padding:30,
 }
 const formRadio = {
     display:'flex',

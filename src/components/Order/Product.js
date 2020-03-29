@@ -35,7 +35,7 @@ const Product = (props) => {
                         { <img className="card-img" src={ cover } alt={ name } /> }
                     </div>
                     <div className="right">
-                        <div className="card-remove" onClick={handleRemove}>
+                        <div className="card-remove" onClick={handleRemove} style={props.status === 'Received' ? {display:'none'} : null}>
                             <ion-icon name="close"></ion-icon>
                         </div>
 
@@ -44,7 +44,7 @@ const Product = (props) => {
                         <p className="card-option"><span>Option: </span> <span> { option } </span></p>
 
                         <div className="card-unit"><span>Qty: </span> <span> { qty } </span>
-                            <div className="card-units-wrapper">
+                            <div className="card-units-wrapper" style={props.status === 'Received' ? {display:'none'} : null}>
                                 <ion-icon name="remove" onClick={()=>handleSubtractQty()}></ion-icon>
                                 <div className="card-units">{ qty }</div>
                                 <ion-icon name="add" onClick={()=>handleAddQty()}></ion-icon>

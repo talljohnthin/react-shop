@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import Container from 'react-bootstrap/Container'
 import  { Redirect } from 'react-router-dom'
 import { formatMoney } from './../../utils/Index'
-import { db } from './../../config/firebase'
+import Hero from './../Hero/Index'
 import { sumProductsInOrder, updateShippingFee, proccessOrder} from './../../redux/actions/order/orderActions'
 import Product from './Product'
 
@@ -34,19 +34,20 @@ const ViewOrder = ({ selectedOrder, selectedOrderId, sumProductsInOrder, updateS
 
     const hasOrder = () => {
         return order.name.products.map((product, productIndex) => {
-            return <Product key={productIndex} index={productIndex} product={product} id={product.id}/>
+            return <Product status={selectedOrder.name.status} key={productIndex} index={productIndex} product={product} id={product.id}/>
         })
     }
     
     
     return (
         <Fragment>
-            <Container>
+            <Hero title={`Order ID: ${ selectedOrderId }`} />
+            <Container style={{padding:30, paddingTop:0}}>
                 <div className="WISHLIST-product-list">
                     { order && hasOrder() }
                 </div>
                 <div className="WISHLIST-product-total">
-                <div className="title">Total</div>
+                    <div className="title">Total</div>
                     <ul>
                         <li><span className="label">Shipping :</span>
                             <input type="number" value={shippingFee} onChange={(e)=> handleAddShippingFee(e)}/>
@@ -54,8 +55,8 @@ const ViewOrder = ({ selectedOrder, selectedOrderId, sumProductsInOrder, updateS
                         <li><span className="label">Total :</span><span className="amount">&#8369; { formatMoney(order.name.total_amount) }</span></li>
                     </ul>
                 </div>
-                <div className="WISHLIST-submit">
-                    <span className="btn btn-primary" onClick={() => handleProccessOrder()}>Proccess Order</span>
+                <div className="procees-order-button" style={selectedOrder.name.status === 'Received' ? {display:'none'} : null}> 
+                    <button className="btn btn-primary" onClick={() => handleProccessOrder()}>Proccess Order</button>
                 </div>
             </Container>
         </Fragment>

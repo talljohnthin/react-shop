@@ -7,19 +7,23 @@
 
 .WISHLIST-product-list .card {
     margin-bottom:12px;
-    border-radius: 0;
+    border-radius: 4px;
     border:0;
     box-shadow: 0 0.25rem 0.125rem 0 rgba(0,0,0,0.02);
+    transition:0.3s;
+    &:hover{
+        box-shadow: 0 0.25rem 0.125rem 0 rgba(0,0,0,0.06);
+    }
     .card-img {
         border-radius: 0;
     }
     .card-total {
-        font-weight: 400;
+        font-weight: 700;
         font-family: $primary-font;
         font-size:14px;
         margin-top: 5px;
-        color:$secondary-color;
-        margin-bottom: 5px;;
+        margin-bottom: 5px;
+        color:#333 !important;
         @media (max-width:767px) {
             font-size:14px;
         }
@@ -27,10 +31,10 @@
     .card-title {
         color:#000;
         font-family: $secondary-font;
-        font-size:13px;
+        font-size:15px;
         font-weight: 600;
         margin:0 0 5px;
-        text-transform: uppercase;
+        text-transform: capitalize;
     }
     .card-variation,
     .card-option,
@@ -41,11 +45,17 @@
         font-size:13px;
         font-family: $secondary-font;
         display: flex;
+        color:#343a408a;
+        &:not(:last-child) {
+            margin-bottom: 6px;
+        }
         span {
             flex:1;
+            text-transform: capitalize !important;
             &:first-child {
                 max-width: 80px;
-                text-transform: uppercase;
+                text-transform: capitalize !important;
+                
             }
         }
     }
@@ -56,21 +66,25 @@
     }
     .left {
         max-width:160px;
+        min-height: 157px;
     }
     .right {
         width:100%;
         padding-left: 15px;
+        padding-right: 15px;
         .card-units-wrapper {
             display: flex;
             align-items: center;
             ion-icon {
-                width:13px;
-                height:13px;
+                width:16px;
+                height:16px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 background:$secondary-color;
                 color:#fff;
+                cursor: pointer;
+                border-radius: 2px;
             }
             .card-units {
                 font-size:13px;
@@ -80,12 +94,16 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                font-weight: 700;
             }
         }
         .card-remove {
             position:absolute;
             right:8px;
             top:8px;
+            font-size: 22px !important;
+            color:$secondary-color;
+            cursor: pointer;
         }
     }
     .change-variation,
@@ -101,41 +119,55 @@
     box-shadow: 0 0.25rem 0.125rem 0 rgba(0,0,0,0.02);
     margin-bottom: 12px;
     margin-top: 20px;
+    border-radius: 4px;
+    overflow: hidden;
     .title {
         background:$secondary-color;
         color:#fff;
         padding: 10px 20px;
-        font-size:14px;
+        font-size:16px;
         font-family: $secondary-font;
     }
     ul {
         padding:20px;
         li {
             display: flex;
-            margin-bottom: 4px;
+            margin-bottom: 8px;
             span {
                 flex:1;
                 text-align: right;
             }
+            input[type='number'] {
+                max-width: 120px;
+                border:0;
+                border-bottom:2px solid #eee;
+                text-align: right;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                margin: 0;
+            }
             &:first-child {
                 .amount {
-                    font-size:15px;
+                    font-size:16px;
                     font-weight: 600;
+                    width: 100%;
                 }
             }
             &:last-child {
                 .amount {
-                    font-size:10px;
+                    font-size:16px;
                     text-transform: uppercase;
+                    width: 100%;
+                    max-width: 120px;
+                    font-weight: 700;
                 }
             }
         }
         .label {
-            font-size:13px;
-            font-weight: $secondary-font;
+            font-size:16px;
         }
         .amount {
-            font-family: $secondary-font;
         }
     }
 }
@@ -184,14 +216,15 @@
     }
 }
 
-.WISHLIST-submit {
+.procees-order-button {
     display: flex;
     justify-content: flex-end;
-    .btn {
-        font-size:13px;
-        font-family: $secondary-font;
-        border-radius: 0;
-        border-color:$secondary-color;
+    button {
         background:$secondary-color;
+        border-color:$secondary-color;
+        &:hover {
+            background-color: rgb(245, 61, 45);
+            border-color: rgb(245, 61, 45);
+        }
     }
 }

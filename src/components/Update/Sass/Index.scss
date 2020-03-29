@@ -25,7 +25,10 @@
         max-width: 48.5%;
     }
     &:hover {
-        background-color:#f6f7fb;
+        box-shadow: 0 0.25rem 0.125rem 0 rgba(0, 0, 0, 0.06);
+    }
+    .left {
+        min-height: 92px;
     }
     .card-img {
         border-radius: 0;
