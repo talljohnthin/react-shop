@@ -12,6 +12,8 @@ import UpdateVariations from './UpdateVariations'
 import UpdateVariationOptions from './UpdateVariationOptions'
 import PriceSettings from './PriceSettings'
 import Alert from '../Alert/Index'
+import { AuthContext } from './../../contexts/AuthContext'
+import  { Redirect } from 'react-router-dom'
 
 const container = {
     maxWidth: '600px',
@@ -457,6 +459,13 @@ export default class Index extends Component {
             })
         return (
             <Fragment>
+                <AuthContext.Consumer>
+                {(value) => {
+                   if(Object.keys(value.state.user).length === 0 || value.state.user === null) {
+                        return <Redirect to='/'  />
+                   }
+                }}
+                </AuthContext.Consumer>
                 <div className="hero">
                     <Container>
                         <h1>Edit Product</h1>

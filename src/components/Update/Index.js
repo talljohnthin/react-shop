@@ -1,8 +1,10 @@
 import React, { Component, Fragment } from 'react'
 import Container from 'react-bootstrap/Container'
 import Product from './Product'
+import  { Redirect } from 'react-router-dom'
 import { db } from '../../config/firebase'
 import './Sass/Index.scss'
+import { AuthContext } from './../../contexts/AuthContext'
 
 export default class Index extends Component {
 
@@ -38,6 +40,13 @@ export default class Index extends Component {
     render() {
         return (
             <Fragment>
+                <AuthContext.Consumer>
+                    {(value) => {
+                    if(Object.keys(value.state.user).length === 0 || value.state.user === null) {
+                            return <Redirect to='/'  />
+                    }
+                    }}
+                </AuthContext.Consumer>
                 <div className="hero">
                     <Container>
                         <h1>Edit Products</h1>

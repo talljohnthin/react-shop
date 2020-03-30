@@ -6,6 +6,8 @@ import Add from './Add'
 import { db } from '../../config/firebase'
 import Hero from './../Hero/Index'
 import Alert from '../Alert/Index'
+import  { Redirect } from 'react-router-dom'
+import { AuthContext } from './../../contexts/AuthContext'
 
 const container = {
     padding:30,
@@ -148,6 +150,13 @@ export default class Index extends Component {
 
         return (
             <Fragment>
+                <AuthContext.Consumer>
+                {(value) => {
+                   if(Object.keys(value.state.user).length === 0 || value.state.user === null) {
+                        return <Redirect to='/'  />
+                   }
+                }}
+            </AuthContext.Consumer>
                 <Hero title="Categories" />
                 <Container style={container}>
                     <Alert

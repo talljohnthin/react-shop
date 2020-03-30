@@ -24,8 +24,8 @@ const Admin = () => {
                 <Header />
                 <div className="MainContent">
                     <ReactNotifications />
-                    {/* <Route path="/" exact component={ Hero }/>
-                    <Route path="/" exact component={ Products }/> */}
+                    {/* <Route path="/" exact component={ Hero }/> */}
+                    <Route path="/" exact component={ Products }/>
                     <Route path="/order" exact component={ Order } />
                     <Route path="/upload" exact component={ Uploads } />
                     <Route path="/order/ViewOrder" exact component={ ViewOrder } />

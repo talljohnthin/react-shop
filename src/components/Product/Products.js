@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect, useContext } from 'react'
 import Product from './Product'
 import Container from 'react-bootstrap/Container'
 import { db } from '../../config/firebase'
-import Loader from 'react-loader-spinner'
+import Hero from './../Hero/Index'
 import { ProductContext } from '../../contexts/ProductContext'
 
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
@@ -57,15 +57,16 @@ const Products = () => {
     const filterItem = categories.map(e => <li key={e.id}>{e.name.name}</li>)
     return (
         <Fragment>
-            <ul className="home-filter">
+            <Hero title="Product List" />
+            {/* <ul className="home-filter">
                 <li>MEN</li>
                 <li>WOMEN</li>
                 <li>KIDS</li>
                 <li>OTHERS</li>
-            </ul>
+            </ul> */}
             <Container>
                 <div>
-                    <ul className="home-filter-categories">
+                    {/* <ul className="home-filter-categories">
                         { filterItem }
                         {
                             products.length <= 0 ? <Loader
@@ -78,12 +79,11 @@ const Products = () => {
                        
                             /> : ''
                         }
-                    </ul>
+                    </ul> */}
                     <div className="row product-list">
                         { 
-                           products && products.map( product => <Product key={ product.id } data={ product }/>) 
+                           products.length ? products.map( product => <Product key={ product.id } data={ product }/>) : <span>Product Loading...</span>
                         }
-                        <div className="card"></div>
                     </div>
                 </div>
             </Container>

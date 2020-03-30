@@ -61,7 +61,7 @@ function Product({data}) {
                 <div className="card-body">
                     <p className="card-price">Php { product.priceOptions[0]?.options[0]?.price } </p>
                     <h4 className="card-title">{ product.productName }</h4>
-                    <span className="card-cart" onClick={() => handleClickWish(data)}><ion-icon name="heart-empty"></ion-icon></span>
+                    {/* <span className="card-cart" onClick={() => handleClickWish(data)}><ion-icon name="heart-empty"></ion-icon></span> */}
                 </div>
             </div>
         </div> :

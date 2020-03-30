@@ -1,12 +1,11 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { ListGroup, Form, Button, Card } from 'react-bootstrap'
 import Container from 'react-bootstrap/Container'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRight, faListOl, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
 import { getOrders, getOrdersByCustomer, selectOrder } from './../../redux/actions/order/orderActions'
 import { formatOrderDate, Spinner } from './../../utils/Index'
 import  { Redirect } from 'react-router-dom'
+import { AuthContext } from './../../contexts/AuthContext'
 
 const Index = ({ stateOrders, getOrders, getOrdersByCustomer, selectOrder }) => {
     let isMounted = false
@@ -80,6 +79,13 @@ const Index = ({ stateOrders, getOrders, getOrdersByCustomer, selectOrder }) => 
     })
     return (
         <Fragment>
+            <AuthContext.Consumer>
+                {(value) => {
+                   if(Object.keys(value.state.user).length === 0 || value.state.user === null) {
+                        return <Redirect to='/'  />
+                   }
+                }}
+            </AuthContext.Consumer>
             <div class="order-search-id">
                 <span>Search by order ID:</span>
                 <div class="search-input">
