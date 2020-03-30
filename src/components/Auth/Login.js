@@ -1,5 +1,5 @@
 import React, { Fragment, useContext, useState, useEffect } from 'react'
-import { Container } from 'react-bootstrap'
+import { Container, Card } from 'react-bootstrap'
 import firebase from '../../config/firebase'
 import { Redirect } from "react-router-dom";
 import { AuthContext } from '../../contexts/AuthContext'
@@ -44,25 +44,28 @@ const Login = () => {
 
     return (
         <Fragment>
-            <div className="hero">
-                <Container>
-                    <h1>Login</h1>
-                </Container>
-            </div>
             <Container className="login-container">
-                <form>
-                    <div className="form-row">
-                        {
-                            isLoading ? (<div className="alert alert-warning">Please wait...</div>) : 
-                            errorMessage && (<div className="alert alert-danger">{errorMessage}</div>)
-                        }
-                        <label htmlFor="inputEmail">Email</label>
-                        <input type="email" className="form-control" placeholder="Email" value={email} onChange={e => setEmail(e.currentTarget.value)} />
-                        <label htmlFor="inputPassword">Password</label>
-                        <input type="password" className="form-control" value={password} onChange={e => setPassword(e.currentTarget.value)} placeholder="Password" />
-                        <button type="submit" className="btn btn-primary" onClick={handleLogin}>Login</button>
-                    </div>
-                </form>
+                <Card>
+                    <Card.Header>
+                        <h5>Admin User Login</h5>
+                    </Card.Header>
+                    <Card.Body>
+                    <form>
+                        <div className="form-row">
+                            {
+                                isLoading ? (<div className="alert alert-warning">Please wait...</div>) : 
+                                errorMessage && (<div className="alert alert-danger">{errorMessage}</div>)
+                            }
+                            <label htmlFor="inputEmail">Email: </label>
+                            <input type="email" className="form-control" value={email} onChange={e => setEmail(e.currentTarget.value)} />
+                            <label htmlFor="inputPassword">Password:</label>
+                            <input type="password" className="form-control" value={password} onChange={e => setPassword(e.currentTarget.value)} />
+                            <button style={{backgroundColor:'#00807d', borderColor:'#00807d'}}type="submit" className="btn btn-primary" onClick={handleLogin}>Login</button>
+                            {/* <button style={{backgroundColor:'#00807d', borderColor:'#00807d', marginTop:6}}type="submit" className="btn btn-primary" onClick={handleLogin}>Add New Admin</button> */}
+                        </div>
+                    </form>
+                    </Card.Body>
+                </Card>
             </Container>
         </Fragment>
     )

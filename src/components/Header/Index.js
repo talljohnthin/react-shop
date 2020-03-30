@@ -11,7 +11,7 @@ const Index = () => {
     const {dispatch} = useContext(AuthContext)
     const {wishListState} = useContext(WishListContext)
     const handleLogout = () => {
-        dispatch({type: "LOGOUT", payload:null})
+        dispatch({type: "LOGOUT", payload:{}})
         firebase.auth().signOut()
     }
     let wishListCount = null
@@ -26,7 +26,7 @@ const Index = () => {
                         <img className="logo" src={logo} />
                     </div>
                     <div className="right">
-                        <div className="wishlist">
+                        {/* <div className="wishlist">
                             <Link to="/wish-list">
                                 <svg xmlns="http://www.w3.org/2000/svg" role="img" width="1000mm" height="1000mm" viewBox="0 0 1000 1000" style={{
                                     maxWidth: '1.6em',
@@ -50,16 +50,18 @@ const Index = () => {
                                 </path>
                             </svg>
                             <div className="orders-count">2</div>
-                        </div>
+                        </div> */}
                         <div className="user-login">
                             <AuthContext.Consumer>
                                 {(value) => {
-                                    if ( value.state.user === null ) {
+                                    
+                                    if ( value.state.user === null || Object.keys(value.state.user).length === 0 ) {
                                         return <Link to="/login"><div className="user-button">Login</div></Link>
                                     } else {
                                         return  <Fragment>
-                                                    <div className="user-name">{firebase.auth().currentUser && firebase.auth().currentUser.displayName}</div>
-                                                    <div className="user-button" onClick={handleLogout}>Logout</div>
+                                               
+                                                    {/* <div className="user-name">{firebase.auth().currentUser && firebase.auth().currentUser.displayName}</div> */}
+                                                    <div className="user-button" onClick={()=>handleLogout()}>Logout</div>
                                                 </Fragment>
                                     }
                                 }}

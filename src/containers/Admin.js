@@ -31,9 +31,9 @@ const Admin = () => {
                     <Route path="/order/ViewOrder" exact component={ ViewOrder } />
                     <Route path="/update" exact component={ Update } />
                     <Route path="/edit/:id" exact component={ Edit } />
-                    {/* <Route path="/signup" exact component={ SignUp }/>
+                    <Route path="/signup" exact component={ SignUp }/>
                     <Route path="/login" exact component={ Login }/>
-                    <Route path="/wish-list" exact component={ WishList }/> */}
+                    {/* <Route path="/wish-list" exact component={ WishList }/> */}
                     <Route path="/category" exact component={ Category }/>
                     <Route path="/segments" exact component={ Segments } />
                 </div>

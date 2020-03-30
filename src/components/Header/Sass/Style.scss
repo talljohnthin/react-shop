@@ -71,13 +71,23 @@
         }
         .user-login {
             margin-left: 15px;
+            color:#fff;
             .user-name {
                 font-family: $secondary-font;
                 font-size:10px;
             }
+            a {
+                color:#fff;
+                text-decoration: none;
+            }
             .user-button {
                 cursor: pointer;
                 font-family: $secondary-font;
+                background:$secondary-color;
+                padding:10px 20px;
+                border-radius: 4px;
+                color:'#fff' !important;
+                font-size: 15px;
             }
         }
         
