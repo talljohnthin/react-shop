@@ -1,12 +1,18 @@
-This project can be viewed temporarily in (http://just10.netlify.com/).
+This project can be viewed in https://admin-shiqa.netlify.com/.
 
-## Ecommerce Web App Admin 
+## Admin Shiqa Ecommerce App
 
-This app this built in React and Firebase BackEnd.
+This app is the admin part of Shiqa Shopping ecommerce app, where we can process clients orders, approved orders, update quantity, update prices, add and remove products, add shipping fee based on orders, upload product images and many more. 
 
-This app is not yet styled I focus on functionalities first.
+This app this built in React Js, Redux, Redux-thunk, and Firebase BackEnd.
 
-Please also note that this app is still in development.
+The client side of this app is a mobile android app which is built in react native, redux, redux-thunk and firebase. Please download the client android app here: 
+
+
+
+
+
+
 
 
 
