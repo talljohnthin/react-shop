@@ -9,7 +9,7 @@ This app this built in React Js, Redux, Redux-thunk, and Firebase BackEnd.
 The client side of this app is a mobile android app which is built in react native, redux, redux-thunk and firebase. Please download the client android app here: 
 
 
-For testing u can use this temporary user:
+For testing you can use this temporary user:
 
 email: test@gmail.com
 password: testing
