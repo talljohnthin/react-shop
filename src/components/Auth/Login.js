@@ -11,6 +11,7 @@ const Login = () => {
     const [password, setPassword] = useState('')
     const [redirect, setRedirect] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
+    const [successMessage, setSuccessMessage] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const { state, dispatch } = useContext(AuthContext)
 
@@ -38,7 +39,10 @@ const Login = () => {
             })
             setIsLoading(false)
             setErrorMessage('')
-            setRedirect(true)
+            setSuccessMessage('Login Successfully!')
+            setTimeout(()=>{
+                setRedirect(true)
+            },400)
        }
     }
 
@@ -52,6 +56,9 @@ const Login = () => {
                     <Card.Body>
                     <form>
                         <div className="form-row">
+                            {
+                                successMessage && (<div className="alert alert-success">{successMessage}</div>)
+                            }
                             {
                                 isLoading ? (<div className="alert alert-warning">Please wait...</div>) : 
                                 errorMessage && (<div className="alert alert-danger">{errorMessage}</div>)

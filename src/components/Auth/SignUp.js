@@ -15,31 +15,38 @@ const SignUp = () => {
     const [isLoading, setIsLoading] = useState(false)
 
     if (redirect) {
-        return <Redirect to="/" />
+        return <Redirect to="/login" />
     }
 
     const handleSignUp = (e) => {
         e.preventDefault()
-        setIsLoading(true)
-        firebase.auth().createUserWithEmailAndPassword(email,password)
-        .then((result) => {
-            setPassword('')
-            setEmail('')
-            return result.user.updateProfile({
-                displayName: name,
-                phoneNumber: phone
-            }).then(() => {
-                setName('')
-                setPhone('')
-                setIsLoading(false)
-                setSuccessMessage('Signed Up Successfully')
-                setRedirect(true)
+
+        if( email && password) {
+            setIsLoading(true)
+            firebase.auth().createUserWithEmailAndPassword(email,password)
+            .then((result) => {
+                setPassword('')
+                setEmail('')
+                return result.user.updateProfile({
+                    displayName: name,
+                    phoneNumber: phone
+                }).then(() => {
+                    setName('')
+                    setPhone('')
+                    setIsLoading(false)
+                    setSuccessMessage('Signed Up Successfully')
+                    setTimeout(()=>{
+                        setRedirect(true)
+                    },300)
+                })
             })
-        })
-        .catch( error => {
-            setErrorMessage(error)
-            setIsLoading(false)
-        })
+            .catch( error => {
+                setErrorMessage(error)
+                setIsLoading(false)
+            })
+        }else {
+            setErrorMessage('Email & Password cannot be empty!')
+        }
     }
     return (
         <Fragment>
@@ -66,7 +73,7 @@ const SignUp = () => {
                                 <input type="email" className="form-control" placeholder="Email" value={email} onChange={e => setEmail(e.currentTarget.value)} />
                                 <label htmlFor="inputPassword">Password</label>
                                 <input type="password" className="form-control" value={password} onChange={e => setPassword(e.currentTarget.value)} placeholder="Password" />
-                                <button style={{backgroundColor:'#00807d', borderColor:'#00807d'}} type="submit" className="btn btn-primary" onClick={() => handleSignUp()}>SignUp</button>
+                                <button style={{backgroundColor:'#00807d', borderColor:'#00807d'}} type="submit" className="btn btn-primary" onClick={(e) => handleSignUp(e)}>SignUp</button>
                             </div>
                         </form>
                     </Card.Body>

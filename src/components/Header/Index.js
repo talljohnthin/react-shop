@@ -56,7 +56,10 @@ const Index = () => {
                                 {(value) => {
                                     
                                     if ( value.state.user === null || Object.keys(value.state.user).length === 0 ) {
-                                        return <Link to="/login"><div className="user-button">Login</div></Link>
+                                        return <Fragment>
+                                                    <Link to="/signup"><div className="user-button" style={{marginRight:5}}>Register</div></Link>
+                                                    <Link to="/login"><div className="user-button">Login</div></Link>
+                                               </Fragment>
                                     } else {
                                         return  <Fragment>
                                                

@@ -72,10 +72,7 @@
         .user-login {
             margin-left: 15px;
             color:#fff;
-            .user-name {
-                font-family: $secondary-font;
-                font-size:10px;
-            }
+            display: flex;
             a {
                 color:#fff;
                 text-decoration: none;
